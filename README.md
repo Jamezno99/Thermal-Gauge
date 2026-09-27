@@ -1,2 +1,10 @@
-# Thermal-Gauge
-An app that aids HVAC Technicians with service or maintenance calls. 
+# Thermal Gauge (web app) — v1.28
+
+Offline HVAC field calculator: superheat & subcool (TXV / piston), P-T chart for R-410A, R-22, R-454B,
+R-32, R-134a, R-404A and R-407C, airflow, psychrometrics, load calculator, maintenance checklist,
+service notes with photos/videos, and Gary, an offline HVAC assistant.
+
+**Install on iPhone:** open the site in Safari → Share → Add to Home Screen → open it from the new icon.
+Everything is stored on your own phone; nothing is uploaded.
+
+Field reference only. Always follow the equipment manufacturer's instructions.
