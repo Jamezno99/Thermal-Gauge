@@ -1,5 +1,5 @@
 /* Thermal Gauge service worker — makes the app work offline after the first visit. */
-const CACHE = "thermal-gauge-1.28";
+const CACHE = "thermal-gauge-1.31";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {

@@ -164,7 +164,7 @@ button:disabled{opacity:.45;pointer-events:none}
 .nthumbs .vt::after,.photos .ph.vid::after{content:"";position:absolute;left:50%;top:50%;width:0;height:0;border-style:solid;border-width:9px 0 9px 15px;
   border-color:transparent transparent transparent #fff;transform:translate(-35%,-50%);filter:drop-shadow(0 1px 3px rgba(0,0,0,.7));pointer-events:none}
 .photos .ph.vid::before{content:"";position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:20px;background:rgba(0,0,0,.45);pointer-events:none}
-.photos .ph .dur{position:absolute;left:6px;bottom:6px;font-size:12px;font-weight:700;color:#fff;background:rgba(0,0,0,.6);border-radius:6px;padding:1px 6px;pointer-events:none}
+.photos .ph .dur{position:absolute;left:6px;top:6px;font-size:12px;font-weight:700;color:#fff;background:rgba(0,0,0,.6);border-radius:6px;padding:1px 6px;pointer-events:none}
 .photos .adds{display:contents}
 .viewer video{flex:1;min-height:0;width:100%;background:#000}
 .nthumbs img,.nthumbs span{width:52px;height:52px;border-radius:8px;object-fit:cover;background:var(--field);border:1px solid var(--line)}
@@ -336,6 +336,16 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 @keyframes menuMoved{0%{background:color-mix(in srgb,var(--accent) 30%,transparent)}100%{background:transparent}}
 .menu-foot{display:none;padding:16px 20px calc(16px + env(safe-area-inset-bottom))}
 #nav-menu.editing .menu-foot{display:block}
+/* photo / video labels */
+.photos .ph .plabel{position:absolute;left:0;right:0;bottom:0;padding:14px 6px 5px;font-size:12px;font-weight:700;line-height:1.2;color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.78));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:0;text-align:left;width:100%;font-family:inherit}
+.photos .ph .plabel.empty{color:rgba(255,255,255,.75);font-weight:600}
+.vlabel{padding:10px 16px 0;background:#000}
+.vlabel input{width:100%;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.3);background:#141414;color:#fff}
+.vlabel .chips{margin:8px 0 0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.vlabel .chips::-webkit-scrollbar{display:none}
+.vlabel .chips button{flex:none;background:#1f1f1f;border-color:#333;color:#fff;font-size:13px;padding:6px 11px}
+.nitem .lbls{font-size:12px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* web / iPhone */
 .kval{font-size:16px}
 header{padding-top:max(10px, env(safe-area-inset-top))}
@@ -614,7 +624,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.28 (web) · Field reference only. Always follow the equipment manufacturer's instructions.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.31 (web) · Field reference only. Always follow the equipment manufacturer's instructions.</p>
   </div>
 </section>
 
@@ -799,6 +809,10 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
 <div class="viewer hide" id="viewer">
   <img id="v-img" alt="">
   <video id="v-vid" class="hide" controls playsinline preload="metadata"></video>
+  <div class="vlabel">
+    <input id="v-label" maxlength="60" placeholder="Label this (e.g. Nameplate, Before, After)" enterkeyhint="done" autocapitalize="sentences">
+    <div class="chips" id="v-lchips"></div>
+  </div>
   <div class="vbar"><span id="v-cap"></span><div style="display:flex;gap:8px"><button id="v-del">Remove</button><button id="v-close">Close</button></div></div>
 </div>
 
@@ -1186,7 +1200,7 @@ const NKEY = "hvac_notes";
 const SERVICE_TYPES = ["Maintenance / tune-up","Diagnostic","Repair","Refrigerant charge","Leak check","Install","No cool","No heat","Other"];
 const loadNotes = () => { try { const a = JSON.parse(localStorage.getItem(NKEY) || "[]"); return Array.isArray(a) ? a : []; } catch(e){ return []; } };
 const saveNotes = a => { try { localStorage.setItem(NKEY, JSON.stringify(a)); return true; } catch(e){ return false; } };
-let notes = loadNotes(), editing = null, nTypes = new Set(), nPhotos = [], nAdded = [], nRemoved = [];
+let notes = loadNotes(), editing = null, nTypes = new Set(), nPhotos = [], nAdded = [], nRemoved = [], nLabels = {};
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const today = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
 const niceDate = s => { if (!s) return "No date"; const [y,m,d] = s.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString(undefined, {month:"short", day:"numeric", year:"numeric"}); };
@@ -1301,7 +1315,7 @@ function shrinkImage(file, maxSide, q){
 function renderNotes(){
   const q = $("n-search").value.trim().toLowerCase();
   const list = notes.slice().sort((a, b) => (b.date || "").localeCompare(a.date || "") || b.updated - a.updated)
-    .filter(n => !q || [n.addr, n.cust, n.ref, n.unit, n.body, n.read, (n.types || []).join(" "), n.photos && n.photos.some(id => !isVid(id)) ? "photo photos" : "", n.photos && n.photos.some(isVid) ? "video videos" : ""].join(" ").toLowerCase().includes(q));
+    .filter(n => !q || [n.addr, n.cust, n.ref, n.unit, n.body, n.read, (n.types || []).join(" "), n.photos && n.photos.some(id => !isVid(id)) ? "photo photos" : "", n.photos && n.photos.some(isVid) ? "video videos" : "", Object.values(n.labels || {}).join(" ")].join(" ").toLowerCase().includes(q));
   if (!notes.length){ $("n-list").innerHTML = `<div class="empty">No service notes yet.<br>Tap <b>New service note</b> after each call.</div>`; return; }
   if (!list.length){ $("n-list").innerHTML = `<div class="empty">No notes match “${esc(q)}”.</div>`; return; }
   $("n-list").innerHTML = list.map(n => `
@@ -1310,7 +1324,7 @@ function renderNotes(){
       <div class="addr">${esc(n.addr || "No address")}</div>
       <div class="tags">${n.ref && n.ref !== "N/A" ? `<span class="tag ref">${esc(n.ref)}</span>` : ""}${(n.types || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
       ${n.body ? `<div class="snip">${esc(n.body)}</div>` : ""}
-      ${n.photos && n.photos.length ? `<div class="nthumbs">${n.photos.slice(0, 4).map(id => isVid(id) ? `<span class="vt"><img alt="" data-pid="${esc(id)}"></span>` : `<img alt="" data-pid="${esc(id)}">`).join("")}${n.photos.length > 4 ? `<span>+${n.photos.length - 4}</span>` : ""}</div>` : ""}
+      ${n.photos && n.photos.length ? `<div class="nthumbs">${n.photos.slice(0, 4).map(id => isVid(id) ? `<span class="vt"><img alt="" data-pid="${esc(id)}"></span>` : `<img alt="" data-pid="${esc(id)}">`).join("")}${n.photos.length > 4 ? `<span>+${n.photos.length - 4}</span>` : ""}</div>${n.labels && Object.keys(n.labels).length ? `<div class="lbls">🏷 ${esc(n.photos.filter(id => n.labels[id]).map(id => n.labels[id]).join(" · "))}</div>` : ""}` : ""}
     </button>`).join("");
   fillThumbs($("n-list"));
 }
@@ -1329,14 +1343,14 @@ function openNote(n){
   $("n-body").value = n ? n.body || "" : "";
   $("n-read").value = n ? n.read || "" : "";
   nTypes = new Set(n ? n.types || [] : []); paintTypes();
-  nPhotos = n && n.photos ? n.photos.slice() : []; nAdded = []; nRemoved = []; renderPhotos();
+  nPhotos = n && n.photos ? n.photos.slice() : []; nLabels = Object.assign({}, n && n.labels || {}); nAdded = []; nRemoved = []; renderPhotos();
   $("n-del").classList.toggle("hide", !n);
   $("n-listview").classList.add("hide"); $("n-edit").classList.remove("hide"); window.scrollTo(0, 0);
   try { if (!(history.state && history.state.ed)) history.pushState({ed: 1}, ""); } catch(e){}
 }
 function closeNote(fromPop, saved){
   if (!saved) nAdded.forEach(id => PhotoDB.del(id));      // discard photos added to a note that wasn't saved
-  nAdded = []; nRemoved = []; nPhotos = [];
+  nAdded = []; nRemoved = []; nPhotos = []; nLabels = {};
   editing = null; clearDraft();
   $("n-edit").classList.add("hide"); $("n-listview").classList.remove("hide"); renderNotes(); window.scrollTo(0, 0);
   try { if (!fromPop && history.state && history.state.ed) history.back(); } catch(e){}
@@ -1353,7 +1367,7 @@ window.addEventListener("popstate", () => {
 /* Draft autosave so an in-progress note survives the app being closed */
 const DKEY = "hvac_note_draft";
 const NFIELDS = ["n-date","n-ref","n-cust","n-addr","n-unit","n-body","n-read"];
-function saveDraft(){ const d = {id: editing ? editing.id : null, types: [...nTypes], photos: nPhotos, added: nAdded, removed: nRemoved}; NFIELDS.forEach(f => d[f] = $(f).value); try { localStorage.setItem(DKEY, JSON.stringify(d)); } catch(e){} }
+function saveDraft(){ const d = {id: editing ? editing.id : null, types: [...nTypes], photos: nPhotos, labels: nLabels, added: nAdded, removed: nRemoved}; NFIELDS.forEach(f => d[f] = $(f).value); try { localStorage.setItem(DKEY, JSON.stringify(d)); } catch(e){} }
 function clearDraft(){ try { localStorage.removeItem(DKEY); } catch(e){} }
 function restoreDraft(){
   let d; try { d = JSON.parse(localStorage.getItem(DKEY) || "null"); } catch(e){}
@@ -1361,7 +1375,7 @@ function restoreDraft(){
   openNote(d.id ? notes.find(n => n.id === d.id) || null : null);
   NFIELDS.forEach(f => { if (d[f] !== undefined) $(f).value = d[f]; });
   nTypes = new Set(d.types || []); paintTypes();
-  nPhotos = d.photos || nPhotos; nAdded = d.added || []; nRemoved = d.removed || []; renderPhotos();
+  nPhotos = d.photos || nPhotos; nLabels = d.labels || nLabels; nAdded = d.added || []; nRemoved = d.removed || []; renderPhotos();
 }
 function growUnit(){ const t = $("n-unit"); t.style.height = "auto"; t.style.height = Math.max(118, t.scrollHeight + 2) + "px"; }
 $("n-unit").addEventListener("input", growUnit);
@@ -1374,7 +1388,7 @@ $("n-new").addEventListener("click", () => openNote(null));
 $("n-cancel").addEventListener("click", () => closeNote());
 $("n-save").addEventListener("click", () => {
   const rec = { date: $("n-date").value, ref: nref.value, cust: $("n-cust").value.trim(), addr: $("n-addr").value.trim(),
-    unit: $("n-unit").value.trim(), body: $("n-body").value.trim(), read: $("n-read").value.trim(), types: SERVICE_TYPES.filter(t => nTypes.has(t)), photos: nPhotos.slice(), updated: Date.now() };
+    unit: $("n-unit").value.trim(), body: $("n-body").value.trim(), read: $("n-read").value.trim(), types: SERVICE_TYPES.filter(t => nTypes.has(t)), photos: nPhotos.slice(), labels: cleanLabels(), updated: Date.now() };
   if (!rec.addr && !rec.body && !rec.cust && !rec.photos.length){ toast("Add an address, notes or a photo first"); return; }
   if (editing) Object.assign(editing, rec); else notes.push(Object.assign({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), created: Date.now() }, rec));
   if (saveNotes(notes)){ nRemoved.forEach(id => { PhotoDB.del(id); thumbCache.delete(id); }); toast("Note saved"); closeNote(false, true); }
@@ -1402,16 +1416,17 @@ $("n-attach").addEventListener("click", () => {
   if (nref.value === "N/A" || nref.value === "Other") nref.value = r.name;
   saveDraft(); toast("Readings inserted");
 });
-function mediaLine(ids){
+function mediaLine(ids, labels){
   if (!ids || !ids.length) return "";
   const v = ids.filter(isVid).length, ph = ids.length - v, parts = [];
   if (ph) parts.push(`${ph} photo${ph > 1 ? "s" : ""}`);
   if (v) parts.push(`${v} video${v > 1 ? "s" : ""}`);
-  return `Media: ${parts.join(", ")} (saved in the app)`;
+  const named = ids.filter(id => labels && labels[id]).map(id => `${labels[id]} (${isVid(id) ? "video" : "photo"})`);
+  return `Media: ${parts.join(", ")} (saved in the app)` + (named.length ? `\nLabels: ${named.join("; ")}` : "");
 }
 function noteText(n){
   return [`${niceDate(n.date)} — ${n.addr || "No address"}`, n.cust && `Customer: ${n.cust}`, n.ref && `Refrigerant: ${n.ref}`,
-    n.types && n.types.length && `Service: ${n.types.join(", ")}`, n.unit && `Equipment: ${n.unit}`, n.body && `Notes: ${n.body}`, n.read && `Readings: ${n.read}`, mediaLine(n.photos)]
+    n.types && n.types.length && `Service: ${n.types.join(", ")}`, n.unit && `Equipment: ${n.unit}`, n.body && `Notes: ${n.body}`, n.read && `Readings: ${n.read}`, mediaLine(n.photos, n.labels)]
     .filter(Boolean).join("\n");
 }
 function copyText(txt){
@@ -1428,20 +1443,21 @@ const ADD_TILE = `<button type="button" class="add" id="n-addph"><svg viewBox="0
   + `<button type="button" class="add" id="n-addvid"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4z"/></svg>Add video</button>`;
 let busy = 0;
 function renderPhotos(){
-  $("n-photos").innerHTML = nPhotos.map((id, i) => `<div class="ph${isVid(id) ? " vid" : ""}" data-i="${i}"><img alt="" data-pid="${esc(id)}">${isVid(id) ? `<span class="dur"></span>` : ""}<button type="button" class="x" data-x="${i}" aria-label="Remove">×</button></div>`).join("")
+  $("n-photos").innerHTML = nPhotos.map((id, i) => `<div class="ph${isVid(id) ? " vid" : ""}" data-i="${i}"><img alt="" data-pid="${esc(id)}">${isVid(id) ? `<span class="dur"></span>` : ""}<button type="button" class="x" data-x="${i}" aria-label="Remove">×</button><button type="button" class="plabel${nLabels[id] ? "" : " empty"}" data-lbl="${i}">${nLabels[id] ? esc(nLabels[id]) : "+ Label"}</button></div>`).join("")
     + Array.from({length: busy}, () => `<div class="ph busy">Saving…</div>`).join("") + ADD_TILE;
   $("n-phcount").textContent = nPhotos.length ? `(${nPhotos.length})` : "";
   fillThumbs($("n-photos"));
 }
 function removePhoto(i){
   const id = nPhotos[i]; if (id === undefined) return;
-  nPhotos.splice(i, 1);
+  nPhotos.splice(i, 1); delete nLabels[id];
   if (nAdded.includes(id)){ nAdded = nAdded.filter(x => x !== id); PhotoDB.del(id); thumbCache.delete(id); }
   else nRemoved.push(id);                                  // existing photo: deleted for good when the note is saved
   renderPhotos(); saveDraft();
 }
 $("n-photos").addEventListener("click", e => {
   const x = e.target.closest("[data-x]"); if (x){ removePhoto(+x.dataset.x); return; }
+  const lb = e.target.closest("[data-lbl]"); if (lb){ openViewer(+lb.dataset.lbl, true); return; }
   if (e.target.closest("#n-addph")){ $("n-file").value = ""; $("n-file").click(); return; }
   if (e.target.closest("#n-addvid")){ $("n-vfile").value = ""; $("n-vfile").click(); return; }
   const ph = e.target.closest(".ph[data-i]"); if (ph) openViewer(+ph.dataset.i);
@@ -1482,8 +1498,9 @@ $("n-vfile").addEventListener("change", async () => {
 /* full-screen viewer */
 let vIndex = -1;
 let vURL = null;
-async function openViewer(i){
+async function openViewer(i, focusLabel){
   vIndex = i; const id = nPhotos[i], vid = $("v-vid"), img = $("v-img");
+  $("v-label").value = nLabels[id] || "";
   if (isVid(id)){
     const rec = await PhotoDB.get(id);
     if (!rec || !rec.blob){ toast("Couldn't open that video"); return; }
@@ -1495,7 +1512,23 @@ async function openViewer(i){
     $("v-cap").textContent = `Photo ${i + 1} of ${nPhotos.length}`;
   }
   $("viewer").classList.remove("hide");
+  if (focusLabel) setTimeout(() => $("v-label").focus(), 60);
 }
+/* labels: quick picks + typing, kept with the note (saved when the note is saved) */
+const LABEL_PICKS = ["Before", "After", "Nameplate", "Condenser", "Evaporator coil", "Furnace", "Filter", "Wiring", "Capacitor", "Contactor", "Drain / pan", "Ductwork", "Thermostat", "Damage", "Leak", "Gauges / readings"];
+$("v-lchips").innerHTML = LABEL_PICKS.map(t => `<button type="button">${t}</button>`).join("");
+function setLabel(text){
+  const id = nPhotos[vIndex]; if (id === undefined) return;
+  text = (text || "").trim().slice(0, 60);
+  if (text) nLabels[id] = text; else delete nLabels[id];
+  const cap = document.querySelector(`#n-photos [data-lbl="${vIndex}"]`);
+  if (cap){ cap.textContent = text || "+ Label"; cap.classList.toggle("empty", !text); }
+  saveDraft();
+}
+$("v-label").addEventListener("input", () => setLabel($("v-label").value));
+$("v-label").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); $("v-label").blur(); } });
+$("v-lchips").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; $("v-label").value = b.textContent; setLabel(b.textContent); });
+function cleanLabels(){ const out = {}; nPhotos.forEach(id => { if (nLabels[id]) out[id] = nLabels[id]; }); return out; }
 function closeViewer(){
   const vid = $("v-vid"); try { vid.pause(); } catch(e){}
   vid.removeAttribute("src"); vid.removeAttribute("poster"); try { vid.load(); } catch(e){}
@@ -1620,6 +1653,86 @@ const ISSUES = [
    causes:["Formicary corrosion in copper evaporator coils","Leaking Schrader cores or caps missing","Rub-outs on vibrating lines","Flare or braze joint failures"],
    effects:["Loss of capacity","Compressor overheating","Refrigerant cost and regulatory issues"],
    checks:["Electronic leak detector or bubble solution at oily spots","Nitrogen pressure test with standing hold","Inspect service valve caps and cores"]},
+  {t:"Outdoor (condenser) fan not running, compressor runs", c:["Cooling","Electrical"],
+   s:["Outdoor fan not spinning while the compressor runs","Very hot air or no air off the top of the unit","Head pressure climbing fast"],
+   causes:["Failed fan side of the dual run capacitor","Seized or burned-out fan motor (bad bearings)","Loose or burned fan wire at the contactor or capacitor","Fan blade jammed by debris or a bent blade"],
+   effects:["Head pressure and amps soar; compressor trips on its overload or high-pressure switch","Overheated compressor and broken-down oil","Short cycling and eventually compressor failure"],
+   checks:["Test the FAN side of the capacitor (µF within its rating)","Spin the blade by hand with power off — it should turn freely","Check for line voltage at the motor while the contactor is pulled in","Compare fan amps with the motor FLA"]},
+  {t:"Compressor overheating / cycling on internal overload", c:["Cooling","Refrigerant","Electrical"],
+   s:["Compressor shuts off, then restarts after a long wait","Shell too hot to touch","Discharge line over about {t:225}"],
+   causes:["Low charge (high superheat, poor cooling of the motor)","Dirty condenser or failed condenser fan (high head)","Low or unbalanced voltage","Weak run capacitor","Non-condensables or a restriction","Leaking compressor valves"],
+   effects:["Oil breaks down and forms acid","Windings weaken and short","Compressor burnout"],
+   checks:["Discharge line temperature about 6 in. from the compressor","Superheat, subcool and head pressure","Voltage under load (within ±10% of nameplate)","Run capacitor µF","Amps compared with RLA"]},
+  {t:"Compressor shorted to ground / low megohm", c:["Electrical","Cooling"],
+   s:["Breaker trips instantly when the compressor starts","Continuity from a compressor terminal to the copper or shell","Megohm readings dropping from visit to visit"],
+   causes:["Breakdown of winding insulation (heat, age)","Acid or moisture in the system","Liquid refrigerant in the shell (low reading on a cold unit)","Burned terminals or a damaged terminal block"],
+   effects:["Tripped breakers and possible fire risk","Compressor replacement needed","A burnout can spread acid through the system"],
+   checks:["Power off; megohm each terminal to ground (log the value)","Ohm C–S, C–R and S–R (S–R = C–S + C–R)","Warm the compressor and retest if the unit sat cold","After a burnout, do an acid test on the oil"]},
+  {t:"Compressor burnout / acid in system", c:["Refrigerant","Electrical"],
+   s:["Burnt, acrid smell when recovering refrigerant","Dark or black oil","Acid test kit turns positive"],
+   causes:["Motor winding failure","Moisture from poor evacuation","Overheating from low charge or high head","Non-condensables or brazing scale"],
+   effects:["A new compressor fails again if the acid isn't cleaned out","Plugged metering devices and driers","Sludge in the lines"],
+   checks:["Test the oil for acid","Install a suction-line drier (burnout type) plus a new liquid-line drier","Replace the metering device or strainer if contaminated","Check pressure drop across the driers; change them until the acid test is clean","Evacuate below 500 microns"]},
+  {t:"Restricted filter drier / liquid line", c:["Refrigerant","Cooling"],
+   s:["Low suction, high superheat, but normal or high subcooling","Temperature drop across the drier","Frost or sweat right after the drier or restriction"],
+   causes:["Drier full of moisture, debris or acid","Kinked or crushed liquid line","Plugged strainer or metering device screen","Brazing scale from joints brazed without nitrogen"],
+   effects:["Starved evaporator and poor cooling","High superheat overheats the compressor","Looks like a low charge, which leads to overcharging"],
+   checks:["Measure the temperature drop across the drier (more than about {d:3} = restricted)","Look along the liquid line for kinks and cold spots","Replace the drier and evacuate properly"]},
+  {t:"TXV hunting / erratic superheat", c:["Refrigerant","Cooling"],
+   s:["Superheat swings high and low while conditions are steady","Suction pressure rises and falls","Occasional frosting of the suction line"],
+   causes:["Loose, uninsulated or badly placed sensing bulb","Oversized TXV","Low load or low airflow","Flash gas from low charge or a liquid-line restriction","Moisture freezing at the valve"],
+   effects:["Floodback when the valve overfeeds","High superheat and poor capacity when it underfeeds","Compressor wear"],
+   checks:["Bulb clamped tight on a horizontal line, 12 o'clock on lines 7/8\" and smaller, and insulated","Airflow and filter","Subcooling (full column of liquid at the TXV)","Watch superheat for 10–15 minutes before adjusting"]},
+  {t:"Low airflow / high static pressure", c:["Airflow","Cooling","Heating"],
+   s:["Weak air at registers","Whistling grilles or noisy blower","Total external static above the rated value (often 0.5 in. WC)","Temperature split in cooling above about {d:22}"],
+   causes:["Dirty or overly restrictive filter (thin high-MERV)","Dirty evaporator coil or blower wheel","Undersized or crushed ducts, closed dampers or registers","Blower on too low a speed tap","Too few return grilles"],
+   effects:["Coil freezing in cooling; high-limit trips in heating","Higher energy use and ECM noise","Shorter equipment life and comfort complaints"],
+   checks:["Measure return and supply static and add them","Pressure drop across the filter and coil","Check the blower speed setting against the blower table","Inspect ducts for disconnections and kinks","Verify CFM against about 400 CFM/ton"]},
+  {t:"Float switch tripped / system shuts off", c:["Drainage","Cooling"],
+   s:["Unit stops cooling; thermostat still calling","Water in the secondary pan","Float switch in the drain line is raised"],
+   causes:["Algae or sludge clogging the drain or trap","Trap too shallow — negative pressure holds water in the pan","No vent, or a vent before the trap","Drain line not sloped (needs at least 1/8\" per foot)","Failed condensate pump"],
+   effects:["No cooling until it's cleared (the switch is doing its job)","Water damage if there's no switch or it's bypassed","Mold growth and rusted pans"],
+   checks:["Clear and flush the drain and trap","Trap depth at least 2× the negative static","Vent after the trap, taller than the pan","Test the pump and its float","Never bypass the float switch"]},
+  {t:"Inducer runs, no ignition (pressure switch open)", c:["Heating","Electrical"],
+   s:["Inducer motor runs but the ignitor never lights","Board flashes a pressure-switch code","Repeated retries then lockout"],
+   causes:["Blocked flue, intake or vent termination (snow, nests, ice)","Water in the pressure-switch hose or a plugged port","Flooded condensate trap in a 90% furnace","Weak inducer motor or cracked inducer housing","Failed pressure switch"],
+   effects:["No heat","Freeze risk to the home in cold weather","Jumping the switch can vent CO into the home"],
+   checks:["Inspect the vent and intake pipes and terminations","Clear the hose and port; drain and clean the trap","Measure draft with a manometer and compare with the switch rating","Check the inducer amps and wheel"]},
+  {t:"Flame rollout switch tripped", c:["Heating"],
+   s:["Burners shut off and the furnace won't relight","Rollout switch open (often needs manual reset)","Scorch marks near the burner box"],
+   causes:["Blocked flue or heat exchanger","Cracked heat exchanger","Overfiring (gas pressure too high or wrong orifices)","Misaligned or dirty burners","Poor draft or not enough combustion air"],
+   effects:["Fire risk and damaged wiring","Carbon monoxide in the home","Repeated no-heat calls"],
+   checks:["Find the cause before resetting","Check manifold pressure against the rating plate","Inspect the heat exchanger and flue","Watch the flame when the blower starts (moving flame = suspect heat exchanger)","CO test after the repair"]},
+  {t:"High CO / poor combustion", c:["Heating"],
+   s:["Flue CO over 400 ppm air-free (furnace/boiler)","CO alarm or occupants with headaches, nausea","Yellow, lazy or lifting flames; soot"],
+   causes:["Gas pressure too high or too low","Dirty or misaligned burners","Not enough combustion air","Blocked or disconnected vent","Cracked heat exchanger","Wrong orifices for the fuel (NG vs LP)"],
+   effects:["Carbon monoxide poisoning risk","Soot buildup and wasted fuel","Heat exchanger damage"],
+   checks:["If ambient CO is 70 ppm or more: everyone out, call 911","Combustion analysis (air-free CO, O2) after 5–10 minutes","Manifold and inlet gas pressure","Clean burners and check combustion air and venting","Inspect the heat exchanger; red-tag if cracked"]},
+  {t:"Heat strips not heating", c:["Heating","Electrical"],
+   s:["Cool air in emergency heat","Heat pump can't keep up in cold weather","Low amps on the heat-kit circuit"],
+   causes:["Burned-open element","Open limit or blown fusible link","Failed sequencer or relay","Tripped heat-kit breaker","No W2/E call from the thermostat"],
+   effects:["No backup heat when it's cold","Frozen pipes in severe weather","Long recovery times"],
+   checks:["Amps per element (about kW × 1000 ÷ volts)","Ohm each element and limit with power off","24 V on W2/E at the air handler","Check the sequencers bring on each stage","Airflow — low airflow trips the limits"]},
+  {t:"Aux / strip heat running too much", c:["Heating","Electrical"],
+   s:["High electric bills in winter","\"Aux heat\" showing on mild days","Supply air very hot even when it's not very cold outside"],
+   causes:["Aux lockout not set (or set too high)","Large setback recovery triggers strips","Heat pump low on charge or not heating (strips cover for it)","Stuck reversing valve or defrost problem","Thermostat set up for the wrong system type"],
+   effects:["Big energy bills","The heat pump problem goes unnoticed","Extra wear on sequencers and elements"],
+   checks:["Is the compressor running and heating? (check SC/SH or heat-mode chart)","Set the aux lockout near the balance point","Reduce setbacks or use smart recovery","Check the defrost and reversing valve operation","Thermostat installer settings (heat pump type, O/B)"]},
+  {t:"Reversing valve stuck or leaking", c:["Heating","Cooling","Refrigerant"],
+   s:["Cools in heat mode or heats in cool mode","Poor capacity in both modes","Whooshing sound through the valve"],
+   causes:["No 24 V to the solenoid (thermostat O/B setting or wiring)","Open solenoid coil","Sludge or debris sticking the slide","Internal leak-by (valve stuck mid-way)"],
+   effects:["No heat or no cooling","Compressor overheats from hot gas leaking by","High energy use"],
+   checks:["24 V at the coil when it should be energized, and the coil is magnetic","Compare temperatures on the valve's lines","Thermostat O vs B setting","Try shifting it under a high pressure difference before replacing"]},
+  {t:"Low-voltage fuse keeps blowing", c:["Electrical"],
+   s:["3–5 A board fuse blows right away or when a certain mode is called","Blank thermostat after a call for cooling"],
+   causes:["Thermostat wire rubbing the condenser cabinet or chewed by lawn equipment or pests","Shorted contactor, valve or relay coil","Miswired thermostat (for example, a C wire landed on R)","Water shorting the float switch or wiring"],
+   effects:["No heat or cooling","Transformer damage if an oversized fuse is used"],
+   checks:["Note which call blows it (Y, W, G or O)","Ohm each control wire to C and to ground with things disconnected","Inspect the outdoor wire run","Ohm the contactor and valve coils"]},
+  {t:"Mini-split error code / not cooling", c:["Cooling","Refrigerant","Electrical"],
+   s:["Flashing lights or error code on the indoor head","Indoor fan runs but outdoor unit won't start","Weak cooling from one head"],
+   causes:["Communication wiring fault between indoor and outdoor units","Leaking flare connection (low charge)","Dirty filter, coil or blower wheel","Failed sensor (thermistor)","Board or inverter fault, or power supply problem"],
+   effects:["No cooling or heating","Compressor damage from running low on charge","Mold and odor from a dirty blower wheel"],
+   checks:["Look up the error code in the service manual","Check the communication wire voltage and connections","Leak-check each flare (charge by weight only)","Clean the filters, coil and blower wheel","Ohm the thermistors against the manufacturer's chart"]},
 ];
 
 function arrow(v){
@@ -1986,6 +2099,48 @@ const KB = [
   {k: ["flame sensor", "clean flame sensor", "flame rod"], t: "Flame sensor", a: "Proves flame to the control board. If the furnace lights then shuts off after a few seconds, clean the rod with fine abrasive pad (not sandpaper), check the ground, and measure microamps against the board spec."},
   {k: ["capacitor", "cap test", "microfarad", "µf", "uf"], t: "Testing a run capacitor", a: "Kill power and discharge it. Measure µF across C–HERM and C–FAN; it should be within the rating on the label (usually ±5% or ±6%). Bulging tops or leaking oil mean replace it."},
   {k: ["contactor"], t: "Contactor", a: "The relay that switches line voltage to the compressor and fan when it gets 24 V on Y. Check for 24 V at the coil, and pitted or burned contacts; a voltage drop across closed contacts means it's worn."},
+  {"p": 1, "k": ["manifold pressure", "gas pressure", "inlet pressure", "propane pressure", "lp pressure", "natural gas pressure", "gas valve pressure", "manometer"], "t": "Gas pressures (furnace)", "a": "Always set to the <b>rating plate</b>, measured with a manometer at the gas valve taps. Typical: <b>natural gas</b> manifold about <b>3.5 in. WC</b> on high fire, with inlet (supply) around 7 in. WC. <b>Propane (LP)</b> manifold about <b>10–11 in. WC</b>, inlet about 11–13 in. WC and never over 14 in. WC. Two-stage valves have a separate, lower low-fire setting. Check inlet pressure with the other gas appliances running, and verify the conversion kit/orifices match the fuel."},
+  {"p": 1, "k": ["carbon monoxide", " co ", "co reading", "co level", "combustion analysis", "flue gas", "air free", "air-free", "co limit"], "t": "Carbon monoxide & combustion", "a": "Read CO <b>air-free</b> in the flue after the burner stabilizes (about 5–10 minutes). ANSI/BPI-1200 action levels: central furnaces and boilers <b>400 ppm air-free</b>, water heaters and room heaters 200 ppm. Ambient air: 9–35 ppm — tell the customer and ventilate; 36–69 ppm — elevated, open up and shut off sources; <b>70 ppm or more — everyone out and call 911</b>. High CO usually means incorrect gas pressure, a dirty/misaligned burner, too little combustion air, or a blocked vent or heat exchanger."},
+  {"p": 1, "k": ["sequence of operation", "furnace sequence", "startup sequence", "how does a furnace work"], "t": "Gas furnace sequence of operation", "a": "<ol><li>Thermostat calls on W.</li><li>Board checks the limits, then runs the <b>inducer</b>.</li><li><b>Pressure switch</b> closes (proves draft).</li><li>Hot-surface ignitor heats (or spark tries).</li><li><b>Gas valve</b> opens and burners light.</li><li><b>Flame sensor</b> proves flame within a few seconds.</li><li>Blower starts after its on-delay.</li><li>When the call ends, gas shuts off, the inducer post-purges and the blower runs its off-delay.</li></ol>Note where it stops — that tells you which part to test. Read the board's LED flash code first."},
+  {"p": 1, "k": ["pressure switch", "inducer", "draft inducer", "vent motor"], "t": "Inducer & pressure switch", "a": "The inducer pulls combustion gases through the heat exchanger, and the pressure switch proves that draft before ignition. If the inducer runs but the switch won't close: check the hose and port for water or blockage, a blocked flue or intake (snow, nests), a flooded condensate trap on 90% furnaces, a weak inducer, or a bad switch — compare the manometer reading to the switch's rating. <b>Never jumper it</b> except for a brief test with you watching."},
+  {"p": 1, "k": ["rollout", "roll out", "rollout switch"], "t": "Flame rollout switch", "a": "Opens when flame comes out of the burner area. It's a safety — usually manual reset. If it tripped, find out why before resetting: blocked flue or heat exchanger, cracked heat exchanger, poor draft, overfiring, or a misaligned burner. Do a combustion/CO check after the repair. Never bypass it."},
+  {"p": 1, "k": ["high limit", "limit switch", "limit trip"], "t": "High limit switch", "a": "Opens if the heat exchanger gets too hot and shuts off the gas. It's almost always an <b>airflow</b> problem: dirty filter, closed registers, dirty blower wheel or coil, blower on the wrong speed, or undersized ducts. Check the temperature rise and static pressure against the rating plate. Also check for overfiring (gas pressure)."},
+  {"p": 1, "k": ["hot surface", "ignitor", "igniter"], "t": "Hot-surface ignitor", "a": "Should glow bright orange within the warm-up time. Check that it gets voltage (usually 120 V; some are 80 V) during the ignition step, then ohm it cold against the manufacturer's range. Don't touch the element (skin oil shortens its life) and handle carefully — it's brittle. Silicon nitride ignitors last longer than silicon carbide."},
+  {"k": ["temperature rise", "temp rise", "heat rise"], "t": "Furnace temperature rise", "a": "Supply air temp − return air temp in heating, after about 10 minutes. It must be inside the range on the rating plate (often around {d:30-60} or {d:35-65}). Too high = low airflow or overfiring; too low = too much airflow or underfiring. To get CFM from it, ask me \"80000 btu rise 50\"."},
+  {"p": 1, "k": ["heat exchanger"], "t": "Heat exchanger inspection", "a": "Look for cracks, holes or rust-through with a light and camera, especially at bends and seams. Warning signs: flame that moves or changes when the blower starts, soot, rollout trips, and rising flue CO. A cracked heat exchanger can leak CO into the home — red-tag it, shut it off and explain the risk to the customer."},
+  {"p": 1, "k": ["brazing", "braze", "nitrogen purge", "flow nitrogen", "flowing nitrogen", "sweat a joint"], "t": "Brazing with nitrogen", "a": "Flow dry nitrogen through the pipe while brazing so copper doesn't form oxide scale inside (it forms quickly once copper is above about {t:500}). Remove Schrader cores, purge the air out first at a higher flow, then braze at about <b>2–5 SCFH</b> — just a whisper out the far end. Keep flowing until the joint cools. Use 15% silver (Sil-Fos) on copper-to-copper without flux; use a high-silver rod and flux on brass or steel. Wrap valves with a wet rag or heat paste."},
+  {"p": 1, "k": ["recover", "recovery", "epa 608", "section 608", "recovery tank", "recovery cylinder", "venting refrigerant"], "t": "Refrigerant recovery (EPA 608)", "a": "Never vent refrigerant. Required recovery levels with post-1993 equipment: high-pressure systems under 200 lb — <b>0 psig</b>; 200 lb or more — <b>10 in. Hg</b> vacuum. Small appliances (5 lb or less) — 90% recovered (80% if the compressor is dead) or 4 in. Hg. Fill recovery cylinders to <b>80%</b> max (weigh them), use A2L-rated machines and tanks for A2L refrigerants, and never mix refrigerants in one cylinder. Recovery goes faster with liquid first, then vapor."},
+  {"p": 1, "k": ["phase out", "phase-out", "phased out", "phasing out", "being phased", "phasedown", "phase down", "aim act", "410a ban", "410a phase", "refrigerant transition", "install 410a", "install r-410a", "install r410a", "use 410a", "use r-410a", "410a still"], "t": "R-410A phase-down (AIM Act)", "a": "Under the AIM Act, new home AC and heat pump systems built from Jan 1, 2025 must use a refrigerant with GWP under 700 (R-454B or R-32). In 2026 EPA amended the rule (effective July 27, 2026): R-410A systems made or imported <b>before</b> Jan 1, 2025 can still be installed until that stock runs out. R-410A is still legal to use for servicing existing units, but production cuts mean higher prices — fix leaks instead of topping off. Never mix R-410A and A2L refrigerants or swap one into the other's equipment."},
+  {"p": 1, "k": ["cylinder color", "tank color", "jug color", "left hand thread", "left-hand thread"], "t": "Refrigerant cylinder colors", "a": "Since 2020 new refrigerant cylinders are all a light green-gray; read the label, not the paint. Flammable refrigerants (including A2Ls like R-454B and R-32) have a <b>red band or top</b>, and A2L cylinders use <b>left-hand threads</b>, so you need the right adapter. Recovery cylinders are gray with a yellow top."},
+  {"p": 1, "k": ["line set", "lineset", "line length", "additional charge", "extra charge", "long line", "oil trap", "suction riser", "oil return"], "t": "Line sets & charge adjustment", "a": "Factory charge covers a set line length (often 15 ft — check the manual). For longer runs add charge per foot of <b>liquid line</b> per the manual (for 3/8\" R-410A it's often around 0.6 oz/ft). Stay within the maximum length and lift, size the suction line per the chart so oil returns, and follow the manual on traps and long-line kits. Insulate the suction line fully and keep line sets from sagging."},
+  {"p": 1, "k": ["txv bulb", "sensing bulb", "bulb placement", "bulb location", "where to put the bulb"], "t": "TXV sensing bulb placement", "a": "Mount it on a <b>horizontal</b> section of the suction line near the evaporator outlet, before any trap, with the manufacturer's strap tight and full metal contact. On lines 7/8\" and smaller put it on top (around 12 o'clock); on larger lines at 4 or 8 o'clock. Insulate it so it reads the pipe, not the air. A loose or uninsulated bulb causes hunting, floodback or high superheat."},
+  {"p": 1, "k": ["txv hunting", "hunting"], "t": "TXV hunting", "a": "Superheat swinging up and down (for example 3° to 20°) while conditions are steady. Common causes: loose or uninsulated bulb, bulb in a bad spot, oversized valve, low load or low airflow, or flash gas in the liquid line from a low charge or restriction. Fix the bulb and airflow first."},
+  {"p": 1, "k": ["filter drier", "filter dryer", "liquid line drier", "drier"], "t": "Filter drier", "a": "Install a new liquid-line drier every time the system is opened (use the right type for the refrigerant). A temperature drop of more than about {d:3} across it means it's restricted. Use a suction-line drier after a burnout, then pull it once the acid test is clean."},
+  {"p": 1, "k": ["pump down", "pumpdown"], "t": "Pumping down", "a": "With the unit running in cooling, front-seat the liquid service valve and watch suction pressure. When it falls to just above 0 psig, front-seat the suction valve and shut the unit off. Don't pull the system into a vacuum (it can draw in air and damage scroll compressors). Only pump down if the condenser can hold the whole charge."},
+  {"p": 1, "k": ["discharge temp", "discharge line temp", "discharge temperature"], "t": "Discharge line temperature", "a": "Measure about 6 inches from the compressor. Try to keep it under about <b>{t:225}</b>; above that, the oil starts breaking down. High discharge temperature points to high superheat (low charge, restriction), high head pressure, non-condensables, or a leaking compressor valve."},
+  {"p": 1, "k": ["poe oil", "pve oil", "mineral oil", "oil type", "compressor oil"], "t": "Compressor oils", "a": "R-410A, R-454B and R-32 use <b>POE</b> (or PVE) oil; R-22 used mineral oil. POE absorbs moisture fast, so keep systems and oil containers sealed, evacuate well, and always change the drier. Don't mix oils unless the manufacturer allows it."},
+  {"p": 1, "k": ["vacuum pump oil", "pump oil"], "t": "Vacuum pump oil", "a": "Change it often — before a deep evacuation and after any wet or burned-out system. Milky or dark oil can't pull a good vacuum. Warm the pump up before draining, and keep it capped when stored."},
+  {"p": 1, "k": ["megohm", "megger", "insulation resistance", "meg test", "winding to ground", "grounded compressor", "shorted to ground"], "t": "Megohm (insulation) test", "a": "With power off and wires removed, test each compressor terminal to a clean spot on the copper or shell. Trane's minimum for hermetic motors is <b>1,000 ohms per volt</b> (a 460 V motor needs at least 460,000 ohms), but a healthy motor usually reads far higher. What matters most is the <b>trend</b>: log it each visit, and a steady drop means the windings or oil are breaking down. Liquid refrigerant in the shell lowers the reading — test warm. Any direct continuity to the shell = grounded compressor."},
+  {"p": 1, "k": ["winding resistance", "ohm out a compressor", "ohm the compressor", "ohm a compressor", "compressor windings", "common start run", "c s r"], "t": "Compressor winding check", "a": "Power off, wires off. On single-phase: start-to-run (S–R) should equal common-to-start + common-to-run, and C–S is larger than C–R. Infinite on any pair = open winding (or an open internal overload — let a hot compressor cool for an hour and recheck). Near zero = shorted. On three-phase, the three readings should match within about 5–10%. Then check each terminal to ground."},
+  {"p": 1, "k": [" rla ", " lra ", " fla ", " mca ", "mocp", "max fuse", "nameplate amps", "hacr"], "t": "Nameplate amps (RLA, LRA, FLA, MCA)", "a": "<b>RLA</b> — compressor rated load amps: what it should draw running hard. <b>LRA</b> — locked-rotor amps: the startup surge (or what it pulls stuck). <b>FLA</b> — full-load amps for fan and blower motors. <b>MCA</b> — minimum circuit ampacity, used to size the wire. <b>Max fuse / HACR</b> — the largest breaker allowed; never upsize it to stop trips. A compressor near RLA at mild conditions is working too hard (dirty coil, overcharge, bad valves)."},
+  {"p": 1, "k": ["hard start", "start capacitor", "start kit", "start assist"], "t": "Hard-start kit", "a": "A start capacitor and relay (or PTC) that gives the compressor extra torque for a second at startup. It can help a compressor that struggles against unequal pressures or low voltage, but it doesn't fix a failing compressor. Check the run capacitor, contactor and supply voltage first. It's not recommended on some scrolls or inverter units — follow the manufacturer."},
+  {"p": 1, "k": ["thermostat wir", "thermostat wire", "wire color", "wiring color", "c wire", "common wire", "o/b", "rc and rh", "rh and rc", "y2 ", "w2 "], "t": "Thermostat terminals", "a": "<b>R</b> 24 V hot (Rh heat / Rc cool) · <b>C</b> common · <b>Y</b> compressor (Y2 second stage) · <b>G</b> indoor fan · <b>W</b> heat (W2 second stage / aux) · <b>O</b> reversing valve energized in <b>cool</b> (most brands) · <b>B</b> reversing valve energized in <b>heat</b> (some Rheem/Ruud) · <b>E</b> emergency heat · <b>L</b> fault. Colors are only convention (red R, white W, yellow Y, green G, blue/black C) — go by the terminal letter. Photograph and label before you disconnect, and verify 24 V between R and C."},
+  {"p": 1, "k": ["transformer", "low voltage fuse", "3 amp fuse", "24v fuse", "24 v fuse", " va "], "t": "24 V transformer & fuse", "a": "Check for 24–28 V across R and C, and 120/240 V on the primary. A blown 3–5 A board fuse means a short in the low-voltage wiring — most often the outdoor thermostat wire rubbing the cabinet or chewed, or a shorted contactor/valve coil. Find the short before replacing the fuse. Use a transformer with at least the same VA rating."},
+  {"p": 1, "k": ["heat strip", "sequencer", "electric heat", "heat kit", "strip heat"], "t": "Electric heat strips", "a": "Each element draws roughly kW × 1000 ÷ volts (5 kW at 240 V is about 20.8 A). Power off and ohm each element — open means burned out. Check the sequencers/relays bring on each stage, and check the limits and fusible links. If strips trip on limit, check airflow."},
+  {"p": 1, "k": ["crankcase heater"], "t": "Crankcase heater", "a": "Keeps the compressor oil warm so refrigerant doesn't settle in it during the off-cycle, which prevents a slugged, foamy start. Tell the customer to restore power to the outdoor unit several hours (often 12–24) before starting it after a long shutdown in cold weather. Check it with an amp clamp or ohm test."},
+  {"p": 1, "k": ["reversing valve", "4 way valve", "four way valve"], "t": "Reversing valve", "a": "On most brands it's energized in <b>cooling</b> (O terminal); some use B (energized in heat). To test: check for 24 V at the solenoid coil when it should shift and that the coil is magnetic. Feel the lines: the big line to the indoor coil should be cold in cooling and hot in heating. A valve stuck mid-way gives poor capacity in both modes. Sometimes shifting under high pressure difference frees a sticky valve."},
+  {"p": 1, "k": ["defrost board", "defrost cycle", "defrost sensor", "defrost timer", "demand defrost", "how does defrost"], "t": "Heat pump defrost", "a": "<b>Time/temperature:</b> once the coil sensor closes around {t:32}, the board counts run time (30, 60 or 90 minutes) and then defrosts. <b>Demand defrost:</b> it compares the coil and outdoor air temperatures and defrosts when the difference gets too large. During defrost the reversing valve shifts to cooling, the outdoor fan stops and aux heat comes on. It ends when the coil warms (often about {t:65}) or after a maximum time (usually about 10 minutes). To test, use the board's test/speed-up pins, check 24 V on O and W, and ohm the sensor against its chart."},
+  {"p": 1, "k": ["balance point", "aux heat", "auxiliary heat", "emergency heat", "em heat", "aux lockout", "compressor lockout", "dual fuel"], "t": "Balance point & aux heat", "a": "The <b>balance point</b> is the outdoor temperature where the heat pump's output equals the home's heat loss; below it you need backup heat. <b>Aux heat</b> comes on automatically (second stage or defrost). <b>Emergency heat</b> is manual: backup only, compressor off. Set the aux lockout (outdoor temperature above which strips can't run) near the balance point so strips don't run on mild days. For dual-fuel, set the compressor lockout where the furnace becomes cheaper than the heat pump."},
+  {"p": 1, "k": ["charge in heat", "charging in heat", "heat mode charge", "winter charg", "charge a heat pump"], "t": "Charging a heat pump in heat mode", "a": "The most reliable way is to <b>recover and weigh in</b> the nameplate charge (plus line-set adjustment). Many manufacturers publish heat-mode charts. If not, verify the charge in cooling when the weather allows. Subcooling in heat mode is less reliable because the indoor coil and line lengths vary."},
+  {"p": 1, "k": ["mini split", "minisplit", "mini-split", "ductless", "inverter"], "t": "Mini-splits & inverter units", "a": "Charge inverter mini-splits <b>by weight</b> — pressures and superheat move with compressor speed. Use the unit's test or charge mode if you need readings. Flare connections: use the right flare tool, a drop of the correct oil on the flare's back side (not the face), and torque to spec. Pressure test with nitrogen, then evacuate below 500 microns. Error codes on the indoor or outdoor board point you to the fault. Clean filters, coils and the blower wheel — dirty wheels cut airflow."},
+  {"p": 1, "k": ["flare", "flaring", "flare nut", "flare torque"], "t": "Flare connections", "a": "Cut square, deburr pointing down so chips fall out, and slide the nut on <b>before</b> flaring. Use an eccentric flare tool for the right size and shape. Put a drop of refrigerant oil on the back of the flare (not the sealing face) and torque to the manufacturer's spec with a torque wrench. Pressure test with nitrogen and leak check every flare before evacuating."},
+  {"p": 1, "k": ["merv", "filter rating", "which filter", "filter efficiency"], "t": "Filters & MERV", "a": "MERV 1–4: catches only coarse debris. MERV 6–8: dust, pollen, lint (MERV 8 is a common default). MERV 11: pet dander and finer dust. MERV 13+: at least half of 0.3–1 micron particles, including smoke and bacteria. Higher MERV means more resistance, so check the filter's pressure drop. Use a larger or deeper (4–5\") filter instead of a thin high-MERV one, and change it before it loads up."},
+  {"p": 1, "k": ["measure static", "static probe", "check static", "taking static", "take static"], "t": "Measuring static pressure", "a": "Use a manometer with static tips. Measure <b>return</b> static between the filter and blower (or before and after the filter to see its drop) and <b>supply</b> static after the coil. Add the two readings, ignoring the minus sign, to get total external static. Compare it with the rated static on the blower table (often 0.5 in. WC) to read the CFM. A clean filter usually drops about 0.1 in. WC — check its rated initial resistance."},
+  {"p": 1, "k": ["ecm", "psc", "x13", "constant torque", "variable speed motor", "blower motor type"], "t": "Blower motors: PSC vs ECM", "a": "<b>PSC</b> — capacitor motor with fixed speed taps; airflow drops a lot as static rises. <b>Constant-torque ECM (X13 type)</b> — about 80% efficient with 24 V speed taps; it holds torque, so CFM still falls as static rises. <b>Variable-speed ECM</b> — programmed for constant airflow; it ramps up as static rises (holding CFM but using more watts and making more noise). With an ECM, check high-voltage power and the 24 V tap or signal before blaming the motor. Many ECMs have a separate module that can be replaced."},
+  {"p": 1, "k": ["zoning", "zone damper", "bypass damper", "zone board", "zone system"], "t": "Zoning", "a": "Dampers and a zone board send air to the zones that call. The big risk is too little airflow when one small zone calls: use a variable-speed or staged system, size each zone's ducts for the minimum airflow, and avoid dumping air through a bypass. Test each damper by calling zones one at a time and confirm it moves fully."},
+  {"p": 1, "k": ["condensate trap", "drain trap", "trap depth", "drain slope", "float switch", "secondary pan", "safety switch", "condensate pump"], "t": "Condensate drains & traps", "a": "Slope the drain at least 1/8\" per foot (1/4\" is better). Coils on the blower's suction side need a <b>trap</b>. Make the trap depth at least <b>twice the negative static</b> in inches (0.5 in. WC → 1\" trap), with the outlet lower than the inlet. Put an open vent <b>after</b> the trap, taller than the pan. Install a float switch in the primary drain or secondary pan that shuts the system off (wire several in series). Flush the drain and treat the pan at each maintenance visit."},
+  {"p": 1, "k": ["coil clean", "clean the coil", "clean a coil", "coil cleaning", "clean coils", "clean the condenser"], "t": "Cleaning coils", "a": "Power off. <b>Condenser:</b> rinse from the inside out with low pressure, using a coil cleaner rated for aluminum (non-acid for home units), and straighten fins with a fin comb. <b>Evaporator:</b> use a no-rinse or foaming indoor cleaner, and clear the pan and drain afterward. Check that airflow, the temperature split and head pressure improve."},
+  {"p": 1, "k": ["low ambient", "fan cycling", "cooling in winter"], "t": "Low-ambient cooling", "a": "Standard condensers aren't meant to cool below about {t:55}-{t:65} outdoors. Head pressure drops, the metering device underfeeds and the coil can freeze. For equipment that must cool year-round, use the manufacturer's low-ambient kit (fan cycling or speed control), plus a crankcase heater and freeze protection."}
 ];
 
 /* ---------- intents ---------- */
@@ -2150,9 +2305,10 @@ function issueAnswer(q){
     act: {label: "Open in Issues", fn: () => { showTab("issues"); save(); $("i-search").value = it.t.split(" (")[0]; renderIssues(); const d = document.querySelector("#i-list details"); if (d) d.open = true; window.scrollTo(0, 0); }},
     chips: alt.map(t => t).concat(["How can I help a unit run better?"])};
 }
-function kbAnswer(q){
+function kbAnswer(q, priorityOnly){
   let best = null, bs = 0;
-  for (const e of KB) for (const k of e.k) if (q.includes(k) && k.length > bs){ best = e; bs = k.length; }
+  const qq = " " + q.replace(/[?!.,;:()"]/g, " ").replace(/\s+/g, " ") + " ";
+  for (const e of KB){ if (priorityOnly && !e.p) continue; for (const k of e.k) if (qq.includes(k) && k.length > bs){ best = e; bs = k.length; } }
   return best ? `${b(best.t)}<br>${uT(best.a)}` : null;
 }
 /* ---------- Gary: improvement advice ("how do I make this unit run better?") ---------- */
@@ -2434,7 +2590,7 @@ function stopSpeaking(){
 const HELP = `I work completely offline. Try asking:<ul>
 <li>"R-410A at 40°" or "454B 300 psi"</li><li>"Superheat 410A 118 psi 52°"</li><li>"Subcool R-22 260 psi 105°"</li>
 <li>"Target superheat WB 63 ODB 85"</li><li>"CFM for 3 tons" or "80000 btu rise 50"</li><li>"Dew point 75°F 50%"</li><li>"How many tons for 1800 sq ft?"</li>
-<li>"High head low suction"</li><li>"Why is my coil freezing?"</li><li>"How can I help a unit run better?" or "Make it last longer"</li><li>"Check my readings" (reviews what's in the calculators)</li><li>"What is glide?" or "How do I evacuate?"</li><li>"75 F to C"</li></ul>
+<li>"High head low suction"</li><li>"Why is my coil freezing?"</li><li>"How can I help a unit run better?" or "Make it last longer"</li><li>"Check my readings" (reviews what's in the calculators)</li><li>"What is glide?" or "How do I evacuate?"</li><li>"Gas pressure for propane", "CO limits", "Defrost board", "Thermostat wire colors", "Megger a compressor", "Can I still install 410A?"</li><li>"75 F to C"</li></ul>
 After any reading, ask ${b("\"What should I do?\"")} for next steps.`;
 
 function answer(raw){
@@ -2459,6 +2615,7 @@ function answer(raw){
   if ((ref || /p-?t|pressure|temp|saturat|psi|°|deg/.test(q)) && (pressures(q).length || temps(q).length || /\bat\s+-?\d/.test(q)) && (r = ptAnswer(q, cur)))
     return {html: r, act: {label: `Open ${refName(cur)} P-T chart`, fn: () => { S.ptref = cur; document.querySelector(`#p-ref [data-v="${cur}"]`).click(); showTab("pt"); save(); window.scrollTo(0, 0); }}};
   if (/how (do|to|should)|what (is|are|does)|what's|define|meaning|explain|tell me about/.test(q) && (r = kbAnswer(q))) return {html: r};
+  if ((r = kbAnswer(q, true))) return {html: r};
   if (IMP_WORDS.test(q)) return improveAnswer(q);
   if ((r = issueAnswer(q))) return r;
   if ((r = kbAnswer(q))) return {html: r};
