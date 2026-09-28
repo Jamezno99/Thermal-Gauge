@@ -1,6 +1,6 @@
 /* Thermal Gauge service worker — makes the app work offline after the first visit. */
-const CACHE = "thermal-gauge-1.37";
-const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
+const CACHE = "thermal-gauge-1.40";
+const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./icon-aurora-180.png", "./icon-aurora-192.png"];
 const OCR_CACHE = "thermal-gauge-ocr-5.1.1";   // kept across app updates (13 MB, only changes if the reader changes)
 const OCR_FILES = ["./ocr/core-simd.js", "./ocr/core.js", "./ocr/eng.js"];   // photo reader: cached in the background so it works offline
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).then(() => { caches.open(OCR_CACHE).then(o => o.match(OCR_FILES[2]).then(h => h || o.addAll(OCR_FILES))).catch(() => {}); })).then(() => self.skipWaiting())); });
