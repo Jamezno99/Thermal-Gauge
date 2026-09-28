@@ -772,7 +772,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.40 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.41 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -3992,14 +3992,15 @@ function applyTheme(){
   appIcon(S.aurora ? "aurora" : "default");
 }
 /* Home-screen icon follows ONLY the Northern Lights theme (green & blue shield); every other theme keeps the normal shield.
-   Android app: the native shell switches which launcher entry is enabled (only when it actually changes).
+   Android app: the native shell remembers the wanted icon and switches launcher entries when the app goes to the background
+   (onStop), only if it actually differs — doing it while the app is on screen makes Android close the app.
    Web app: the browser-tab icon switches; an icon already added to an iPhone Home Screen can't be changed by a web page. */
 function appIcon(mode){
   let last = null; try { last = localStorage.getItem("tg_icon"); } catch(e){}
   const inApp = /\bwv\b/.test(navigator.userAgent) && location.protocol === "file:";
-  if (inApp && last !== mode && !(last === null && mode === "default")){
+  if (inApp){                     // the app only changes the launcher icon after you leave it (switching while open would close it)
     let ok = false; try { ok = window.prompt("tg:icon", mode) !== null; } catch(e){}
-    if (ok && last !== null) toast(mode === "aurora" ? "App icon: Northern Lights shield" : "App icon: normal shield");
+    if (ok && last !== null && last !== mode) toast(mode === "aurora" ? "App icon switches to the Northern Lights shield when you leave the app" : "App icon switches back to the normal shield when you leave the app");
   }
   try { localStorage.setItem("tg_icon", mode); } catch(e){}
   document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach(l => {
