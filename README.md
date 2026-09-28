@@ -1,4 +1,4 @@
-# Thermal Gauge (web app) — v1.34
+# Thermal Gauge (web app) — v1.37
 
 Offline HVAC field calculator: superheat & subcool (TXV / piston), P-T chart for R-410A, R-22, R-454B,
 R-32, R-134a, R-404A and R-407C, airflow, psychrometrics, load calculator, maintenance checklist,
