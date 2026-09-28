@@ -346,6 +346,47 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 .vlabel .chips::-webkit-scrollbar{display:none}
 .vlabel .chips button{flex:none;background:#1f1f1f;border-color:#333;color:#fff;font-size:13px;padding:6px 11px}
 .nitem .lbls{font-size:12px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Gary chat history */
+.gtbtns{display:flex;gap:8px}
+#v-gary.histopen .glog,#v-gary.histopen .gdock{display:none}
+.ghhead{display:flex;justify-content:space-between;align-items:center;margin:0 2px 10px;gap:10px}
+.ghhead .ghost{width:auto;padding:7px 14px;font-size:14px}
+#g-hcount{font-size:13px;color:var(--muted);font-weight:700}
+.ghitem{display:flex;align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;overflow:hidden}
+.ghitem.cur{border-color:var(--accent)}
+.ghopen{flex:1;min-width:0;text-align:left;background:transparent;border:0;color:var(--ink);font:inherit;padding:11px 13px}
+.ghopen .ght{display:block;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghopen .ghs{display:block;font-size:12.5px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghopen .ghcur{color:var(--accent);font-weight:800}
+.ghdel{flex:none;width:46px;background:transparent;border:0;border-left:1px solid var(--line);color:var(--muted);font-size:22px;line-height:1}
+.ghempty{text-align:center;color:var(--muted);padding:26px 10px;font-size:14px}
+.ghclear{display:block;margin:14px auto 0;background:transparent;border:0;color:var(--muted);font:inherit;font-size:13px;text-decoration:underline}
+/* Gary photo reading */
+.gimg{display:block;max-width:220px;max-height:260px;border-radius:12px}
+.gmsg.me .gbub:has(.gimg){padding:4px;background:var(--card);border:1px solid var(--accent)}
+.gphoto{min-width:180px}
+.gspin{display:inline-flex;align-items:center;gap:8px;font-size:14px}
+.gspin::before{content:"";width:16px;height:16px;border-radius:50%;border:2.5px solid currentColor;border-right-color:transparent;animation:gspin .8s linear infinite;flex:none}
+@keyframes gspin{to{transform:rotate(360deg)}}
+.gtbl{width:100%;border-collapse:collapse;margin:6px 0 2px;font-size:14px}
+.gtbl th{text-align:left;vertical-align:top;color:var(--muted);font-weight:700;padding:5px 8px 5px 0;white-space:nowrap;width:1%}
+.gtbl td{padding:5px 0;border-top:1px solid var(--line);vertical-align:top}
+.gtbl tr:first-child td{border-top:0}
+.gtbl tr+tr th{border-top:1px solid var(--line)}
+.gdim{color:var(--muted);font-size:12.5px}
+.graw{margin-top:8px;font-size:12.5px}
+.graw summary{color:var(--muted);font-weight:700}
+.graw pre{white-space:pre-wrap;word-break:break-word;font-size:11.5px;max-height:220px;overflow:auto;background:var(--chip);border-radius:8px;padding:8px;margin:6px 0 0}
+.gform{display:flex;flex-direction:column;gap:7px;min-width:250px}
+.gform p{margin:0 0 2px}
+.grow2{display:flex;gap:8px}.grow2 .grf{flex:1;min-width:0}
+.grf{display:flex;align-items:center;gap:8px;font-size:13.5px}
+.grf span{flex:1;min-width:0}
+.grf input{width:86px;flex:none;font-size:16px;padding:7px 9px;border-radius:9px}
+.grf select{width:100%;font-size:15px;padding:7px 9px;border-radius:9px}
+.grow2 .grf{flex-direction:column;align-items:stretch;gap:3px}
+.grf em{font-style:normal;color:var(--muted);width:30px;flex:none;font-size:12.5px}
+.gsend{align-self:flex-start;margin-top:4px}
 /* web / iPhone */
 .kval{font-size:16px}
 header{padding-top:max(10px, env(safe-area-inset-top))}
@@ -624,7 +665,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.31 (web) · Field reference only. Always follow the equipment manufacturer's instructions.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.34 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -723,7 +764,12 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
 
 <!-- ================= ASK GARY ================= -->
 <section class="view" id="v-gary">
-  <div class="gtop"><span class="gbadge">Offline</span><button class="ghost" id="g-clear" type="button">New chat</button></div>
+  <div class="gtop"><span class="gbadge">Offline</span><div class="gtbtns"><button class="ghost" id="g-histbtn" type="button">History</button><button class="ghost" id="g-clear" type="button">New chat</button></div></div>
+  <div id="g-hist" class="ghist hide">
+    <div class="ghhead"><button class="ghost" id="g-histback" type="button">← Back to chat</button><span id="g-hcount"></span></div>
+    <p class="note" style="margin:0 0 10px">Your last 15 chats are saved on this phone. Tap one to reopen it and keep going. Starting a 16th chat removes the one you used longest ago.</p>
+    <div id="g-hlist"></div>
+  </div>
   <div id="g-log" class="glog" aria-live="polite"></div>
   <div class="gdock">
     <div id="g-sugg" class="gsugg">
@@ -733,6 +779,8 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
       <button type="button">Dew point 75°F 50%</button><button type="button">How do I evacuate?</button>
     </div>
     <form id="g-form" class="gbar" autocomplete="off">
+      <button type="button" id="g-cam" class="gmic" aria-label="Read a photo"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.6"/></svg></button>
+      <input type="file" id="g-file" accept="image/*" class="hide">
       <input id="g-in" placeholder="Ask Gary…" enterkeyhint="send" autocapitalize="sentences">
       <button type="button" id="g-mic" class="gmic hide" aria-label="Ask by voice"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8.5 21h7"/></svg></button>
       <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg></button>
@@ -1362,6 +1410,7 @@ window.addEventListener("popstate", () => {
   if (!$("viewer").classList.contains("hide")){        // back closes the photo viewer first
     closeViewer(); try { history.pushState({ed: 1}, ""); } catch(e){} return;
   }
+  if (typeof histOpen === "function" && histOpen()){ closeHist(true); return; }   // back closes Gary's chat history
   if (!$("n-edit").classList.contains("hide")) closeNote(true);
 });
 /* Draft autosave so an in-progress note survives the app being closed */
@@ -2493,6 +2542,7 @@ function wordsToNumber(ws){
   return (neg ? "-" : "") + v + (dec ? "." + dec : "");
 }
 function normalizeSpoken(q){
+  q = q.replace(/\ba hundred\b/g, "one hundred");                                  // "a hundred fifteen" -> "one hundred fifteen"
   // refrigerant names said out loud: "r four ten a", "four fifty four b", "r twenty two"
   const RSAY = [["four ten", "410"], ["four fifty four", "454"], ["one thirty four", "134"], ["four oh four", "404"], ["four oh seven", "407"], ["twenty two", "22"], ["thirty two", "32"]];
   for (const [w, n] of RSAY){
@@ -2587,10 +2637,244 @@ function stopSpeaking(){
   if (IN_APP) nativeCall("gary:stop"); else { try { speechSynthesis.cancel(); } catch(e){} }
 }
 
+/* ---------- Gary: understands a whole set of readings in one sentence and diagnoses them ----------
+   "500 psi on the high side with a 115 degree liquid line, what's wrong"
+   "head 450 suction 130 liquid 105 suction line 55 outdoor 95 txv"
+   Readings are remembered for the chat, so "outdoor is 95" or "suction 130 psi 55°" can be added later. */
+G.rd = {};   // readings carried between messages: hiP loP liqT slT odb ret sup wb split dis scD shD tsc
+
+/* [regex, pressure key, temperature key, default for a bare number]; earlier entries win overlaps */
+const RD_LABELS = [
+  [/\b(?:target|nameplate|spec(?:ified)?|design|should be)\s*sub ?-?cool(?:ing)?\b/, null, "tsc", "T"],
+  [/\bsub ?-?cool(?:ing|ed)?\b/, null, "scD", "T"],
+  [/\bsuper ?-?heat(?:ed)?\b/, null, "shD", "T"],
+  [/\b(?:wet ?bulb|wb)\b/, null, "wb", "T"],
+  [/\b(?:discharge|leaving|supply)\s*air\b|\bsupply(?:\s*(?:temp(?:erature)?|register|duct))?\b|\blat\b/, null, "sup", "T"],
+  [/\b(?:temperature )?(?:split|delta ?t|δt)\b/, null, "split", "T"],
+  [/\bdischarge\s*(?:line\s*)?temp(?:erature)?\b|\bdischarge line\b|\bcompressor discharge\b/, null, "dis", "T"],
+  [/\b(?:outdoor|outside|ambient|odb|condenser (?:air|inlet)|air (?:entering|into) (?:the )?condenser)(?:\s*(?:air|temp(?:erature)?|dry ?bulb|db))?\b/, null, "odb", "T"],
+  [/\b(?:return air|return temp(?:erature)?|indoor|inside|room|house|entering air|eat)(?:\s*(?:air|temp(?:erature)?|dry ?bulb|db))?\b/, null, "ret", "T"],
+  [/\b(?:high|hi) ?side(?:\s*(?:pressure|press|psi|gauge|temp(?:erature)?|line))?\b|\bhead(?:\s*(?:pressure|press|psi))?\b|\bcondensing(?:\s*(?:pressure|press|psi))?\b|\bhigh (?:pressure|press)\b|\bdischarge(?:\s*(?:pressure|press|psi))?\b/, "hiP", "liqT", "P"],
+  [/\bliquid(?:\s*line)?(?:\s*(?:pressure|press|psi|temp(?:erature)?))?\b|\bliq\b/, "hiP", "liqT", "auto"],
+  [/\b(?:low|lo) ?side(?:\s*(?:pressure|press|psi|gauge|temp(?:erature)?|line))?\b|\bsuction(?:\s*line)?(?:\s*(?:pressure|press|psi|temp(?:erature)?))?\b|\blow (?:pressure|press)\b/, "loP", "slT", "auto"],
+];
+const RD_TEXT = {hiP: "high side", loP: "suction", liqT: "liquid line", slT: "suction line", odb: "outdoor", ret: "return air", sup: "supply air", wb: "wet bulb", split: "split", dis: "discharge line", scD: "subcool", shD: "superheat", tsc: "target subcool"};
+
+function rdBareUnit(txt, lab, v, labs, self){
+  if (/press|psi|gauge/.test(txt) && lab[1]) return "P";
+  if (/temp|\bline\b/.test(txt) && lab[2]) return "T";
+  if (lab[1] && !lab[2]) return "P";
+  if (lab[2] && !lab[1]) return "T";
+  if (lab[3] === "auto"){ if (labs.some(x => x !== self && x.L === lab && /line|temp/.test(x.txt))) return "P";
+    if (/^(?:low|lo|high|hi)/.test(txt)) return "P"; return (lab[1] === "hiP" && /liq/.test(txt)) ? (v >= 150 ? "P" : "T") : (v >= 80 ? "P" : "T"); }
+  return lab[3];
+}
+
+function rdParse(q0){
+  const q = stripRefs(q0), nums = [], labs = [];
+  const nre = /(^|[^\w.])(-?\d+(?:\.\d+)?)(?![\d.])\s*(psig|psi|#|°\s*([fc])?|deg(?:ree)?s?(?:\s*([fc])\b(?![a-z]))?|([fc])\b(?![a-z]))?/g;
+  let m;
+  while ((m = nre.exec(q))){
+    const s = m.index + m[1].length, e = m.index + m[0].length, u = m[3] || "", rest = q.slice(e);
+    if (!u && /^\s*(?:tons?|cfm|fpm|%|percent|k?btu|amps?|volts?|rh\b|microns?|hz|sq|ft\b|feet|inch|in\b|"|µ|uf|mfd|ppm|rla|lra|seer|x\b|years?|yrs?|months?|hours?|hrs?|minutes?|mins?)/.test(rest)) continue;
+    const t = /psi|#/.test(u) ? "P" : u ? "T" : "U", c = (m[4] || m[5] || m[6] || "").toLowerCase();
+    nums.push({s, e: s + m[2].length + (u ? m[0].length - m[1].length - m[2].length : 0), v: parseFloat(m[2]), u: t, c});
+  }
+  RD_LABELS.forEach(L => {
+    const re = new RegExp(L[0].source, "g"); let mm;
+    while ((mm = re.exec(q))){
+      if (!mm[0].length){ re.lastIndex++; continue; }
+      const s = mm.index, e = s + mm[0].length;
+      if (!labs.some(x => s < x.e && e > x.s)) labs.push({s, e, txt: mm[0], L});
+    }
+  });
+  labs.sort((a, c) => a.s - c.s);
+  /* pair numbers with labels: the set of pairs that matches the most readings with the fewest words between each */
+  const items = nums.map(n => ({t: "n", n, s: n.s, e: n.e})).concat(labs.map(l => ({t: "l", l, s: l.s, e: l.e}))).sort((a, c) => a.s - c.s);
+  const pairOf = (a, c) => {
+    if (a.t === c.t) return null;
+    const n = a.t === "n" ? a.n : c.n, l = a.t === "l" ? a.l : c.l, dir = a.t === "l" ? "prev" : "next";
+    const gap = q.slice(a.e, c.s), words = gap.trim() ? gap.trim().split(/\s+/).length : 0;
+    if (words > 3 || /\b(?:but|while|however)\b/.test(gap)) return null;
+    let ut = n.u;
+    if (ut === "U") ut = rdBareUnit(l.txt, l.L, n.v, labs, l);
+    if (ut === "auto") ut = n.v >= 80 ? "P" : "T";
+    if (!ut) return null;
+    const key = ut === "P" ? l.L[1] : l.L[2]; if (!key) return null;
+    return {n, l, key, ut, cost: words * 10 + (dir === "prev" ? 0 : 1)};
+  };
+  const memo = [];
+  const best = i0 => {
+    if (i0 >= items.length) return {sc: 0, ps: []};
+    if (memo[i0]) return memo[i0];
+    let bst = best(i0 + 1);
+    for (let k = i0 + 1; k < items.length; k++){
+      const pr = pairOf(items[i0], items[k]); if (!pr) continue;
+      const rest = best(k + 1), sc = 1000 - pr.cost + rest.sc;
+      if (sc > bst.sc) bst = {sc, ps: [pr].concat(rest.ps)};
+    }
+    return (memo[i0] = bst);
+  };
+  const pairs = best(0).ps, usedN = new Set(), vals = {}, lab = [];
+  pairs.forEach(p => {
+    if (vals[p.key] !== undefined) return;
+    usedN.add(p.n); lab.push(p.key);
+    if (p.ut === "P") vals[p.key] = p.n.v;
+    else if (p.key === "scD" || p.key === "shD" || p.key === "tsc" || p.key === "split") vals[p.key] = p.n.c === "c" ? p.n.v * 9 / 5 : p.n.c === "f" ? p.n.v : dIn(p.n.v);
+    else vals[p.key] = p.n.c === "c" ? p.n.v * 9 / 5 + 32 : p.n.c === "f" ? p.n.v : tIn(p.n.v);
+  });
+  pairs.forEach(p => {                                           // a pressure label also claims the next loose temperature ("suction 130 psi 55°")
+    if (p.ut !== "P" || !usedN.has(p.n) || !p.l.L[2] || p.l.L[1] !== p.key || vals[p.l.L[2]] !== undefined) return;
+    const t = nums.filter(o => !usedN.has(o) && o.u === "T" && o.s >= p.n.e && o.s - p.n.e < 14 && !nums.some(z => z !== o && z !== p.n && z.s >= p.n.e && z.e <= o.s))[0];
+    if (!t) return; usedN.add(t); lab.push(p.l.L[2]);
+    vals[p.l.L[2]] = t.c === "c" ? t.v * 9 / 5 + 32 : t.c === "f" ? t.v : tIn(t.v);
+  });
+  return {vals, lab, free: nums.filter(n => !usedN.has(n) && n.u === "P").map(n => n.v)};
+}
+
+const RD_WHY = {
+  "Overcharge": "Extra refrigerant backs up in the condenser: high head, high subcool, and usually normal-to-high suction with low or normal superheat.",
+  "Dirty condenser / low outdoor air": "Not enough air across the condenser: high head with normal-to-low subcool.",
+  "Non-condensables in system": "Air or nitrogen in the system props head pressure up. Compare standing pressure at ambient with the P-T chart.",
+  "Liquid-line restriction (drier)": "A plugged drier or kinked liquid line starves the evaporator: low suction, high superheat, and a temperature drop across the restriction.",
+  "Undercharge / leak": "Low on refrigerant: low suction and head, low subcool, high superheat. Leak-search before adding any.",
+  "Low indoor airflow / dirty evap": "The coil isn't getting enough air: low suction and head, low superheat. Check the filter, coil and blower first.",
+  "TXV underfeeding / stuck closed": "The valve is starving the evaporator: low suction, high superheat, high subcool.",
+  "TXV overfeeding / stuck open": "Too much refrigerant floods the evaporator: high suction, low superheat, low subcool.",
+  "Weak compressor (bad valves)": "It can't build a pressure difference: suction high, head low. Confirm before condemning it.",
+};
+
+function rdTips(top, st){
+  if (st.head === "U") return {title: "High head pressure — what to do", tips: [
+    ["Check the condenser first", "Coil clean and unblocked, fan spinning the right way at full speed (check the capacitor and motor amps), no hot air recirculating. It's the fastest check and the most common cause."],
+    ["Fill in the rest of the picture", "Take suction pressure and suction line temperature (superheat), the outdoor temperature, and confirm TXV or piston. Compare subcool to the nameplate target."],
+    ["Clean coil and subcool still high: overcharged", "Recover a little at a time, let it settle 10–15 min, and stop when subcool reaches the nameplate target."],
+    ["Head stays high even then: suspect air in the system", "After the unit has been off for hours, standing pressure should match the P-T chart at ambient. If it's well above, recover, replace the drier, evacuate to 500 microns and weigh in the charge."],
+    ["Rule out a restriction", "A temperature drop across the filter-drier of more than {d:3}, low suction and high superheat point to a plugged drier or metering device."],
+  ]};
+  if (PFIX[top]){ const f = FIX[PFIX[top]]; return {title: f[0], tips: f[1]}; }
+  if (/airflow/.test(top)) return {title: IMPROVE.airflow.t, tips: IMPROVE.airflow.tips};
+  return null;
+}
+
+function diagAnswer(q, cur){
+  if (/\btons?\b|sq\.?\s*f|square f|\bcfm\b|btu|dew ?point|humidity|%|percent/.test(q)) return null;
+  const R = rdParse(q), core = ["hiP", "loP", "liqT", "slT"];
+  const inMsg = k => R.vals[k] !== undefined, nCore = core.filter(inMsg).length;
+  const intent = /what'?s wrong|what is wrong|whats wrong|what'?s going on|diagnos|problem|trouble|fault|normal|\bok\b|okay|good|bad|right|correct|check|think|why|help|should|reading|running|issue/.test(q);
+  const memCore = core.some(k => G.rd[k] !== undefined);
+  if (!((nCore >= 1 && (R.lab.length >= 2 || intent)) || (R.lab.length >= 1 && memCore))) return null;
+
+  const r = refById(cur), name = r.name, ac = !/r404a|r134a/.test(cur);
+  if (R.vals.hiP !== undefined && G.rd.hiP !== undefined && Math.abs(R.vals.hiP - G.rd.hiP) > 0.5) G.rd = {};      // a new set of gauge readings = a different unit
+  const carried = Object.keys(G.rd).filter(k => R.vals[k] === undefined);
+  const V = Object.assign({}, G.rd, R.vals);
+  // plain unlabeled pressures ("500 psi 130 psi"): the higher is the high side, or decide by saturation temperature
+  const hiSide = p => { const t = tAt(r.b, p); return isFinite(t) ? t >= 75 : null; };
+  if (R.free.length && (V.hiP === undefined || V.loP === undefined)){
+    if (V.hiP === undefined && V.loP === undefined){
+      if (R.free.length >= 2){ V.hiP = Math.max(R.free[0], R.free[1]); V.loP = Math.min(R.free[0], R.free[1]); }
+      else { const h = hiSide(R.free[0]); if (h === true) V.hiP = R.free[0]; else if (h === false) V.loP = R.free[0]; }
+    } else if (V.hiP === undefined && hiSide(R.free[0]) === true) V.hiP = R.free[0];
+    else if (V.loP === undefined && hiSide(R.free[0]) === false) V.loP = R.free[0];
+  }
+  G.rd = V;
+  if (/\btxv\b|\bteev\b|expansion valve|\beev\b/.test(q)) G.meter = "txv"; else if (/piston|orifice|fixed metering/.test(q)) G.meter = "piston";
+  const meter = G.meter || null;
+
+  const cond = V.hiP !== undefined ? tAt(r.b, V.hiP) : NaN, evap = V.loP !== undefined ? tAt(r.d, V.loP) : NaN;
+  if (V.hiP !== undefined && !isFinite(cond)) return {html: `${V.hiP} psig is outside my ${name} table (${rangeText()}). Check the refrigerant — say "R-22" or "R-454B" if it isn't ${name}.`};
+  if (V.loP !== undefined && !isFinite(evap)) return {html: `${V.loP} psig is outside my ${name} table (${rangeText()}). Check the refrigerant.`};
+  const sc = isFinite(cond) && V.liqT !== undefined ? cond - V.liqT : V.scD !== undefined ? V.scD : NaN;
+  const sh = isFinite(evap) && V.slT !== undefined ? V.slT - evap : V.shD !== undefined ? V.shD : NaN;
+  const appr = isFinite(cond) && V.odb !== undefined ? cond - V.odb : NaN;
+  const td = isFinite(evap) && V.ret !== undefined ? V.ret - evap : NaN;
+
+  /* states: U up, D down, N normal — "soft" ones are guesses without the outdoor / return temperature */
+  const st = {}, soft = {};
+  if (isFinite(cond)){
+    if (isFinite(appr)) st.head = appr > 30 ? "U" : appr < 10 ? "D" : "N";
+    else if (ac){ st.head = cond >= 125 ? "U" : cond <= 95 ? "D" : "N"; soft.head = 1; }
+  }
+  if (isFinite(sc)){
+    if (V.tsc !== undefined) st.sc = sc > V.tsc + 3 ? "U" : sc < V.tsc - 3 ? "D" : "N";
+    else st.sc = sc < 5 ? "D" : sc > (meter === "piston" ? 20 : 15) ? "U" : "N";
+  }
+  if (isFinite(sh)){
+    if (meter === "piston" && isFinite(V.wb) && isFinite(V.odb)){ const t = ((3 * V.wb) - 80 - V.odb) / 2; if (t >= 5) st.sh = sh > t + 5 ? "U" : sh < t - 5 ? "D" : "N"; }
+    if (!st.sh) st.sh = sh < 5 ? "D" : sh > (meter === "piston" ? 25 : 20) ? "U" : "N";
+  }
+  if (isFinite(evap) && ac){
+    if (isFinite(td)) st.suc = td > 42 ? "D" : td < 26 ? "U" : "N";
+    else { st.suc = evap < 33 ? "D" : evap > 52 ? "U" : "N"; soft.suc = 1; }
+  }
+
+  const cols = {suc: 1, head: 2, sh: 3, sc: 4};
+  const ADJ = {"Overcharge": {suc: "U/N", sh: "D/N"}}, PRIOR = {"Non-condensables in system": -0.6};
+  const scored = PATTERNS.map(p => { let s = 0; for (const [k, c] of Object.entries(cols)){ if (!st[k]) continue; const opts = ((ADJ[p[0]] || {})[k] || p[c]).split("/"), w = soft[k] ? 0.5 : 1; s += opts.includes(st[k]) ? (opts.length === 1 ? w : w / 2) : -w; } if (st.head === "U" && /restriction/.test(p[0])) s -= 0.1; s += PRIOR[p[0]] || 0; return [s, p]; }).sort((a, c) => c[0] - a[0]);
+  const top = scored.filter(x => x[0] >= 1 && x[0] >= scored[0][0] - 0.5).slice(0, 3);
+
+  const W = {U: "high", D: "low", N: "normal"}, lines = [];
+  const mt = meter === "txv" ? " · TXV" : meter === "piston" ? " · piston" : "";
+  if (isFinite(cond)) lines.push(`High side ${b(V.hiP + " psig")} → condensing ${b(fmtT(cond))}` + (V.liqT !== undefined ? `<br>Liquid line ${fmtT(V.liqT)} → ${b("subcool " + fmtD(sc))}` : ""));
+  else if (isFinite(sc)) lines.push(`${b("Subcool " + fmtD(sc))}`);
+  if (isFinite(evap)) lines.push(`Suction ${b(V.loP + " psig")} → evaporating ${b(fmtT(evap))}` + (V.slT !== undefined ? `<br>Suction line ${fmtT(V.slT)} → ${b("superheat " + fmtD(sh))}` : ""));
+  else if (isFinite(sh)) lines.push(`${b("Superheat " + fmtD(sh))}`);
+  if (isFinite(appr)) lines.push(`Condensing − outdoor = ${b(fmtD(appr))} (typically {d:15-30})`);
+  if (isFinite(td)) lines.push(`Return air − evaporating = ${b(fmtD(td))} (typically about {d:30-40})`);
+  if (V.split !== undefined) lines.push(`Temperature split ${b(fmtD(V.split))}` + (V.split > 22 ? " — high, points to low airflow." : V.split < 14 ? " — low." : " — normal."));
+
+  const notes = [];
+  if (isFinite(cond) && ac && !isFinite(appr)){
+    const lo = cond - 30, hi = cond - 15;
+    notes.push(st.head === "U" ? `${b("Head pressure is high")} unless it's roughly ${fmtT(lo)}–${fmtT(hi)} outside.` : st.head === "D" ? `${b("Head pressure is low")} unless it's cool outside (under about ${fmtT(hi)}).` : `Head pressure looks reasonable if it's roughly ${fmtT(lo)}–${fmtT(hi)} outside.`);
+  } else if (isFinite(appr)){
+    notes.push(`At ${fmtT(V.odb)} outdoors I'd expect about ${b(pAt(r.b, V.odb + 15).toFixed(0) + "–" + pAt(r.b, V.odb + 30).toFixed(0) + " psig")}; yours is ${b(st.head === "U" ? "high" : st.head === "D" ? "low" : V.hiP < pAt(r.b, V.odb + 15) ? "a little under that — normal for many high-efficiency units" : V.hiP > pAt(r.b, V.odb + 30) ? "a little over that" : "in range")}.`);
+  }
+  if (isFinite(cond) && cond >= 130 && cur === "r410a") notes.push("⚠ This is getting hot for the compressor — most R-410A high-pressure switches trip around 600 psig.");
+  if (isFinite(sc) && sc < 0 || isFinite(sh) && sh < -1) notes.push("⚠ A negative reading isn't physically possible: recheck the refrigerant selected, gauge hookup and where the temperature clamp is.");
+  if (isFinite(evap) && evap < 32 && ac) notes.push("⚠ Evaporating below 32°F — the coil will freeze.".replace("32°F", "{t:32}"));
+  if (!ac) notes.push("My rules of thumb are tuned for air conditioning; refrigeration boxes run different temperatures.");
+
+  const WORD = {suc: "suction", head: "head pressure", sh: "superheat", sc: "subcool"};
+  const head = Object.keys(cols).filter(k => st[k]).map(k => WORD[k] + " " + W[st[k]]);
+  let out = `${b(name)}${mt}<br>` + lines.join("<br>");
+  if (notes.length) out += `<br>${notes.join("<br>")}`;
+  if (head.length) out += `<div class="gsec">What the readings say</div>${b(head.join(" · "))}`;
+  if (top.length){
+    out += `<div class="gsec">Most likely</div><ul>` + top.map(([s, p]) => `<li>${b(p[0])}<br><span class="gsub">${RD_WHY[p[0]] || ""}</span></li>`).join("") + `</ul>`;
+    if (st.head === "U") out += `<span class="gsub">A dirty condenser or weak fan also raises head — rule that out first.</span>`;
+  } else {
+    const one = [];
+    if (st.sh === "D") one.push(sh < 2 ? "⚠ Superheat is very low — risk of liquid floodback to the compressor." : "Superheat is low for most systems.");
+    if (st.sh === "U") one.push("Superheat is high — a starved evaporator (low charge, restriction or metering problem).");
+    if (st.sc === "D") one.push("Subcool is low — usually undercharged (leak-search first).");
+    if (st.sc === "U") one.push("Subcool is high — usually overcharged or a liquid-line restriction.");
+    out += one.length ? `<div class="gsec">Most likely</div>${one.join("<br>")}` : (Object.keys(st).length >= 2 ? `<br>Those readings don't point to a fault — compare them with the nameplate targets.` : "");
+    if (!top.length && !G.last){ const key = st.sh === "D" ? "shLow" : st.sh === "U" ? "shHigh" : st.sc === "D" ? "scLow" : st.sc === "U" ? "scHigh" : ""; if (key) setFix(key); }
+    if (!top.length){ const key = st.sh === "D" ? "shLow" : st.sh === "U" ? "shHigh" : st.sc === "D" ? "scLow" : st.sc === "U" ? "scHigh" : ""; if (key) setFix(key); }
+  }
+
+  const need = [];
+  if (!isFinite(sh)) need.push("suction pressure and suction line temperature");
+  if (V.odb === undefined && ac) need.push("outdoor temperature");
+  if (!meter) need.push("TXV or piston");
+  if (meter !== "piston" && V.tsc === undefined && isFinite(sc)) need.push("nameplate target subcool");
+  if (!isFinite(sc) && isFinite(cond)) need.push("liquid line temperature");
+  if (need.length) out += `<div class="gsec">To pin it down, tell me</div><span class="gsub">${need.join(" · ")}.<br>Just type them, like "suction 130 psi 55° outdoor 95 TXV" — I'll add them to these.</span>`;
+  if (carried.length) out += `<br><span class="gsub">Still using: ${carried.map(k => RD_TEXT[k]).join(", ")} from earlier.</span>`;
+
+  const rt = top.length ? rdTips(top[0][1][0], st) : null; if (rt) G.last = rt;
+  const fill = {}; if (V.loP !== undefined) fill.sp = V.loP; if (V.slT !== undefined) fill.st = V.slT; if (V.hiP !== undefined) fill.lp = V.hiP; if (V.liqT !== undefined) fill.lt = V.liqT;
+  const res = {html: out, chips: ["What should I do?"]};
+  if (Object.keys(fill).length) res.act = {label: "Open in SH/SC calculator", fn: () => fillCharge(cur, fill)};
+  return res;
+}
+
 const HELP = `I work completely offline. Try asking:<ul>
 <li>"R-410A at 40°" or "454B 300 psi"</li><li>"Superheat 410A 118 psi 52°"</li><li>"Subcool R-22 260 psi 105°"</li>
-<li>"Target superheat WB 63 ODB 85"</li><li>"CFM for 3 tons" or "80000 btu rise 50"</li><li>"Dew point 75°F 50%"</li><li>"How many tons for 1800 sq ft?"</li>
-<li>"High head low suction"</li><li>"Why is my coil freezing?"</li><li>"How can I help a unit run better?" or "Make it last longer"</li><li>"Check my readings" (reviews what's in the calculators)</li><li>"What is glide?" or "How do I evacuate?"</li><li>"Gas pressure for propane", "CO limits", "Defrost board", "Thermostat wire colors", "Megger a compressor", "Can I still install 410A?"</li><li>"75 F to C"</li></ul>
+<li>"500 psi high side, 115° liquid line, what's wrong?"</li><li>"Head 450 suction 130 liquid 105 outdoor 95"</li><li>"Target superheat WB 63 ODB 85"</li><li>"CFM for 3 tons" or "80000 btu rise 50"</li><li>"Dew point 75°F 50%"</li><li>"How many tons for 1800 sq ft?"</li>
+<li>"High head low suction"</li><li>"Why is my coil freezing?"</li><li>"How can I help a unit run better?" or "Make it last longer"</li><li>"Check my readings" (reviews what's in the calculators)</li><li>"What is glide?" or "How do I evacuate?"</li><li>"Gas pressure for propane", "CO limits", "Defrost board", "Thermostat wire colors", "Megger a compressor", "Can I still install 410A?"</li><li>"75 F to C"</li><li>📷 Tap the camera to read a data tag or gauges, or type "decode Lennox serial 5807H14681"</li></ul>
 After any reading, ask ${b("\"What should I do?\"")} for next steps.`;
 
 function answer(raw){
@@ -2604,7 +2888,9 @@ function answer(raw){
   if (FOLLOW.test(q)) return G.last ? {html: tipsHTML(G.last.title, G.last.tips)} : {html: `Tell me what's going on first — a reading like "superheat 118 psi 52°", a symptom like "coil freezing", or ask "How can I help a unit run better?"`};
   if (/check (my|the|these) readings|review (my|the) readings|analy[sz]e (my|the)|how('s| is) (my|the|this) (unit|system) (doing|running)|look at my readings|diagnose (my|the) (readings|unit|system)/.test(q)) return reviewAnswer();
   if ((r = convertAnswer(q))) return {html: r};
+  if ((r = tagTextAnswer(q))) return r;                   // typed model / serial -> decode
   if (/target\s*(superheat|sh)|\bwb\b|wet ?bulb.*(outdoor|odb|dry)/.test(q) && !/%|percent|\brh\b/.test(q)) return targetSH(q);
+  if ((r = diagAnswer(q, cur))) return r;                 // several labeled readings in one message -> full diagnosis
   const hasNum = pressures(q).length || temps(q).length || bare(stripRefs(q)).length;
   if (/super ?heat|\bsh\b/.test(q) && !/what is|what's|define|explain/.test(q) && hasNum) return shAnswer(q, cur);
   if (/sub ?-?cool|\bsc\b/.test(q) && !/what is|what's|define|explain/.test(q) && hasNum) return scAnswer(q, cur);
@@ -2644,18 +2930,682 @@ function addMsg(who, html, extra){
 function ask(text, fromVoice){
   text = (text || "").trim(); if (!text) return;
   stopSpeaking();
-  addMsg("me", (fromVoice ? '<span class="gvoice">🎤</span> ' : "") + esc(text));
+  const meHtml = (fromVoice ? '<span class="gvoice">🎤</span> ' : "") + esc(text);
+  addMsg("me", meHtml);
+  const before = garyCtx();
   let res; try { res = answer(text); } catch(e){ res = {html: "Something went wrong working that out — try rephrasing it."}; }
   res.html = uT(res.html);
+  histRecord(text, meHtml, res, before);
   setTimeout(() => { addMsg("gary", res.html, res); speakText(res.html); }, S.reduceMotion ? 0 : 220);
 }
 $("g-form").addEventListener("submit", e => { e.preventDefault(); const t = $("g-in").value; $("g-in").value = ""; ask(t); });
 $("g-sugg").addEventListener("click", e => { const bt = e.target.closest("button"); if (bt) ask(bt.textContent); });
 if (VOICE.canListen) $("g-mic").classList.remove("hide");
 $("g-mic").addEventListener("click", () => { if ($("g-mic").classList.contains("on")){ if (recog) try { recog.stop(); } catch(e){} $("g-mic").classList.remove("on"); return; } startListening(); });
-$("g-clear").addEventListener("click", () => { stopSpeaking(); $("g-log").innerHTML = ""; G.ref = null; greet(); });
+$("g-clear").addEventListener("click", () => { stopSpeaking(); newChat(); if (histOpen()) closeHist(); toast("New chat started"); });
 function greet(){ addMsg("gary", `Hi, I'm ${b("Gary")} — your offline HVAC helper. No signal needed. Ask me about pressures, superheat, subcool, airflow, psychrometrics or troubleshooting.`); }
 greet();
+/* ---------- Gary: chat history (last 15 chats, saved on this phone) ----------
+   A chat is saved once you ask it something. Reopening a chat restores its messages and Gary's memory
+   (refrigerant, readings, last tips), so you can keep going. A brand-new 16th chat removes the one used longest ago. */
+const HKEY = "hvac_gary_chats", HMAX = 15, HMSGS = 300;
+let chats = loadChats(), curChat = null;          // curChat = id of the chat on screen (null = new, not saved yet)
+function loadChats(){ try { const a = JSON.parse(localStorage.getItem(HKEY) || "[]"); return Array.isArray(a) ? a : []; } catch(e){ return []; } }
+function saveChats(){
+  for (;;){
+    try { localStorage.setItem(HKEY, JSON.stringify(chats)); return; }
+    catch(e){ if (chats.length <= 1) return; chats.sort((a, c) => c.updated - a.updated); chats.pop(); }   // storage full: drop the least-recent chat
+  }
+}
+/* Gary's conversation memory, copied so it can be stored and put back */
+function garyCtx(){ return JSON.parse(JSON.stringify({ref: G.ref || null, rd: G.rd || {}, meter: G.meter || null, last: G.last || null})); }
+function setGaryCtx(c){ c = c || {}; G.ref = c.ref || null; G.rd = Object.assign({}, c.rd || {}); G.meter = c.meter || null; G.last = c.last || null; }
+
+function histRecord(q, meHtml, res, before){
+  let c = chats.find(x => x.id === curChat);
+  if (!c){                                           // first question of a brand-new chat
+    chats.sort((a, x) => x.updated - a.updated);
+    while (chats.length >= HMAX) chats.pop();        // make room: remove the chat used longest ago
+    c = {id: "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), title: q.slice(0, 80), created: Date.now(), msgs: []};
+    chats.push(c); curChat = c.id;
+  }
+  c.msgs.push({w: "me", h: meHtml});
+  const g = {w: "gary", h: res.html};
+  if (res.act) { g.a = res.act.label; g.q = q; g.x = before; }         // keep what's needed to rebuild the button
+  if (res.chips && res.chips.length) g.c = res.chips.slice();
+  c.msgs.push(g);
+  if (c.msgs.length > HMSGS) c.msgs.splice(0, c.msgs.length - HMSGS);
+  c.updated = Date.now(); c.ctx = garyCtx();
+  saveChats();
+}
+/* rebuild a saved answer's action button: re-run that question with the memory Gary had at the time */
+function replayAct(m){
+  return {label: m.a, fn: () => {
+    const now = garyCtx();
+    try { setGaryCtx(m.x); const r = answer(m.q); setGaryCtx(now); if (r && r.act) r.act.fn(); }
+    catch(e){ setGaryCtx(now); toast("That button isn't available anymore"); }
+  }};
+}
+function newChat(){
+  curChat = null; setGaryCtx(null); $("g-log").innerHTML = ""; greet();
+}
+function openChat(id){
+  const c = chats.find(x => x.id === id); if (!c) return;
+  stopSpeaking(); curChat = c.id; setGaryCtx(c.ctx);
+  const log = $("g-log"); log.innerHTML = "";
+  const frag = document.createDocumentFragment();
+  const bubble = (who, html, extra) => {
+    const m = document.createElement("div"); m.className = "gmsg " + who; m.style.animation = "none";
+    m.innerHTML = `<div class="gbub">${html}</div>`;
+    if (extra && (extra.act || (extra.chips && extra.chips.length))){
+      const row = document.createElement("div"); row.className = "gacts";
+      if (extra.act){ const bt = document.createElement("button"); bt.type = "button"; bt.className = "gact"; bt.textContent = extra.act.label + " →"; bt.onclick = extra.act.fn; row.appendChild(bt); }
+      extra.chips.forEach(t => { const bt = document.createElement("button"); bt.type = "button"; bt.className = "gchip"; bt.textContent = t; bt.onclick = () => ask(t); row.appendChild(bt); });
+      m.appendChild(row);
+    }
+    frag.appendChild(m);
+  };
+  bubble("gary", `Picking up where we left off — <b>${esc(c.title)}</b> (${histWhen(c.updated)}).`);
+  c.msgs.forEach(m => bubble(m.w, m.h, m.w === "gary" ? {act: m.a ? replayAct(m) : null, chips: m.c || []} : null));
+  log.appendChild(frag);
+  closeHist();
+  requestAnimationFrame(() => scrollTo({top: document.documentElement.scrollHeight, behavior: "auto"}));
+}
+function deleteChat(id){
+  chats = chats.filter(x => x.id !== id); saveChats();
+  if (curChat === id) curChat = null;              // the chat on screen keeps showing, but it's now a new (unsaved) chat
+  renderHist();
+}
+function histWhen(t){
+  const d = new Date(t), now = new Date(), day = 864e5;
+  const time = d.toLocaleTimeString(undefined, {hour: "numeric", minute: "2-digit"});
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  if (t >= start) return "Today " + time;
+  if (t >= start - day) return "Yesterday " + time;
+  return d.toLocaleDateString(undefined, {month: "short", day: "numeric", year: d.getFullYear() === now.getFullYear() ? undefined : "numeric"}) + " " + time;
+}
+function renderHist(){
+  chats.sort((a, c) => c.updated - a.updated);
+  $("g-hcount").textContent = `${chats.length} of ${HMAX} saved`;
+  $("g-hlist").innerHTML = chats.length ? chats.map(c => {
+    const n = c.msgs.filter(m => m.w === "me").length;
+    return `<div class="ghitem${c.id === curChat ? " cur" : ""}"><button type="button" class="ghopen" data-open="${c.id}"><span class="ght">${esc(c.title)}</span>` +
+      `<span class="ghs">${c.id === curChat ? '<span class="ghcur">On screen · </span>' : ""}${histWhen(c.updated)} · ${n} question${n === 1 ? "" : "s"}</span></button>` +
+      `<button type="button" class="ghdel" data-del="${c.id}" aria-label="Delete chat">×</button></div>`;
+  }).join("") + `<button type="button" class="ghclear" id="g-hclear">Delete all chats</button>`
+    : `<div class="ghempty">No saved chats yet.<br>Ask Gary something and the chat is saved here.</div>`;
+}
+let clearArmed = 0;
+$("g-hlist").addEventListener("click", e => {
+  const o = e.target.closest("[data-open]"); if (o){ openChat(o.dataset.open); return; }
+  const d = e.target.closest("[data-del]"); if (d){ deleteChat(d.dataset.del); toast("Chat deleted"); return; }
+  if (e.target.closest("#g-hclear")){
+    if (Date.now() - clearArmed > 4000){ clearArmed = Date.now(); toast("Tap again to delete all chats"); return; }
+    clearArmed = 0; chats = []; saveChats(); curChat = null; renderHist(); toast("All chats deleted");
+  }
+});
+const histOpen = () => $("v-gary").classList.contains("histopen");
+function openHist(){
+  if (histOpen()) return;
+  stopSpeaking(); renderHist();
+  $("v-gary").classList.add("histopen"); $("g-hist").classList.remove("hide"); window.scrollTo(0, 0);
+  try { history.pushState(Object.assign({}, history.state, {gh: 1}), ""); } catch(e){}
+}
+function closeHist(fromPop){
+  if (!histOpen()) return;
+  $("v-gary").classList.remove("histopen"); $("g-hist").classList.add("hide");
+  if (!fromPop) try { if (history.state && history.state.gh){ skipPop++; history.back(); } } catch(e){}
+  requestAnimationFrame(() => scrollTo({top: document.documentElement.scrollHeight, behavior: "auto"}));
+}
+$("g-histbtn").addEventListener("click", openHist);
+$("g-histback").addEventListener("click", () => closeHist());
+
+/* ================= OFFLINE PHOTO READER (Tesseract OCR, runs on the phone) =================
+   ocr/core-simd.js or ocr/core.js = Tesseract compiled to WebAssembly (wasm embedded, no network),
+   ocr/eng.js = English text model. Loaded only the first time a photo is read.
+   Runs in a background worker so the screen doesn't freeze; falls back to the page if workers aren't allowed. */
+const OCR = (() => {
+  let ready = null, mode = "", worker = null, engine = null, seq = 0;
+  const waits = {};
+  const simdOK = () => { try { return WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,10,1,8,0,65,0,253,15,253,98,11])); } catch(e){ return false; } };
+  const loadScript = src => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => no(new Error("load " + src)); document.head.appendChild(s); });
+
+  /* the engine itself: plain function, used as-is on the page or stringified into the worker */
+  function makeEngine(Core, engB64){
+    return Core({}).then(M => {
+      const bin = atob(engB64), data = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) data[i] = bin.charCodeAt(i);
+      M.FS.writeFile("/eng.traineddata", data);
+      const api = new M.TessBaseAPI();
+      if (api.Init("/", "eng", 1) !== 0) throw new Error("init");
+      return {
+        rec(png, psm, dpi){
+          M.FS.writeFile("/input", new Uint8Array(png));
+          api.SetImageFile(1, 0);
+          api.SetVariable("tessedit_pageseg_mode", String(psm || 3));
+          api.SetVariable("user_defined_dpi", dpi ? String(dpi) : "0");
+          api.Recognize(null);
+          const text = api.GetUTF8Text(), conf = api.MeanTextConf();
+          api.Clear();
+          return {text, conf};
+        }
+      };
+    });
+  }
+  function workerMain(){
+    let eng = null;
+    onmessage = e => {
+      const m = e.data;
+      if (m.init){ makeEngine(TesseractCore, m.eng).then(x => { eng = x; postMessage({ready: 1}); }, err => postMessage({fail: String(err)})); return; }
+      try { postMessage({id: m.id, res: eng.rec(m.png, m.psm, m.dpi)}); } catch(err){ postMessage({id: m.id, err: String(err)}); }
+    };
+  }
+  async function start(){
+    try { await loadScript(simdOK() ? "ocr/core-simd.js" : "ocr/core.js"); }
+    catch(e){ await loadScript("ocr/core.js"); }
+    await loadScript("ocr/eng.js");
+    try {
+      const src = "var _scriptDir;\nvar TesseractCore = " + TesseractCore.toString() + ";\n" + makeEngine.toString() + "\n(" + workerMain.toString() + ")();";
+      const url = URL.createObjectURL(new Blob([src], {type: "text/javascript"}));
+      worker = new Worker(url);
+      await new Promise((ok, no) => {
+        const t = setTimeout(() => no(new Error("timeout")), 60000);
+        worker.onmessage = e => { if (e.data.ready){ clearTimeout(t); ok(); } else if (e.data.fail){ clearTimeout(t); no(new Error(e.data.fail)); } };
+        worker.onerror = ev => { clearTimeout(t); no(new Error("worker")); };
+        worker.postMessage({init: 1, eng: TG_ENG});
+      });
+      worker.onmessage = e => { const w = waits[e.data.id]; if (!w) return; delete waits[e.data.id]; e.data.err ? w.no(new Error(e.data.err)) : w.ok(e.data.res); };
+      mode = "worker";
+    } catch(e){
+      if (worker) try { worker.terminate(); } catch(_){}
+      worker = null;
+      engine = await makeEngine(TesseractCore, TG_ENG); mode = "page";
+    }
+    try { window.TG_ENG = null; } catch(e){}
+  }
+  function init(){ if (!ready) ready = start().catch(e => { ready = null; throw e; }); return ready; }
+  async function rec(png, psm, dpi){
+    await init();
+    if (mode === "worker") return new Promise((ok, no) => { const id = ++seq; waits[id] = {ok, no}; worker.postMessage({id, png, psm, dpi}, [png]); });
+    await new Promise(r => setTimeout(r, 30));                 // let the "reading…" message paint first
+    return engine.rec(png, psm, dpi);
+  }
+
+  /* ---------- image prep: upright, ~1800 px, gray + contrast (pass A) and cleaned black/white (pass B) ---------- */
+  async function loadImage(file){
+    try { return await createImageBitmap(file, {imageOrientation: "from-image"}); }
+    catch(e){
+      const url = URL.createObjectURL(file);
+      try { return await new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = url; }); }
+      finally { setTimeout(() => URL.revokeObjectURL(url), 5000); }
+    }
+  }
+  function toGray(img, target, rot){
+    const w0 = img.width, h0 = img.height, s = target / Math.max(w0, h0);
+    let w = Math.round(w0 * s), h = Math.round(h0 * s);
+    const c = document.createElement("canvas"), sw = rot % 180 ? h : w, sh = rot % 180 ? w : h;
+    c.width = sw; c.height = sh;
+    const x = c.getContext("2d", {willReadFrequently: true});
+    x.imageSmoothingQuality = "high";
+    x.translate(sw / 2, sh / 2); x.rotate(rot * Math.PI / 180); x.drawImage(img, -w / 2, -h / 2, w, h);
+    const d = x.getImageData(0, 0, sw, sh).data, g = new Uint8ClampedArray(sw * sh);
+    for (let i = 0, j = 0; j < g.length; i += 4, j++) g[j] = (d[i] * 77 + d[i + 1] * 150 + d[i + 2] * 29) >> 8;
+    return {g, w: sw, h: sh};
+  }
+  function stretch(G){                        // auto-contrast: 1% of pixels clipped at each end
+    const hist = new Uint32Array(256); G.g.forEach(v => hist[v]++);
+    const cut = G.g.length * 0.01; let lo = 0, hi = 255, acc = 0;
+    while (lo < 255 && (acc += hist[lo]) < cut) lo++;
+    acc = 0; while (hi > 0 && (acc += hist[hi]) < cut) hi--;
+    const span = Math.max(1, hi - lo), out = new Uint8ClampedArray(G.g.length);
+    for (let i = 0; i < out.length; i++) out[i] = (G.g[i] - lo) * 255 / span;
+    return {g: out, w: G.w, h: G.h};
+  }
+  function binarize(G){                       // adaptive threshold, then erase long ruled lines (they confuse the layout)
+    const {g, w, h} = G, W = w + 1, ii = new Float64Array(W * (h + 1));
+    for (let y = 1; y <= h; y++){ let row = 0; for (let x = 1; x <= w; x++){ row += g[(y - 1) * w + x - 1]; ii[y * W + x] = ii[(y - 1) * W + x] + row; } }
+    const r = Math.max(10, Math.round(Math.max(w, h) / 90)), C = 12, dark = new Uint8Array(w * h);
+    for (let y = 0; y < h; y++){
+      const y0 = Math.max(0, y - r), y1 = Math.min(h, y + r + 1);
+      for (let x = 0; x < w; x++){
+        const x0 = Math.max(0, x - r), x1 = Math.min(w, x + r + 1);
+        const sum = ii[y1 * W + x1] - ii[y0 * W + x1] - ii[y1 * W + x0] + ii[y0 * W + x0];
+        if (g[y * w + x] < sum / ((y1 - y0) * (x1 - x0)) - C) dark[y * w + x] = 1;
+      }
+    }
+    const Lh = Math.round(w * 0.12), Lv = Math.round(h * 0.08);
+    for (let y = 0; y < h; y++){ let x = 0; while (x < w){ if (dark[y * w + x]){ let e = x; while (e < w && dark[y * w + e]) e++; if (e - x > Lh) dark.fill(0, y * w + x, y * w + e); x = e; } else x++; } }
+    for (let x = 0; x < w; x++){ let y = 0; while (y < h){ if (dark[y * w + x]){ let e = y; while (e < h && dark[e * w + x]) e++; if (e - y > Lv) for (let k = y; k < e; k++) dark[k * w + x] = 0; y = e; } else y++; } }
+    const out = new Uint8ClampedArray(w * h); for (let i = 0; i < out.length; i++) out[i] = dark[i] ? 0 : 255;
+    return {g: out, w, h};
+  }
+  function toPNG(G){
+    const c = document.createElement("canvas"); c.width = G.w; c.height = G.h;
+    const x = c.getContext("2d"), im = x.createImageData(G.w, G.h);
+    for (let i = 0, j = 0; j < G.g.length; i += 4, j++){ im.data[i] = im.data[i + 1] = im.data[i + 2] = G.g[j]; im.data[i + 3] = 255; }
+    x.putImageData(im, 0, 0);
+    return new Promise(ok => c.toBlob(b => b.arrayBuffer().then(ok), "image/png"));
+  }
+  function thumb(img, max){
+    const s = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement("canvas");
+    c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+    c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+    return c.toDataURL("image/jpeg", 0.72);
+  }
+  const KEYS = /model|serial|\bm\/n|\bs\/n|volts?|phase|\brla\b|\blra\b|\bfla\b|refrigerant|charge|psig|ampacity|fuse|breaker|design|hz\b|btu|input|output|furnace|compressor|motor|r-?410|r-?22|r-?454|r-?32|hfc/gi;
+  const score = r => (r.text.match(KEYS) || []).length * 12 + r.conf * 0.3 + Math.min(r.text.replace(/\s/g, "").length, 400) / 20;
+
+  /* read a photo: returns {text, conf, thumb, passes} ; progress(msg) is called between steps */
+  /* each pass reads the photo a different way; results are merged field by field */
+  const PLAN = [{bw: 0, psm: 3, dpi: 300}, {bw: 1, psm: 3}, {bw: 1, psm: 11, dpi: 200}];
+  async function read(file, progress, opts){
+    progress = progress || (() => {});
+    const img = await loadImage(file);
+    const th = thumb(img, 300);
+    progress("Loading the reader (first time only)…"); await init();
+    progress("Reading the photo…");
+    const plan = (opts && opts.plan) || PLAN, passes = [];
+    let rot = 0, first = null;
+    const grayAt = r => stretch(toGray(img, 1800, r));
+    let G0 = grayAt(0), BW = null;
+    for (let i = 0; i < plan.length; i++){
+      const v = plan[i];
+      if (v.sparse && passes.reduce((n, p) => n + (p.text.match(KEYS) || []).length, 0) >= 3) continue;   // only for gauges / thermometers
+      if (i === 1 && !(opts && opts.plan) && (first.text.match(KEYS) || []).length < 2 && first.conf < 60){  // maybe the photo is sideways
+        progress("Trying it turned sideways…");
+        for (const r of [90, 270]){
+          const t = await rec(await toPNG(grayAt(r)), 3, 300);
+          if (score(t) > score(first) * 1.25){ first = t; rot = r; passes[0] = t; }
+        }
+        if (rot){ G0 = grayAt(rot); BW = null; }
+      }
+      if (i) progress(`Reading it again a different way (${i + 1} of ${plan.length})…`);
+      if (v.bw && !BW) BW = binarize(G0);
+      const t = await rec(await toPNG(v.bw ? BW : G0), v.psm, v.dpi);
+      passes.push(t); if (!i) first = t;
+    }
+    try { if (img.close) img.close(); } catch(e){}
+    return {text: passes.map(p => p.text).join("\n"), conf: Math.max(...passes.map(p => p.conf)), thumb: th, passes};
+  }
+  return {read, init, get mode(){ return mode; }};
+})();
+
+/* ---------- Gary: photos — data tags, gauges and thermometers (offline) ----------
+   Reads the photo with the on-phone OCR engine, then:
+   · data tag  -> brand, model, serial, build date (brand serial rules), size, refrigerant/charge, electrical, pressures, gas data
+   · gauges / thermometers -> pre-fills a readings form the tech confirms, which feeds Gary's diagnosis
+   The same tag decoding also works on typed text ("decode Lennox serial 5807H14681"). */
+
+/* ----- brands: [display name, OCR-tolerant regex, serial family, mini-split sizes] ----- */
+const TAG_BRANDS = [
+  ["Carrier", /CARRIER/, "carrier"], ["Bryant", /BRYANT/, "carrier"], ["Payne", /PAYNE/, "carrier"], ["Day & Night", /DAY\s*(&|AND)\s*NIGHT/, "carrier"],
+  ["Heil", /\bHEIL\b/, "icp"], ["Tempstar", /TEMPSTAR/, "icp"], ["Comfortmaker", /COMFORTMAKER/, "icp"], ["Arcoaire", /ARCOAIRE/, "icp"], ["KeepRite", /KEEP\s?RITE/, "icp"],
+  ["International Comfort Products", /INTERNATIONAL COMFORT|\bICP\b/, "icp"],
+  ["American Standard", /AMERICAN\s*STANDARD/, "trane"], ["Trane", /TRANE/, "trane"], ["RunTru", /RUNTRU/, "trane"],
+  ["Lennox", /LENNOX|LENN0X/, "lennox"], ["Armstrong Air", /ARMSTRONG/, ""], ["Ducane", /DUCANE/, ""], ["AirEase", /AIR\s?EASE/, ""], ["Concord", /\bCONCORD\b/, ""],
+  ["Goodman", /GOODMAN|G00DMAN/, "goodman"], ["Amana", /AMANA/, "goodman"], ["Janitrol", /JANITROL/, "goodman"], ["Daikin", /DAIKIN/, "goodman"],
+  ["Rheem", /RHEEM/, "rheem"], ["Ruud", /\bRUUD\b/, "rheem"], ["WeatherKing", /WEATHER\s?KING/, "rheem"],
+  ["York", /\bYORK\b/, "york"], ["Coleman", /COLEMAN/, "york"], ["Luxaire", /LUXAIRE/, "york"], ["Guardian", /\bGUARDIAN\b/, "york"], ["Champion", /\bCHAMPION\b/, "york"],
+  ["Mitsubishi Electric", /MITSU|SUBISHI/, "mitsubishi", 1], ["Fujitsu", /FUJITSU/, "", 1], ["LG", /\bLG\s+ELECTRONICS|\bLG\b/, "", 1], ["Samsung", /SAMSUNG/, "", 1],
+  ["Gree", /\bGREE\b/, "", 1], ["Midea", /MIDEA/, "", 1], ["MrCool", /MR\.?\s?COOL/, "", 1], ["Bosch", /BOSCH/, ""],
+  ["Frigidaire", /FRIGIDAIRE/, ""], ["Maytag", /MAYTAG/, ""], ["Gibson", /GIBSON/, ""], ["Westinghouse", /WESTINGHOUSE/, ""], ["Intertherm", /INTERTHERM/, ""], ["Nordyne", /NORDYNE/, ""],
+  ["Heat Controller", /HEAT CONTROLLER/, ""], ["Comfort-Aire", /COMFORT-?AIRE/, ""], ["Friedrich", /FRIEDRICH/, "", 1],
+];
+/* weak guess from the model number when the brand name wasn't read */
+const TAG_PREFIX = [
+  [/^(XC|XP|ML1|EL1|SL1|13AC|14AC|16AC|13HP|14HP|EL2|ML2|SL2|CBX|CX3)/, "Lennox"], [/^(GSX|GSZ|GMS|GMV|GME|GMH|GCV|GPC|GPH|GPG|ARUF|AVPT|CAPF|CHPF|SSX|SSZ)/, "Goodman"],
+  [/^(ASX|ASZ|AVX|AVZ|AMV|AMS)/, "Amana"], [/^(DX1|DZ1|DX2|DZ2|DM9|DC9)/, "Daikin"], [/^(\dTT|\dTW|TUD|TUH|TUE|S9V|S8X)/, "Trane"], [/^(4A7|4A6|AUD|AUH)/, "American Standard"],
+  [/^(24A|25H|25V|38A|38H|40R|58S|58T|59S|59T|FB4|FV4|FE4)/, "Carrier"], [/^(113A|180A|187B|123A|126B|127B|315A|912S|926T)/, "Bryant"], [/^(RA1|RP1|RGP|RGR|R9[2-8]|RH1|RH2|RP2|RA2)/, "Rheem"],
+  [/^(UA1|UP1|UGP|U9[2-8]|UH1)/, "Ruud"], [/^(YC|YH|YZ|YX|TG9|TM9|YP9|YM9|YT9)/, "York"], [/^(TC|TH|TG8)/, "Luxaire / Coleman (JCI)"],
+  [/^(PUZ|PUY|MUZ|MSZ|MXZ|SUZ|SEZ|SVZ|PKA|PLA|PVA|MLZ|MUY|MSY)/, "Mitsubishi Electric"], [/^(AOU|ASU|AUU|ARU)/, "Fujitsu"], [/^(N4A|N4H|CA4|CH4|FCM4|N9M|N8M|N4B)/, "ICP (Heil / Tempstar / Comfortmaker)"],
+];
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const wkMon = w => MON[Math.min(11, Math.floor((Math.max(1, w) - 1) / 4.35))];
+const nowY = () => new Date().getFullYear();
+const y2 = yy => { const y = 2000 + yy; return y > nowY() ? y - 100 : y; };
+const digitsFix = s => s.replace(/[OQD]/g, "0").replace(/[IL|!]/g, "1").replace(/S/g, "5").replace(/B/g, "8").replace(/Z/g, "2").replace(/G/g, "6");
+
+/* ----- manufacture date from a serial number, by brand family ----- */
+function serialDate(fam, sn){
+  if (!sn) return null;
+  sn = sn.replace(/[^A-Z0-9]/g, "");
+  const d4 = digitsFix(sn.slice(0, 4)), wk = (w, y, why) => (w >= 1 && w <= 53) ? {y, m: wkMon(w), w, how: why} : null;
+  if (fam === "carrier" || (fam === "icp" && /^\d/.test(sn))){
+    if (/^\d{4}/.test(d4)) return wk(+d4.slice(0, 2), y2(+d4.slice(2, 4)), "serial digits 1–2 = week, 3–4 = year");
+  }
+  if (fam === "icp" && /^[A-Z]/.test(sn)){
+    const t = digitsFix(sn.slice(1, 5)); if (/^\d{4}$/.test(t)) return wk(+t.slice(2, 4), y2(+t.slice(0, 2)), "letter = plant, then 2-digit year, 2-digit week");
+  }
+  if (fam === "goodman" && /^\d{4}/.test(d4)){
+    const y = y2(+d4.slice(0, 2)), m = +d4.slice(2, 4);
+    if (m >= 1 && m <= 12) return {y, m: MON[m - 1], how: "serial digits 1–2 = year, 3–4 = month"};
+  }
+  if (fam === "lennox"){
+    const m = /^(\d{2})(\d{2})([A-HJ-M])/.exec(digitsFix(sn.slice(0, 4)) + sn.slice(4));
+    if (m) return {y: y2(+m[2]), m: MON["ABCDEFGHJKLM".indexOf(m[3])], how: "digits 1–2 = plant, 3–4 = year, letter = month (A = Jan … M = Dec, no I)"};
+  }
+  if (fam === "trane"){
+    if (/^\d{2}\d{2}/.test(d4) && sn.length >= 10 && +d4.slice(0, 2) >= 10) return wk(+d4.slice(2, 4), y2(+d4.slice(0, 2)), "2010 and newer: digits 1–2 = year, 3–4 = week");
+    if (/^\d{3}/.test(d4) && sn.length === 9) return wk(+d4.slice(1, 3), 2000 + +d4[0], "2002–2009: digit 1 = year, 2–3 = week");
+    const T = {A: 1980, O: 1980, T: 1981, U: 1982, W: 1983, X: 1984, Y: 1985, S: 1986, B: 1987, C: 1988, D: 1989, E: 1990, F: 1991, G: 1992, H: 1993, J: 1994, K: 1995, L: 1996, M: 1997, N: 1998, P: 1999, R: 2000, Z: 2001};
+    const t = digitsFix(sn.slice(1, 3));
+    if (T[sn[0]] && /^\d\d$/.test(t)) return wk(+t, T[sn[0]], "before 2002: letter = year, next 2 digits = week");
+  }
+  if (fam === "rheem"){
+    const m = /^[A-Z](\d{2})(\d{2})\d{4,}/.exec(sn[0] + digitsFix(sn.slice(1, 5)) + sn.slice(5)) || /[A-Z](\d{2})(\d{2})\d{5,}$/.exec(sn);
+    if (m) return wk(+m[1], y2(+m[2]), "letter = plant, then 2-digit week, 2-digit year");
+    const o = /^(\d{2})(\d{2})[A-Z]/.exec(sn); if (o && +o[1] >= 1 && +o[1] <= 12) return {y: y2(+o[2]), m: MON[+o[1] - 1], how: "older style: digits 1–2 = month, 3–4 = year"};
+  }
+  if (fam === "york"){
+    const YM = "ABCDEFGHKLMN";
+    let m = /^[A-Z]([0-9O])([A-HK-N])([0-9O])/.exec(sn);
+    if (m){ const yy = +(digitsFix(m[1]) + digitsFix(m[3])); return {y: y2(yy), m: MON[YM.indexOf(m[2])], how: "Oct 2004 and newer: characters 2 + 4 = year, letter 3 = month"}; }
+    m = /^[A-Z]([A-HK-N])([A-HJ-NPRSTV-Y])[A-Z]/.exec(sn);
+    if (m){ const YL = "ABCDEFGHJKLMNPRSTVWXY", i = YL.indexOf(m[2]); return {y: 1971 + i, y2: 1992 + i, m: MON[YM.indexOf(m[1])], how: "before Oct 2004: letter 2 = month, letter 3 = year (repeats every 21 years)"}; }
+  }
+  if (fam === "mitsubishi"){
+    const m = /^([0-9O])([1-9XYZ])/.exec(sn);
+    if (m){ const d = +digitsFix(m[1]), mo = "123456789XYZ".indexOf(m[2]); let y = 2020 + d; if (y > nowY()) y -= 10; return {y, y2: y - 10, m: MON[mo], how: "digit 1 = last digit of the year, digit 2 = month (X/Y/Z = Oct/Nov/Dec)"}; }
+  }
+  return null;
+}
+/* printed date on the tag wins over decoding */
+function printedDate(T){
+  const m = /(?:MFG\.?|MFD\.?|MANUFACTURED|DATE OF MFG|DATE OF MANUFACTURE|MFR\.? DATE|FAB)\s*(?:DATE|ON)?\s*[:.]?\s*(\d{1,2})\s*[\/\-.]\s*(?:\d{1,2}\s*[\/\-.]\s*)?(\d{4}|\d{2})\b/.exec(T);
+  if (!m) return null;
+  const mo = +m[1], y = m[2].length === 4 ? +m[2] : y2(+m[2]);
+  if (mo < 1 || mo > 12 || y < 1960 || y > nowY()) return null;
+  return {y, m: MON[mo - 1], how: "printed on the tag"};
+}
+/* nominal size from the model number: the 3-digit BTU code (036 = 36,000 BTU/h = 3 tons) */
+function modelSize(model, mini){ const r = modelSize2(model, mini); return r; }
+function modelSize2(model, mini){
+  if (!model) return null;
+  const SET = mini ? ["09", "12", "15", "18", "24", "30", "36", "42", "48"] : ["18", "24", "30", "36", "42", "48", "60"];
+  const m = model.replace(/^\d{2,3}(?=[A-Z])/, "");                  // skip Carrier/Bryant family codes like 24ACC / 113ANA
+  const runs = m.match(/\d+/g) || [];
+  for (const r of runs){
+    if (r.length === 2 && SET.includes(r)) return {k: +r, code: r};
+    if (r.length === 3){ if (r[0] === "0" && SET.includes(r.slice(1))) return {k: +r.slice(1), code: r}; if (SET.includes(r.slice(1)) && !/^(208|230|460|575|115)$/.test(r)) return {k: +r.slice(1), code: r.slice(1)}; }
+    if (r.length >= 4){ const z = r.match(new RegExp("0(" + SET.join("|") + ")")); if (z) return {k: +z[1], code: z[0]}; if (SET.includes(r.slice(-2))) return {k: +r.slice(-2), code: r.slice(-2)}; }
+  }
+  return null;
+}
+
+/* ----- read one block of text ----- */
+function tagNorm(t){
+  return " " + t.toUpperCase().replace(/[—–−]/g, "-").replace(/[|_[\]{}“”"‘’`~]/g, " ").replace(/Ł/g, "L")
+    .replace(/(\d)\s*-\s*(?=\d)/g, "$1-").replace(/([A-Z0-9])\s+-\s*(?=[A-Z0-9])/g, "$1-").replace(/[ \t]+/g, " ") + " ";
+}
+const tnum = s => s == null ? undefined : parseFloat(String(s).replace(/,/g, ""));
+function grab(T, re, i = 1){ const m = re.exec(T); return m ? m[i] : undefined; }
+function tagFields(raw){
+  const T = tagNorm(raw), F = {};
+  const brand = TAG_BRANDS.find(b => b[1].test(T));
+  if (brand){ F.brand = brand[0]; F.fam = brand[2]; F.mini = !!brand[3]; }
+  const tok = "([A-Z0-9][A-Z0-9\\-\\/.]{3,26}[A-Z0-9])";
+  F.model = grab(T, new RegExp("(?:MODEL|M\\/N|MOD\\.|MDL\\.?)\\s*(?:NO\\.?|NUMBER|#)?\\s*[:.#]?\\s*" + tok)) ||
+            grab(T, new RegExp("MODEL\\s*(?:NO\\.?|NUMBER)?\\s*[:.]?\\s*\\n\\s*" + tok));
+  if (F.model && (!/\d/.test(F.model) || /^(NO|NUMBER)$/.test(F.model))) F.model = undefined;
+  F.service = grab(T, new RegExp("SERVICE\\s*REF\\.?\\s*" + tok));
+  F.serial = grab(T, /(?:SERIAL|S\/N|S\/ N|SIN\.|SER\.)\s*(?:NO\.?|NUMBER|#)?\s*[:.#\-]*\s*#?\s*-?\s*([A-Z0-9]{6,20})\b/) ||
+             grab(T, /SERIAL\s*(?:NO\.?|NUMBER)?\s*[:.]?\s*\n\s*([A-Z0-9]{6,20})\b/);
+  if (F.serial && !/\d/.test(F.serial)) F.serial = undefined;
+  if (F.model) F.model = F.model.replace(/[.\/-]+$/, "");
+  // refrigerant + charge
+  const rf = /\b(?:R|HFC|HCFC)\s*-?\s*(4[1I]0\s*A|22|454\s*B|32|407\s*C|134\s*A|404\s*A)\b/.exec(T) || /\bR-?(4[1I]0A|454B|407C|134A|404A)/.exec(T);
+  if (rf) F.ref = "R-" + rf[1].replace(/\s/g, "").replace("I", "1");
+  else if (/PURON\s*ADVANCE/.test(T)) F.ref = "R-454B"; else if (/PURON|GENETRON\s*AZ-?20/.test(T)) F.ref = "R-410A";
+  const chg = /CHARGE[D]?[^\d]{0,30}(\d{1,3})\s*(?:LBS?|#)\.?\s*(\d{1,2})\s*(?:OZ|0Z|02|OZS|0ZS)\b/.exec(T) || /\b(\d{1,3})\s*(?:LBS?|IBS|BS)\.?\s*(\d{1,2})\s*(?:OZ|0Z|02|OZS|0ZS)\b/.exec(T);
+  if (chg) F.charge = {lb: +chg[1], oz: +chg[2]};
+  else { const kg = /CHARGE[D]?[^\d]{0,30}(\d{1,2}(?:\.\d{1,2})?)\s*KG/.exec(T); if (kg) F.charge = {kg: +kg[1]};
+    else { const oz = /CHARGE[D]?[^\d]{0,30}(\d{2,3}(?:\.\d)?)\s*(?:OZ|0Z)\b/.exec(T); if (oz) F.charge = {oz: +oz[1]}; } }
+  const add = /EXCEED[S]?\s*(\d{2,3})\s*FT[^\d]{0,20}(\d{1,2}(?:\.\d)?)\s*(?:OZ|0Z|02)[^\d]{0,30}?(\d{1,2}|S)\s*FT/.exec(T);
+  if (add) F.addChg = {ft: +add[1], oz: +add[2], per: add[3] === "S" ? 5 : +add[3]};
+  const cf = /(?:CHARGED FOR|FOR UP TO|INCLUDES? CHARGE FOR)\s*(\d{2,3})\s*(?:FT|FEET)/.exec(T); if (cf) F.chgFt = +cf[1];
+  // electrical
+  const VOK = [115, 120, 200, 208, 220, 230, 240, 265, 277, 460, 480, 575];
+  const vv = /\b(\d{3})\s*[\/-]\s*(\d{3})\b/g; let m;
+  while ((m = vv.exec(T))) if (VOK.includes(+m[1]) && VOK.includes(+m[2])){ F.volts = m[1] + "/" + m[2]; F._vAt = m.index + m[0].length; break; }
+  if (!F.volts){ const v1 = /\b(115|208|230|460|575|120|240)\s*(?:V\b|VOLTS?|VAC)/.exec(T); if (v1) F.volts = v1[1]; }
+  F.ph = tnum(grab(T, /\b([13])\s*(?:PH\b|PHASE|Ø)/) || grab(T, /\bPH(?:ASE)?\s*[:.]?\s*([13])\b/));
+  F.hz = tnum(grab(T, /\b(50|60)\s*HZ\b/) || grab(T, /\bHZ\s*[:.]?\s*(50|60)\b/));
+  if (F._vAt && (!F.ph || !F.hz)){ const after = /^\s*[^\dA-Z]{0,3}([13])\s*[^\dA-Z]{0,3}(50|60)\b/.exec(T.slice(F._vAt)); if (after){ F.ph = F.ph || +after[1]; F.hz = F.hz || +after[2]; } }
+  F.vmin = tnum(grab(T, /MIN(?:IMUM)?\.?\s*(?:VOLT(?:AGE|S)?\.?)?\s*[:.]?\s*(1[89]\d|2\d\d|41\d|4[2-9]\d)\b/));
+  F.vmax = tnum(grab(T, /MAX(?:IMUM)?\.?\s*(?:VOLT(?:AGE|S)?\.?)?\s*[:.]?\s*(2[3-6]\d|50\d|5[1-9]\d)\b/));
+  F.rla = tnum(grab(T, /\bR\.?\s?L\.?\s?A\.?\s*[:.]?\s*(\d{1,3}(?:\.\d{1,2})?)\b/));
+  F.lra = tnum(grab(T, /\b[LTI1]\.?\s?R\.?\s?A\.?\s*[:.]?\s*(\d{1,3}(?:\.\d)?)\b/));
+  const comp = /COMPRESSOR\s*[^\dA-Z]{0,3}(\d{1,2}(?:\.\d{1,2})?)\s*[^\dA-Z]{0,4}(\d{2,3}(?:\.\d)?)\b/.exec(T);
+  if (comp && /R\.?\s?L\.?\s?A/.test(T)){ F.rla = F.rla || +comp[1]; F.lra = F.lra || +comp[2]; }
+  F.fla = tnum(grab(T, /\bF\.?\s?L\.?\s?A\.?\s*[:.]?\s*(\d{0,2}\.\d{1,2}|\d{1,2})\b/) || grab(T, /FAN\s*MOTOR\s*[^\dA-Z]{0,3}(\d{0,2}\.\d{1,2})/));
+  F.hp = grab(T, /\b(\d\/\d{1,2}|\d?\.\d{1,2})\s*HP\b/) || grab(T, /\bHP\s*[:.]?\s*(\d\/\d{1,2}|\.\d{1,2}|\d\.\d{1,2})\b/);
+  F.mca = tnum(grab(T, /(?:MIN(?:IMUM)?\.?\s*(?:CKT|CIR(?:CUIT)?)\.?\s*AMP(?:ACITY|S)?|\bMCA\b)[^\d]{0,40}(\d{1,3}(?:\.\d)?)\b/));
+  F.mocp = tnum(grab(T, /(?:MAX(?:IMUM)?\.?\s*(?:FUSE|OVERCURRENT|O\.?C\.?P|CKT\.?\s*BKR)|MOCP|\bMOP\b)[^\d]{0,70}(\d{2,3})\b/));
+  F.brk = tnum(grab(T, /\bBREAKER\s*[:.]?\s*(\d{2,3})\s*A/));
+  // design / test pressures
+  F.dHi = tnum(grab(T, /\b(\d{3})[ \t]*(?:PSIG?)?[ \t]*H[I1L](?:GH)?[ \t]*SIDE/) || grab(T, /\bH[I1L](?:GH)?[ \t]*(?:SIDE)?[ \t]*[:.]?[ \t]*(\d{3})[ \t]*(?:PSIG?|#)/) || grab(T, /\bHI(?:GH)?[ \t]*(?:SIDE)?[ \t]*[:.]?[ \t]*(\d{3})\b/));
+  F.dLo = tnum(grab(T, /\b(\d{3})[ \t]*(?:PSIG?)?[ \t]*L[O0](?:W)?[ \t]*SIDE/) || grab(T, /\bL[O0](?:W)?[ \t]*(?:SIDE)?[ \t]*[:.]?[ \t]*(\d{3})[ \t]*(?:PSIG?|#)/) || grab(T, /\bLO(?:W)?[ \t]*(?:SIDE)?[ \t]*[:.]?[ \t]*(\d{3})\b/));
+  if (F.dHi && (F.dHi < 250 || F.dHi > 700)) F.dHi = undefined; if (F.dLo && (F.dLo < 100 || F.dLo > 500)) F.dLo = undefined;
+  // gas heat
+  const inp = /INPUT[^\d]{0,30}(\d{2,3}[, ]?\d{3})\b/.exec(T); if (inp && tnum(inp[1]) >= 10000) F.input = tnum(inp[1].replace(" ", ""));
+  const out = /(?:OUTPUT|HEATING CAPACITY)[^\d]{0,30}(\d{2,3}[, ]?\d{3})\b/.exec(T); if (out && tnum(out[1]) >= 10000) F.output = tnum(out[1].replace(" ", ""));
+  const rise = /(?:TEMP(?:ERATURE)?\.?\s*RISE|RISE\s*RANGE)[^\d]{0,30}(\d{2})\s*°?\s*F?\s*(?:-|TO)\s*(\d{2,3})/.exec(T); if (rise) F.rise = [+rise[1], +rise[2]];
+  if (/NATURAL\s*GAS|\bNAT\.?\s*GAS\b/.test(T)) F.gas = "Natural gas"; else if (/PROPANE|\bL\.?P\.?\s*GAS|\bLP\b/.test(T)) F.gas = "Propane (LP)";
+  F.manifold = tnum(grab(T, /MANIFOLD[^\d]{0,40}(\d{1,2}(?:\.\d{1,2})?)/));
+  F.afue = tnum(grab(T, /AFUE\s*[:.]?\s*(\d{2}(?:\.\d)?)/) || grab(T, /(\d{2}(?:\.\d)?)\s*%?\s*AFUE/));
+  F.esp = tnum(grab(T, /(?:EXTERNAL\s*STATIC|E\.?S\.?P\.?)[^\d]{0,25}(0?\.\d{1,2})/));
+  // explicit size on the tag
+  const tons = /(?:NOMINAL\s*)?(?:TONS?|TONNAGE)\s*[:.]?\s*(\d(?:\.\d)?)\b/.exec(T) || /\b(\d(?:\.\d)?)\s*TONS?\b/.exec(T);
+  if (tons && +tons[1] >= 0.75 && +tons[1] <= 25) F.tons = +tons[1];
+  const cap = /(?:COOLING\s*)?CAPACITY[^\d]{0,20}(\d{2}[, ]?\d{3})\s*BTU/.exec(T); if (cap) F.btu = tnum(cap[1].replace(" ", ""));
+  // what kind of equipment
+  F.kind = /HEAT\s*PUMP/.test(T) ? "Heat pump" : /FURNACE|GAS-?FIRED|FORCED AIR/.test(T) || F.input ? "Gas furnace" : /AIR\s*HANDLER|FAN\s*COIL|BLOWER\s*COIL/.test(T) ? "Air handler"
+    : /PACKAGE[D]?\s*(UNIT|GAS|HEAT|AIR)|ROOFTOP/.test(T) ? "Package unit" : /EVAPORATOR|INDOOR COIL|CASED COIL|\bCOIL\b/.test(T) && !/CONDENS/.test(T) ? "Evaporator coil"
+    : /CONDENSING|CONDENSER|AIR\s*CONDITION/.test(T) ? "Air conditioner (condenser)" : "";
+  if (/SPLIT-?SYSTEM/.test(T) && F.mini && F.kind === "Heat pump") F.kind = "Split-system heat pump (outdoor unit)";
+  F.keys = (T.match(/MODEL|SERIAL|\bM\/N|\bS\/N|VOLT|PHASE|\bRLA\b|\bLRA\b|\bFLA\b|REFRIGERANT|CHARGE|PSIG|AMPACITY|FUSE|BREAKER|DESIGN|\bHZ\b|BTU|INPUT|FURNACE|COMPRESSOR|MOTOR/g) || []).length;
+  delete F._vAt;
+  return F;
+}
+/* combine several OCR passes: most common value per field wins */
+function tagMerge(texts){
+  const all = texts.map(tagFields).concat([tagFields(texts.join("\n"))]), F = {};
+  const keys = new Set(); all.forEach(f => Object.keys(f).forEach(k => keys.add(k)));
+  keys.forEach(k => {
+    const vals = all.map(f => f[k]).filter(v => v !== undefined && v !== "" && v !== null && !(typeof v === "number" && isNaN(v)));
+    if (!vals.length) return;
+    const cnt = new Map(); vals.forEach(v => { const s = JSON.stringify(v); cnt.set(s, (cnt.get(s) || 0) + 1); });
+    let best = null, bn = 0; cnt.forEach((n, s) => { if (n > bn || (n === bn && k === "model" && JSON.parse(s).length > JSON.parse(best).length)){ best = s; bn = n; } });
+    F[k] = JSON.parse(best);
+  });
+  F.keys = Math.max(...all.map(f => f.keys || 0));
+  return tagDerive(F);
+}
+function tagDerive(F){
+  if (!F.brand && F.model){ const p = TAG_PREFIX.find(x => x[0].test(F.model.replace(/-/g, ""))); if (p){ F.brand = p[1]; F.brandGuess = 1;
+    const b = TAG_BRANDS.find(x => x[0] === p[1]); if (b){ F.fam = b[2]; F.mini = !!b[3]; } else if (/Luxaire/.test(p[1])) F.fam = "york"; else if (/ICP/.test(p[1])) F.fam = "icp"; } }
+  F.date = F.printed || serialDate(F.fam, F.serial);
+  if (!F.tons && !F.btu && F.kind !== "Gas furnace"){ const k = modelSize(F.model, F.mini); if (k){ F.btu = k.k * 1000; F.sizeFrom = k.code; } }
+  if (F.tons && !F.btu) F.btu = F.tons * 12000;
+  if (F.btu && !F.tons) F.tons = F.btu / 12000;
+  return F;
+}
+function tagParse(text){ const F = tagMerge([text]); F.printed = printedDate(tagNorm(text)); return tagDerive(F); }
+
+/* ----- the answer card ----- */
+const REFID = {"R-410A": "r410a", "R-22": "r22", "R-454B": "r454b", "R-32": "r32", "R-134A": "r134a", "R-404A": "r404a", "R-407C": "r407c"};
+function tagHTML(F, raw){
+  const row = (k, v) => v ? `<tr><th>${k}</th><td>${v}</td></tr>` : "";
+  const tons = F.tons ? `${+F.tons.toFixed(2)} ton${F.tons === 1 ? "" : "s"} (${(F.btu).toLocaleString()} BTU/h)${F.sizeFrom ? ` — from the "${F.sizeFrom}" in the model number` : ""}` : "";
+  let made = "", age = null;
+  if (F.date){
+    age = nowY() - F.date.y;
+    if (F.date.y2){
+      const a = [F.date.y, F.date.y2].sort((p, q) => p - q), ages = a.map(y => nowY() - y).sort((p, q) => p - q);
+      made = `${F.date.m ? F.date.m + " " : ""}${a[0]} or ${F.date.m ? F.date.m + " " : ""}${a[1]} — about ${ages[0]} or ${ages[1]} years old<br><span class="gdim">${esc(F.date.how)}. The serial only gives the last digit of the year, so use the unit's condition and model generation to pick.</span>`;
+      age = null;
+    } else made = `${F.date.m ? F.date.m + " " : ""}${F.date.y} — about ${age} year${age === 1 ? "" : "s"} old<br><span class="gdim">${esc(F.date.how)}</span>`;
+  } else if (F.serial) made = `<span class="gdim">I don't have a date rule for ${F.brand ? esc(F.brand) : "this brand"} — check for a printed MFG date.</span>`;
+  const chg = F.charge ? (F.charge.kg ? `${F.charge.kg} kg` : F.charge.oz !== undefined && F.charge.lb === undefined ? `${F.charge.oz} oz` : `${F.charge.lb} lb ${F.charge.oz} oz`) : "";
+  const elec = [F.volts ? F.volts + " V" : "", F.ph ? F.ph + " ph" : "", F.hz ? F.hz + " Hz" : ""].filter(Boolean).join(" · ") + (F.vmin && F.vmax ? ` <span class="gdim">(runs ${F.vmin}–${F.vmax} V)</span>` : "");
+  const tbl = "<table class=\"gtbl\">" + row("Brand", F.brand ? esc(F.brand) + (F.brandGuess ? ' <span class="gdim">(guessed from model)</span>' : "") : "") + row("Type", esc(F.kind || "")) +
+    row("Model", F.model ? `<b>${esc(F.model)}</b>` : "") + row("Service ref.", esc(F.service || "")) + row("Serial", F.serial ? `<b>${esc(F.serial)}</b>` : "") + row("Made", made) +
+    row("Size", tons) + row("Refrigerant", F.ref ? `<b>${F.ref}</b>` + (chg ? ` · factory charge ${chg}` : "") : chg ? "Factory charge " + chg : "") +
+    row("Line set", F.addChg ? `Charged for up to ${F.addChg.ft} ft — add ${F.addChg.oz} oz per ${F.addChg.per} ft beyond that` : F.chgFt ? `Charged for ${F.chgFt} ft of line set` : "") +
+    row("Power", elec) + row("Compressor", [F.rla ? `RLA ${F.rla} A` : "", F.lra ? `LRA ${F.lra} A` : ""].filter(Boolean).join(" · ")) +
+    row("Fan motor", [F.fla ? `FLA ${F.fla} A` : "", F.hp ? `${F.hp} HP` : ""].filter(Boolean).join(" · ")) +
+    row("Circuit", [F.mca ? `MCA ${F.mca} A` : "", F.mocp ? `max fuse/breaker ${F.mocp} A` : "", F.brk ? `breaker ${F.brk} A` : ""].filter(Boolean).join(" · ")) +
+    row("Design pressure", F.dHi || F.dLo ? [F.dHi ? `high ${F.dHi} psig` : "", F.dLo ? `low ${F.dLo} psig` : ""].filter(Boolean).join(" · ") : "") +
+    row("Gas input", F.input ? F.input.toLocaleString() + " BTU/h" + (F.output ? ` · output ${F.output.toLocaleString()}` : "") : "") + row("Fuel", F.gas || "") +
+    row("Temp rise", F.rise ? `{d:${F.rise[0]}-${F.rise[1]}}` : "") + row("Manifold", F.manifold ? `${F.manifold} in. WC` : "") + row("AFUE", F.afue ? F.afue + "%" : "") +
+    row("Max static", F.esp ? `${F.esp} in. WC` : "") + "</table>";
+  const tips = [];
+  if (age !== null && F.kind !== "Gas furnace" && age >= 15) tips.push(`At about ${age} years it's past the typical 12–15 year life of an AC/heat pump — worth mentioning replacement options.`);
+  if (age !== null && F.kind === "Gas furnace" && age >= 18) tips.push(`At about ${age} years this furnace is near the end of a typical 15–20 year life — inspect the heat exchanger closely.`);
+  if (F.ref === "R-22") tips.push("R-22 hasn't been produced since 2020 — only recovered/reclaimed R-22 is available, so find and fix leaks before adding charge.");
+  if (F.ref === "R-454B" || F.ref === "R-32") tips.push(`${F.ref} is an A2L (mildly flammable) — use A2L-rated recovery equipment and leak detectors.`);
+  if (F.rla) tips.push(`Compressor amps should stay at or below RLA (${F.rla} A); higher usually means high head pressure, low voltage or a failing compressor.`);
+  if (F.mca && F.mocp) tips.push(`Wire must be sized for at least ${F.mca} A; the breaker can't be larger than ${F.mocp} A.`);
+  if (F.dHi) tips.push(`Design pressures are the strength rating for testing — not normal operating pressures.`);
+  if (F.rise) tips.push(`In heat, supply − return temperature must be between {d:${F.rise[0]}-${F.rise[1]}}; ask me "80000 btu rise 50" to check airflow.`);
+  const found = [F.model, F.serial, F.ref, F.volts, F.rla, F.mca].filter(Boolean).length;
+  const head = F.typed ? "Here's what that decodes to:" : found >= 2 ? "Here's what I read from the data tag:" : "I could only read part of this tag — here's what I got:";
+  const miss = [!F.model && "model", !F.serial && "serial", !F.ref && F.kind !== "Gas furnace" && "refrigerant"].filter(Boolean);
+  const data = esc(JSON.stringify({brand: F.brand, model: F.model, serial: F.serial, ref: F.ref, kind: F.kind, tons: F.tons, charge: chg, volts: F.volts, rla: F.rla, lra: F.lra, mca: F.mca, mocp: F.mocp, made: F.date ? (F.date.m ? F.date.m + " " : "") + F.date.y : ""}));
+  return `<div class="gtag" data-tag="${data}">${head}${tbl}` +
+    (tips.length ? `<div class="gsec">Good to know</div><ul>${tips.map(t => `<li>${t}</li>`).join("")}</ul>` : "") +
+    (miss.length && !F.typed ? `<p class="gdim">Couldn't make out the ${miss.join(", ")}. A closer, straight-on photo in good light helps — or type it, like "decode ${F.brand || "Lennox"} serial 5807H14681".</p>` : "") +
+    `<div class="gacts">${F.ref && REFID[F.ref.toUpperCase()] ? `<button type="button" class="gact" data-tg="pt">Open ${F.ref} P-T chart →</button>` : ""}<button type="button" class="gact" data-tg="note">Start a note with this →</button></div>` +
+    (raw ? `<details class="graw"><summary>Text I read</summary><pre>${esc(raw.trim().slice(0, 2500))}</pre></details>` : "") + `</div>`;
+}
+
+/* ----- gauges, digital manifolds, thermometers: pick out likely readings, then the tech confirms ----- */
+function readingsGuess(raw){
+  const T = tagNorm(raw).replace(/(\d)\s?\.\s?([0-9O])/g, (m, x, y) => x + "." + (y === "O" ? "0" : y)), R = {};
+  const f = re => { const m = re.exec(T); return m ? parseFloat(m[1]) : undefined; };
+  const C = /°\s*C\b|\bDEG\s*C\b/.test(T) && !/°\s*F\b/.test(T);
+  R.loP = f(/(?:SUCT(?:ION)?|LOW|VAP(?:OR)?|\bLO)\b[^\d]{0,12}(\d{2,3}(?:\.\d)?)/);
+  R.hiP = f(/(?:HEAD|HIGH|LIQ(?:UID)?|DISCH(?:ARGE)?|\bHI)\b[^\d]{0,12}(\d{3}(?:\.\d)?)/);
+  R.micron = f(/(\d{2,5})\s*(?:MICRONS?|µ|MIC\b)/);
+  const ps = [...T.matchAll(/(\d{2,3}(?:\.\d)?)\s*(?:PSIG?|PSIS|SIG|#)/g)].map(m => +m[1]);
+  if (ps.length >= 2){ const s2 = ps.slice().sort((a, b) => a - b); if (R.loP === undefined) R.loP = s2[0]; if (R.hiP === undefined) R.hiP = s2[s2.length - 1]; }
+  else if (ps.length === 1 && R.loP === undefined && R.hiP === undefined){ if (ps[0] >= 200) R.hiP = ps[0]; else R.loP = ps[0]; }
+  // digital manifolds: SAT + SH on the vapor side, SAT - SC on the liquid side -> line temperatures
+  const sats = [...T.matchAll(/\bSAT\w*\s*[:.]?\s*(-?\d{1,3}(?:\.\d)?)/g)].map(m => +m[1]);
+  const sh = f(/\b(?:SH|S\.H\.|SUPERHEAT)\b\s*[:.]?\s*(\d{1,2}(?:\.\d)?)/), sc = f(/\b(?:SC|S\.C\.|SUBCOOL\w*)\b\s*[:.]?\s*(\d{1,2}(?:\.\d)?)/);
+  const r1 = x => Math.round(x * 10) / 10, toF = x => C ? x * 9 / 5 + 32 : x;
+  if (sh !== undefined && sats.length >= 1) R.slT = toF(r1(sats[0] + sh));
+  if (sc !== undefined && sats.length >= 2) R.liqT = toF(r1(sats[1] - sc));
+  R.slT = R.slT ?? (v => v === undefined ? undefined : toF(v))(f(/SUCT(?:ION)?\s*LINE[^\d-]{0,12}(-?\d{1,3}(?:\.\d)?)/));
+  R.liqT = R.liqT ?? (v => v === undefined ? undefined : toF(v))(f(/LIQ(?:UID)?\s*LINE[^\d-]{0,12}(-?\d{1,3}(?:\.\d)?)/));
+  R.odb = (v => v === undefined ? undefined : toF(v))(f(/(?:OUTDOOR|AMBIENT|OUTSIDE)[^\d-]{0,12}(-?\d{1,3}(?:\.\d)?)/));
+  // a lone thermometer / clamp reading
+  if (R.slT === undefined && R.liqT === undefined && R.loP === undefined && R.hiP === undefined){
+    const ts = [...T.matchAll(/(-?\d{1,3}(?:\.\d)?)\s*°?\s*(?:°F|DEG|°C)/g)].map(m => +m[1]).filter(v => v > -40 && v < 250);
+    if (ts.length) R.lone = toF(ts[0]);
+  }
+  const rf = /\bR-?\s?(4[1I]0A|22|454B|32|407C)\b/.exec(T); if (rf) R.ref = "r" + rf[1].toLowerCase().replace("i", "1");
+  return R;
+}
+function readingsForm(R, note){
+  const u = S.units === "C" ? "°C" : "°F", v = x => (x === undefined || x === null || isNaN(x)) ? "" : String(x);
+  const f = (id, label, unit, val, hint) => `<label class="grf"><span>${label}</span><input inputmode="decimal" data-rf="${id}" value="${v(val)}" placeholder="${hint || ""}"><em>${unit}</em></label>`;
+  const refOpt = REFS.map(r => `<option value="${r.id}"${r.id === (R.ref || G.ref || S.ref) ? " selected" : ""}>${r.name}</option>`).join("");
+  const d = x => x === undefined ? undefined : +tOut(x).toFixed(1);
+  if (R.lone !== undefined) note += `<p>I read one temperature: <b>${d(R.lone)}${u}</b> — put it in the right box below.</p>`;
+  return `<div class="gform">${note}
+    <div class="grow2"><label class="grf"><span>Refrigerant</span><select data-rf="ref">${refOpt}</select></label>
+    <label class="grf"><span>Metering</span><select data-rf="meter"><option value="">Not sure</option><option value="txv">TXV / EEV</option><option value="piston">Piston</option></select></label></div>
+    ${f("loP", "Suction pressure", "psig", R.loP, "e.g. 118")}${f("slT", "Suction line temp", u, d(R.slT), "")}
+    ${f("hiP", "Head / liquid pressure", "psig", R.hiP, "e.g. 350")}${f("liqT", "Liquid line temp", u, d(R.liqT), "")}
+    ${f("odb", "Outdoor air", u, d(R.odb), "")}${f("ret", "Return air (indoor)", u, "", "")}${f("sup", "Supply air", u, "", "")}${f("wb", "Indoor wet bulb", u, "", "optional")}
+    <button type="button" class="gact gsend" data-tg="check">Check these readings →</button></div>`;
+}
+function formSentence(box){
+  const g = k => { const el = box.querySelector(`[data-rf="${k}"]`); return el ? String(el.value).trim().replace(",", ".") : ""; };
+  const u = S.units === "C" ? "°c" : "°f", parts = [];
+  const add = (k, lab, unit) => { const x = g(k); if (x !== "" && isFinite(+x)) parts.push(`${lab} ${+x}${unit}`); };
+  add("hiP", "head", " psi"); add("liqT", "liquid line", u); add("loP", "suction", " psi"); add("slT", "suction line", u);
+  add("odb", "outdoor", u); add("ret", "return air", u); add("sup", "supply air", u); add("wb", "wet bulb", u);
+  if (!parts.length) return "";
+  const ref = REFS.find(r => r.id === g("ref")), mt = g("meter");
+  return `${ref ? ref.name + " " : ""}${parts.join(", ")}${mt ? ", " + (mt === "txv" ? "txv" : "piston") : ""} — what's wrong?`;
+}
+
+/* ----- typed decoding: "decode lennox serial 5807H14681", "model XC14-030-230 serial 5807H14681" ----- */
+function tagTextAnswer(q){
+  if (!/serial|s\/n|\bmodel\b|m\/n|decode|how old/.test(q)) return null;
+  const Q = q.toUpperCase();
+  if (!/\b(?=[A-Z0-9-]*\d)[A-Z0-9][A-Z0-9-]{4,}\b/.test(Q.replace(/\b(R-?)?(410A|454B|407C|134A|404A)\b/g, ""))) return null;
+  const F = tagParse(q);
+  if (!F.serial){ const m = /(?:SERIAL|S\/N)\s*(?:NUMBER|NO\.?|#|IS)?\s*[:#]?\s*([A-Z0-9]{6,20})/.exec(Q) || (/DECODE|HOW OLD/.test(Q) && /\b(?=[A-Z]*\d)([A-Z0-9]{7,20})\b/.exec(Q.replace(/\b(DECODE|HOW|OLD|SERIAL|MODEL)\b/g, ""))); if (m) F.serial = m[1]; }
+  if (!F.model){ const m = /(?:MODEL|M\/N)\s*(?:NUMBER|NO\.?|#|IS)?\s*[:#]?\s*([A-Z0-9][A-Z0-9\-\/]{3,26})/.exec(Q); if (m) F.model = m[1]; }
+  if (!F.serial && !F.model) return null;
+  tagDerive(Object.assign(F, {date: null, typed: 1}));
+  if (F.serial && !F.fam) return {html: `Which brand is it? Serial number date codes are different for each manufacturer — try "${F.serial} Lennox" or "Carrier serial ${F.serial}".`};
+  return {html: tagHTML(F, "")};
+}
+
+/* ----- photo -> answer ----- */
+function visionAnswer(res){
+  const texts = res.passes.map(p => p.text), F = tagMerge(texts);
+  F.printed = printedDate(tagNorm(texts.join("\n"))); tagDerive(F);
+  const strong = [F.model, F.serial, F.volts, F.rla, F.lra, F.mca, F.mocp, F.charge, F.input, F.fla].filter(x => x !== undefined && x !== null).length;
+  const isTag = strong >= 2 || ((F.model || F.serial) && F.keys >= 2);
+  if (isTag){
+    if (F.ref && REFID[F.ref.toUpperCase()]) G.ref = REFID[F.ref.toUpperCase()];
+    G.tag = F;
+    return {title: "📷 " + ([F.brand, F.model].filter(Boolean).join(" ") || "Data tag"), html: tagHTML(F, texts[0].length > texts[1].length ? texts[0] : texts[1]), chips: F.ref ? [`${F.ref} at 40°`, "How do I charge a TXV system?"] : []};
+  }
+  const R = readingsGuess(texts.join("\n"));
+  const got = [R.loP, R.hiP, R.slT, R.liqT, R.odb, R.lone].filter(x => x !== undefined).length;
+  if (R.micron !== undefined) return {html: `That looks like a vacuum gauge reading <b>${R.micron} microns</b>. ${R.micron <= 500 ? "That's at or below 500 — isolate the pump and do a decay test; it should hold under about 1,000 microns for 10+ minutes." : "Keep pulling until you're below 500 microns, then do a decay test. If it won't drop, check for leaks, hoses, cores and wet oil."}`};
+  const note = got ? `<p>I picked these numbers out of the photo — <b>check them against the gauges</b>, fix anything I got wrong, and fill in what's missing:</p>`
+    : `<p>I couldn't read numbers off this one (needle gauges and some screens are hard to read from a photo). Type what the gauges and thermometers show:</p>`;
+  return {html: readingsForm(R, note) + (texts.join("").trim() ? `<details class="graw"><summary>Text I read</summary><pre>${esc(texts.join("\n").trim().slice(0, 1500))}</pre></details>` : "")};
+}
+/* photo button */
+async function askPhoto(file){
+  if (!file) return;
+  stopSpeaking();
+  let res;
+  const meImg = document.createElement("div"); meImg.className = "gmsg me"; meImg.innerHTML = `<div class="gbub gphoto"><span class="gspin"></span></div>`;
+  $("g-log").appendChild(meImg);
+  const say = t => { const s = meImg.querySelector(".gspin"); if (s) s.textContent = t; };
+  try {
+    res = await OCR.read(file, say);
+  } catch(e){
+    meImg.remove(); addMsg("gary", "I couldn't open the photo reader on this phone. You can still type the model and serial, like \"decode Lennox serial 5807H14681\", or ask \"check my readings\".");
+    return;
+  }
+  const meHtml = `<img class="gimg" src="${res.thumb}" alt="Photo">`;
+  meImg.remove(); addMsg("me", meHtml);
+  const before = garyCtx();
+  let ans; try { ans = visionAnswer(res); } catch(e){ ans = {html: "I read the photo but couldn't make sense of it. Try a closer, straight-on shot in good light."}; }
+  ans.html = uT(ans.html);
+  histRecord(ans.title || "📷 Gauge / reading photo", meHtml, ans, before);
+  addMsg("gary", ans.html, ans);
+  speakText(ans.html.replace(/<details[\s\S]*?<\/details>|<form[\s\S]*?<\/form>/g, "").replace(/<div class="gform">[\s\S]*$/, "Check the numbers I filled in, then tap check these readings."));
+}
+$("g-cam").addEventListener("click", () => { $("g-file").value = ""; $("g-file").click(); });
+$("g-file").addEventListener("change", e => askPhoto(e.target.files && e.target.files[0]));
+/* buttons inside answers (work in saved chats too) */
+$("g-log").addEventListener("click", e => {
+  const b = e.target.closest("[data-tg]"); if (!b) return;
+  const k = b.dataset.tg;
+  if (k === "check"){ const s = formSentence(b.closest(".gform")); if (!s){ toast("Enter at least one pressure or temperature"); return; } ask(s); return; }
+  let t = {}; try { t = JSON.parse(b.closest(".gtag").dataset.tag); } catch(err){}
+  if (k === "pt"){ const id = REFID[(t.ref || "").toUpperCase()]; if (!id) return; S.ptref = id; const pb = document.querySelector(`#p-ref [data-v="${id}"]`); if (pb) pb.click(); showTab("pt"); save(); window.scrollTo(0, 0); return; }
+  if (k === "note"){
+    showTab("notes"); save(); openNote(null);
+    const eq = [t.brand, t.kind].filter(Boolean).join(" ") + (t.model ? `\nModel: ${t.model}` : "") + (t.serial ? `\nSerial: ${t.serial}` : "") + (t.made ? `\nMade: ${t.made}` : "") +
+      (t.tons ? `\nSize: ${+(+t.tons).toFixed(2)} tons` : "") + (t.charge ? `\nFactory charge: ${t.charge}` : "") + (t.volts ? `\nPower: ${t.volts} V` : "") + (t.rla ? `\nRLA ${t.rla} / LRA ${t.lra || "?"}` : "") + (t.mca ? `\nMCA ${t.mca} / Max ${t.mocp || "?"}` : "");
+    $("n-unit").value = eq.trim();
+    const rr = REFS.find(x => x.name.toUpperCase() === (t.ref || "").toUpperCase()); if (rr) $("n-ref").value = rr.name;
+    saveDraft(); window.scrollTo(0, 0); toast("Equipment info added to a new note");
+  }
+});
+
 
 
 /* ---------- themes ----------
