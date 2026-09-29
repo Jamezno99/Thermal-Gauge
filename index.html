@@ -584,7 +584,7 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 .sfi{margin-right:8px}
 #v-safety .field{margin-top:14px}
 /* Student Mode: Faults */
-body:not(.student) #nav-menu .menu-list [data-v="faults"]{display:none}
+body:not(.student) #nav-menu .menu-list [data-v="faults"],body:not(.student) #nav-menu .menu-list [data-v="howto"]{display:none}
 .fprog{display:flex;align-items:center;gap:12px;margin-bottom:10px}.fprog b{white-space:nowrap;font-size:14px}
 .fbarw{flex:1;height:8px;border-radius:6px;background:var(--chip);overflow:hidden}#f-bar{height:100%;width:0;background:var(--accent);transition:width .3s ease}
 details.frules summary{padding:4px 0}details.frules ol{margin:8px 0 0;padding-left:20px;font-size:13.5px;line-height:1.45}details.frules li{margin:4px 0}
@@ -598,9 +598,21 @@ details.fault.solved{border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
 .fbody ul{margin:4px 0;padding-left:20px;font-size:14px;line-height:1.45}.fbody .fp{margin:0;font-size:14px;line-height:1.45}
 .fhint{display:flex;gap:9px;font-size:14px;line-height:1.45;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin:5px 0;background:var(--chip)}
 .fhint span{flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
-.finst{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);font-size:14px}.finst b{display:block;color:var(--warn);margin-top:4px}
+.finst{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);font-size:14px}.finst>b{display:block;color:var(--warn);margin-top:4px}
 .fbody .fbtn{margin-top:10px}.fbody .fans{margin-top:12px}
 #f-random{margin-bottom:4px}
+details.howto{scroll-margin-top:84px}details.howto .tags{margin-bottom:8px}details.howto .it{font-size:15.5px}
+.htol{margin:4px 0;padding-left:22px;font-size:14px;line-height:1.5}.htol li{margin:5px 0}
+.htdl{margin:4px 0;font-size:14px;line-height:1.45}.htdl dt{font-weight:800;margin-top:9px;color:var(--accent)}.htdl dd{margin:2px 0 0}
+.httw{overflow-x:auto;margin:6px 0}.httbl{width:100%;border-collapse:collapse;font-size:13px;line-height:1.35}
+.httbl th{text-align:left;background:var(--chip);padding:6px 7px;font-size:12px}.httbl td{padding:6px 7px;border-top:1px solid var(--line);vertical-align:top}
+.htfig{background:var(--field);border:1px solid var(--line);border-radius:12px;padding:8px;margin:8px 0}
+.htsvg{width:100%;height:auto;display:block;fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.htsvg .f{fill:var(--ink)}.htsvg .t,.htsvg .lbl text{fill:var(--ink);stroke:none;font-family:inherit;font-weight:700}
+.htsvg .lbl text{font-size:9px;text-anchor:middle;fill:var(--muted)}.htsvg .lbl.sm text{font-size:6.2px;fill:var(--ink)}
+.htsym{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:6px 0}
+.htsym figure{margin:0;background:var(--field);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.htsym svg{max-width:120px;margin:0 auto}.htsym figcaption{font-size:12px;text-align:center;margin-top:5px;color:var(--muted);font-weight:600}
 /* web / iPhone */
 .kval{font-size:16px}
 header{padding-top:max(10px, env(safe-area-inset-top))}
@@ -937,7 +949,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   <div class="card">
     <h2>Student Mode</h2>
     <div class="switch-row">
-      <div><div class="lbl">Student Mode</div><p class="note" style="margin:2px 0 0">Adds <b>Faults</b> to the Menu: 40 practice troubleshooting faults in 4 tiers, from Beginner to Expert Technician. Faults are set by an instructor on a trainer or practice system.</p></div>
+      <div><div class="lbl">Student Mode</div><p class="note" style="margin:2px 0 0">Adds <b>Faults</b> and <b>How To</b> to the Menu: 40 practice troubleshooting faults in 4 tiers (Beginner to Expert Technician), and step-by-step guides for the basic skills every tech needs.</p></div>
       <button class="switch" id="s-student" role="switch" aria-checked="false" aria-label="Student Mode"></button>
     </div>
   </div>
@@ -947,7 +959,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.54 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.55 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -1157,6 +1169,13 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   <p class="note">Practice only, on equipment an instructor has approved. Always follow the manufacturer's instructions, lockout/tagout, and your school's safety rules.</p>
 </section>
 
+<section class="view" id="v-howto">
+  <div class="field"><input id="h-search" type="search" placeholder="Search guides (e.g. braze, voltage, gas pressure)"></div>
+  <div class="chips" id="h-cats"></div>
+  <div id="h-list"></div>
+  <p class="note" style="margin-top:14px">Learning reference for students. Practice under an instructor, and always follow the manufacturer's instructions, local codes, EPA Section 608 and OSHA rules.</p>
+</section>
+
 <section class="view" id="v-notes">
   <div id="n-listview">
     <button class="primary" id="n-new">+ New service note</button>
@@ -1226,6 +1245,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   <button data-v="safety"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 8.2-8 9-4.6-.8-8-4.4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Safety</button>
   <button data-v="notes"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>Notes</button>
   <button data-v="faults"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>Faults</button>
+  <button data-v="howto"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5"/><path d="M9 7h7M9 11h5"/></svg>How To</button>
   </div>
   <div class="menu-foot"><button class="ghost" id="nav-reset" type="button">Reset to default order</button></div>
 </nav>
@@ -6997,7 +7017,7 @@ function applyStudent(){
 }
 $("s-student").addEventListener("click", () => {
   S.student = !S.student; applyStudent(); save();
-  toast(S.student ? "Student Mode on — Faults added to the Menu" : "Student Mode off");
+  toast(S.student ? "Student Mode on — Faults and How To added to the Menu" : "Student Mode off");
 });
 const _fShowTab = showTab;
 showTab = function(v){
@@ -7009,6 +7029,452 @@ showTab = function(v){
 };
 if (S.tab === "faults" && !S.student) S.tab = "settings";
 applyStudent();
+
+/* ================= STUDENT MODE: How To tab ================= */
+/* ================= Student Mode: How To guides =================
+   Trusted content (may contain <b>, <i>). {t:x} = absolute temp, {d:x} = temp difference, both in °F and
+   shown in the selected unit. Blocks: h, p, ol, ul, dl [[term, text]], tip, warn, tbl {head, rows}, svg, sym, go [tab, label]. */
+const HOWTO_CATS = ["Electrical", "Refrigerant", "Gas heat", "Components", "Basics"];
+
+/* schematic symbols — drawn in a 70 x 34 box, stroke = currentColor */
+const HT_SYMBOLS = [
+  ["Normally open contact", '<path d="M0 17h24M24 7v20M46 7v20M46 17h24"/>'],
+  ["Normally closed contact", '<path d="M0 17h24M24 7v20M46 7v20M46 17h24M18 29 52 5"/>'],
+  ["Coil (relay / contactor)", '<path d="M0 17h23M47 17h23"/><circle cx="35" cy="17" r="12"/>'],
+  ["Switch (open)", '<path d="M0 17h20M50 17h20M22 17l24-12"/><circle cx="20" cy="17" r="2.5" class="f"/><circle cx="50" cy="17" r="2.5" class="f"/>'],
+  ["Pressure switch (NC)", '<path d="M0 12h20M50 12h20M22 12l26 3M35 14v6" /><circle cx="20" cy="12" r="2.5" class="f"/><circle cx="50" cy="12" r="2.5" class="f"/><path d="M27 29a8 8 0 0 1 16 0z"/>'],
+  ["Temperature switch / limit (NC)", '<path d="M0 12h20M50 12h20M22 12l26 3M35 14v5"/><circle cx="20" cy="12" r="2.5" class="f"/><circle cx="50" cy="12" r="2.5" class="f"/><path d="M27 23h5l3 7 3-7h5"/>'],
+  ["Fuse", '<path d="M0 17h70"/><rect x="18" y="10" width="34" height="14" rx="2"/>'],
+  ["Transformer", '<path d="M8 4h10M8 30h10M18 4a4.25 4.25 0 0 1 0 8.5a4.25 4.25 0 0 1 0 8.5a4.25 4.25 0 0 1 0 8.5M52 4h10M52 30h10M52 4a4.25 4.25 0 0 0 0 8.5a4.25 4.25 0 0 0 0 8.5a4.25 4.25 0 0 0 0 8.5M18 29.5V30M52 29.5V30M32 3v28M38 3v28"/>'],
+  ["Motor", '<path d="M0 17h23M47 17h23"/><circle cx="35" cy="17" r="12"/><text x="35" y="21.5" text-anchor="middle" font-size="12" class="t">M</text>'],
+  ["Capacitor", '<path d="M0 17h31M31 6v22M46 17h24M42 6a14 14 0 0 1 0 22"/>'],
+  ["Resistor / heater element", '<path d="M0 17h14l4-8 7 16 7-16 7 16 7-16 7 16 3-8h14"/>'],
+  ["Ground", '<path d="M35 2v16M21 18h28M26 24h18M31 30h8"/>'],
+  ["Wires joined (dot)", '<path d="M0 17h70M35 2v30"/><circle cx="35" cy="17" r="3.5" class="f"/>'],
+  ["Wires crossing (no connection)", '<path d="M0 17h28a7 7 0 0 1 14 0h28M35 2v30"/>'],
+];
+
+/* a basic split AC as a ladder diagram */
+const HT_LADDER = `<svg viewBox="0 0 340 226" class="htsvg" role="img" aria-label="Ladder diagram of a basic split air conditioner">
+<g class="lbl"><text x="170" y="14">LINE VOLTAGE (240 V)</text><text x="20" y="30">L1</text><text x="320" y="30">L2</text><text x="170" y="143">24 V CONTROL</text>
+<text x="32" y="142">R</text><text x="308" y="142">C</text><text x="69" y="39">CC</text><text x="195" y="36">Compressor</text><text x="195" y="71">Outdoor fan</text>
+<text x="74" y="157">Y</text><text x="140" y="159">HPS</text><text x="195" y="159">LPS</text><text x="250" y="190">Contactor coil</text><text x="74" y="192">G</text><text x="250" y="224">Blower relay</text><text x="222" y="121" style="text-anchor:start">Transformer</text></g>
+<g class="ln">
+<path d="M20 34V110M320 34V110M20 50h44M64 43v14M74 43v14M74 50h109M207 50h113M150 50v35h33M207 85h113"/>
+<circle cx="195" cy="50" r="12"/><circle cx="195" cy="85" r="12"/><circle cx="150" cy="50" r="3" class="f"/>
+<path d="M20 110h130M190 110h130M150 110a5 5 0 0 0 10 0a5 5 0 0 0 10 0a5 5 0 0 0 10 0a5 5 0 0 0 10 0M150 118h40M150 121h40M150 128a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0M150 128H40M190 128h110M40 128v77M300 128v77"/>
+<path d="M40 170h20M64 170l22-10M88 170h38M130 170l20 3M140 172v6M132 186a8 8 0 0 1 16 0zM154 170h27M185 170l20 3M195 172v6M187 186a8 8 0 0 1 16 0zM209 170h30M261 170h39"/><circle cx="128" cy="170" r="2.3" class="f"/><circle cx="152" cy="170" r="2.3" class="f"/><circle cx="183" cy="170" r="2.3" class="f"/><circle cx="207" cy="170" r="2.3" class="f"/>
+<circle cx="62" cy="170" r="2.3" class="f"/><circle cx="88" cy="170" r="2.3" class="f"/><circle cx="250" cy="170" r="11"/>
+<path d="M40 205h20M64 205l22-10M88 205h151M261 205h39"/><circle cx="62" cy="205" r="2.3" class="f"/><circle cx="88" cy="205" r="2.3" class="f"/><circle cx="250" cy="205" r="11"/>
+</g><g class="lbl sm"><text x="195" y="53.5">COMP</text><text x="195" y="88.5">OFM</text><text x="250" y="173.5">CC</text><text x="250" y="208.5">BR</text></g></svg>`;
+
+const HOWTO = [
+ /* ===================== ELECTRICAL ===================== */
+ {id: "sch-read", cat: 0, i: "📐", t: "How to read a wiring diagram (schematic)", d: "Symbols, ladder diagrams and how to trace a circuit.",
+  tools: ["The unit's wiring diagram (inside the panel door)", "Highlighter or pencil"],
+  body: [
+   {p: "Most HVAC equipment has two drawings on the panel: a <b>connection (pictorial) diagram</b> that shows where wires physically go, and a <b>schematic (ladder) diagram</b> that shows how the circuit works. Troubleshoot from the ladder; find parts with the pictorial."},
+   {h: "How a ladder diagram works"},
+   {ul: ["The two side rails are the power source: <b>L1 and L2</b> for line voltage, <b>R and C</b> for the 24 V control circuit.",
+         "Each horizontal <b>rung</b> is one path for current: switches first, then the <b>load</b> (coil, motor, heater), then the other rail.",
+         "A load runs only when <b>every switch in its rung is closed</b>.",
+         "Switches and contacts are drawn in their <b>de-energized</b> (power-off, at-rest) position.",
+         "A coil and the contacts it operates share a label (for example the <b>CC</b> coil closes the <b>CC</b> contacts), even when they're drawn far apart."]},
+   {h: "Common symbols"}, {sym: true},
+   {p: "Symbols vary a little between manufacturers — every diagram has a <b>legend</b>. Read it first."},
+   {h: "Example: a basic split AC"}, {svg: HT_LADDER},
+   {p: "Reading it: when the thermostat closes <b>Y</b>, 24 V flows through the high- and low-pressure switches (<b>HPS</b>, <b>LPS</b>, normally closed) to the contactor coil <b>CC</b>. The coil pulls in the <b>CC</b> contacts in the line-voltage section, which starts the compressor and outdoor fan. <b>G</b> energizes the blower relay."},
+   {h: "Tracing a circuit, step by step"},
+   {ol: ["Find the load that isn't working (for example, the contactor coil).",
+         "Put a finger on it and trace back to one rail, listing every switch and connection on the way.",
+         "Trace from the other side of the load to the other rail.",
+         "Now you have a list of everything that must be closed for that load to run — test them in order with your meter (see <b>How to check for voltage</b>)."]},
+   {tip: "Wire colors on the diagram are abbreviated: BK black, WH white, RD red, YL yellow, BL blue, OR orange, BR brown, GR/GN green, PU/VT purple. Dashed lines are usually field wiring (installed by the installer)."}]},
+ {id: "sch-draw", cat: 0, i: "✏️", t: "How to draw a ladder diagram", d: "Turn a real unit's wiring into a clear schematic.",
+  tools: ["Paper or whiteboard", "Pencil and ruler", "The unit's pictorial diagram"],
+  body: [
+   {p: "Drawing your own ladder is the fastest way to understand a unit you've never seen. Keep it simple: straight lines, one load per rung."},
+   {ol: ["Draw two vertical rails. Label them <b>L1</b> and <b>L2</b> (or <b>R</b> and <b>C</b> for 24 V). Draw the line-voltage ladder on top and the control ladder below it.",
+         "Draw the <b>transformer</b> between them: primary across L1–L2, secondary feeding R and C.",
+         "List every <b>load</b> (compressor, fans, coils, heaters, igniter, gas valve). Give each its own rung, with the load at the right, next to L2 or C.",
+         "Put every <b>switch</b> that controls that load to its left, in the order current passes through them: thermostat contacts, safeties, relay contacts.",
+         "Draw switches in their <b>at-rest</b> position: pressure switches, limits and float switches normally closed; relay and contactor contacts normally open unless marked otherwise.",
+         "Label each coil and its matching contacts with the same letters.",
+         "Mark wire colors and terminal numbers so you can find each point on the real unit.",
+         "Check it: pick a load and ask \"what has to close for this to run?\" Your drawing should answer it in one rung."]},
+   {tip: "A load should never be in series with another load, and a switch should never be connected straight across the two rails — that would be a dead short."},
+   {svg: HT_LADDER}]},
+ {id: "volt", cat: 0, i: "⚡", t: "How to check for voltage", d: "Safe meter setup, live-dead-live, and voltage-drop troubleshooting.",
+  safe: ["Line voltage can kill. Students take line-voltage readings only with instructor approval.",
+         "Use a meter and leads rated <b>CAT III 600 V</b> or better, with no cracked insulation or exposed metal.",
+         "Wear safety glasses; use rated gloves and PPE required by your employer's electrical safety program (NFPA 70E).",
+         "Stand to the side of a disconnect when operating it, and keep one hand away from grounded metal when you can."],
+  tools: ["Multimeter (CAT III 600 V)", "Non-contact voltage tester (first check only)", "Proving unit or known live outlet"],
+  body: [
+   {h: "Set up the meter"},
+   {ol: ["Black lead in <b>COM</b>, red lead in <b>V</b>.", "Select <b>AC volts (V~)</b>. If the meter isn't auto-ranging, pick a range above what you expect (600 V).",
+         "<b>Live-dead-live</b>: test the meter on a known live source, test your circuit, then test the known source again. A dead reading only counts if the meter worked before and after."]},
+   {h: "What you should see"},
+   {tbl: {head: ["Where", "Normal reading"], rows: [
+     ["L1 to L2, residential", "about 240 V (230–250)"], ["L1 to L2, commercial building", "about 208 V"], ["Each leg to ground, 240 V single-phase", "about 120 V"],
+     ["R to C, 24 V control", "24–28 V"], ["Across a closed switch or contact", "near 0 V"], ["Across an open switch or contact", "full voltage"]]}},
+   {p: "Motors and compressors are usually rated to run within <b>±10%</b> of nameplate voltage. A 208/230 V unit should see about <b>187–253 V</b> while running."},
+   {h: "Voltage-drop troubleshooting (the most useful skill)"},
+   {ol: ["Confirm the source: measure across the rails (for example R to C).",
+         "Confirm the load has voltage across it. If it has full voltage but isn't running, the load (or its wiring) is bad.",
+         "If the load has no voltage, keep one lead on the common rail (C or L2) and walk the other lead from the power rail toward the load, point by point.",
+         "Or measure <b>across each switch</b>: the open switch is the one with full voltage across it."]},
+   {warn: "A non-contact tester can miss voltage (shielded cable, dead battery, low voltage). Never use it as proof that a circuit is dead."},
+   {tip: "Measure 24 V at the equipment, not only at the thermostat — broken thermostat wire is common."}]},
+ {id: "meter", cat: 0, i: "🔌", t: "How to use a multimeter: ohms, amps, µF", d: "Continuity, resistance, clamp amps, capacitors and flame signal.",
+  safe: ["<b>Ohms, continuity and µF are power-off tests.</b> Lock out, verify dead, and discharge capacitors first.",
+         "Measure amps with the clamp only — never put the meter's leads in series with a line-voltage load."],
+  tools: ["Multimeter with µF and DC µA", "Clamp meter", "Insulated capacitor discharge tool"],
+  body: [
+   {h: "Ohms and continuity"},
+   {ul: ["Isolate the part: remove at least one wire so you don't read through other parts of the circuit.",
+         "<b>0 Ω / beep</b> = continuity (closed). <b>OL</b> = open. A coil or winding should read a steady value, not 0 and not OL.",
+         "Compressor windings: C–S + C–R should add up to R–S. Any terminal to the copper tubing should read OL (a reading means a grounded winding)."]},
+   {h: "Amps (clamp meter)"},
+   {ul: ["Clamp around <b>one</b> conductor. Clamping two wires of the same circuit cancels out and reads near 0.",
+         "Compare with the nameplate: <b>RLA</b> for compressors, <b>FLA</b> for motors. Running near or above it points to a problem.",
+         "<b>LRA</b> (locked-rotor amps) is the brief start-up surge. A compressor that keeps drawing LRA isn't starting."]},
+   {h: "Capacitors (µF)"},
+   {ol: ["Power off, lock out, then discharge the capacitor with an insulated resistor tool (never a screwdriver).",
+         "Remove the wires, marking which went where (HERM, FAN, C).", "Set the meter to µF and measure C–HERM and C–FAN.",
+         "Compare with the label. Most run capacitors should be within about <b>±5–6%</b> of rating. Replace any bulging or leaking capacitor."]},
+   {h: "Flame signal (µA DC)"},
+   {p: "Put the meter in series with the flame sensor wire on the µA DC setting (or use the board's test pins). A healthy signal is usually <b>2–6 µA</b>; check the board's minimum."},
+   {go: ["safety", "Open Safety"]}]},
+ {id: "loto", cat: 0, i: "🔒", t: "How to lock out and tag out (LOTO)", d: "Make sure equipment can't be turned on while you work.",
+  tools: ["Your personal lock and tag", "Lockout hasp or breaker lockout", "Meter (to verify)"],
+  body: [
+   {ol: ["Tell the customer or other workers you're shutting the equipment down.",
+         "Shut it off at the thermostat, then open the <b>disconnect</b> and turn off the <b>breaker</b>.",
+         "Put <b>your own lock</b> and a tag with your name on the disconnect or breaker. You keep the key.",
+         "Check for other sources: heat strips on a second breaker, the air handler feeding 24 V to the outdoor unit, stored energy in capacitors.",
+         "<b>Verify zero energy</b> with your meter (live-dead-live) on every leg and to ground.",
+         "Work. When finished, remove tools, reinstall panels, remove your lock and tag, and restore power in the reverse order."]},
+   {warn: "Never remove someone else's lock. If a unit has a single-pole contactor, one leg stays live even when the contactor is open."}]},
+
+ /* ===================== REFRIGERANT ===================== */
+ {id: "braze", cat: 1, i: "🔥", t: "How to braze copper", d: "Clean joints, nitrogen purge, heat and alloy — the right way.",
+  safe: ["Hot work: clear combustibles or use a heat shield, keep a fire extinguisher within reach, and keep a fire watch for at least 30 minutes after (60 minutes where NFPA 51B applies).",
+         "Wear tinted brazing glasses (shade 3–5), gloves and cotton or flame-resistant clothing. Braze with good ventilation.",
+         "Never braze on a system under pressure or containing refrigerant. Recover it first — on A2L systems (R-32, R-454B) also purge with nitrogen and check with a gas detector.",
+         "Cylinders upright and chained. Acetylene regulator never above 15 psig. Use check valves / flashback arrestors on oxy-acetylene rigs."],
+  tools: ["Air-acetylene or oxy-acetylene torch", "Brazing rod", "Nitrogen cylinder, regulator and flowmeter", "Tubing cutter and deburring tool", "Sand cloth or abrasive pad", "Wet rags or heat-blocking paste"],
+  body: [
+   {h: "Pick the right alloy"},
+   {dl: [["Copper to copper", "<b>Phos-copper (BCuP)</b>, 0–15% silver. <b>No flux</b> — the phosphorus cleans the copper."],
+         ["Copper to brass or bronze", "15% silver phos-copper <b>with flux</b>, or a high-silver (BAg) alloy with flux."],
+         ["Copper to steel", "High-silver (BAg, e.g. 45%) alloy <b>with flux</b>. Phos-copper doesn't work on steel."]]},
+   {h: "Steps"},
+   {ol: ["Cut tubing square with a tubing cutter, then <b>ream / deburr</b> the inside.",
+         "Clean the outside of the tube and the inside of the fitting with sand cloth until bright. Don't touch the cleaned surfaces.",
+         "Assemble fully — the tube must bottom out in the fitting.",
+         "Protect heat-sensitive parts: remove Schrader cores, and wrap service valves, TXVs and reversing valves with wet rags or heat paste.",
+         "<b>Flow nitrogen</b> through the pipe at a low rate (about 2–5 SCFH) with an open exit so pressure can't build. This stops black oxide scale forming inside.",
+         "Heat the <b>tube first</b>, then move to the <b>fitting</b> (it's heavier). Keep the flame moving to heat the whole joint evenly.",
+         "When the copper is a <b>dull cherry red</b> (phos-copper flows around {t:1300-1500}), touch the rod to the joint — not the flame. The alloy should melt and be drawn into the joint by capillary action.",
+         "Feed rod until a smooth fillet shows all the way around. Don't overheat — it burns through and weakens the joint.",
+         "Let the alloy solidify before moving anything, then cool with a wet rag and clean off any flux.",
+         "Pressure-test with nitrogen before evacuating (see <b>How to pressure test and evacuate</b>)."]},
+   {tip: "Vertical joints: heat so the alloy flows toward the heat — it will run uphill into a properly heated joint."},
+   {warn: "Never use oxygen or compressed air to purge or pressure-test. Oxygen with oil can explode."}]},
+ {id: "flare", cat: 1, i: "🔧", t: "How to make a flare connection", d: "45° flares for mini-splits and flare fittings, torqued to spec.",
+  safe: ["Wear safety glasses when cutting and flaring.", "Never flare or loosen a connection on a system that's under pressure without recovering or isolating it first."],
+  tools: ["Tubing cutter", "Reamer / deburring tool", "45° flare tool (R-410A / A2L rated eccentric type)", "Torque wrench with open-end (crowfoot) heads", "Backup wrench", "Flare gauge (optional)"],
+  body: [
+   {ol: ["Cut the tube square and leave a little extra length.",
+         "<b>Deburr</b> with the tube pointing <b>down</b> so chips fall out, not into the pipe. Don't thin the wall.",
+         "<b>Slide the flare nut on now</b>, threads facing the end. (Forgetting it is the most common mistake.)",
+         "Clamp the tube in the flare bar at the height the tool's gauge shows. R-410A / A2L flare tools make a slightly larger flare — use the matching gauge.",
+         "Turn the cone down until the clutch slips or it stops. Don't force it.",
+         "Inspect: smooth, even, round, no cracks or splits, and the flare should fill the nut's seat without sticking past it. If in doubt, cut it off and redo it.",
+         "Follow the installation manual about oil: some manufacturers call for a drop of the specified refrigerant oil on the flare, others say to assemble dry.",
+         "Line it up straight and thread the nut on <b>by hand</b> until snug.",
+         "Hold the fitting with a backup wrench and tighten with a torque wrench to the manufacturer's value."]},
+   {h: "Typical torque (always use the manufacturer's table)"},
+   {tbl: {head: ["Tube OD", "ft-lb", "N·m"], rows: [["1/4 in.", "10–13", "14–18"], ["3/8 in.", "24–30", "33–40"], ["1/2 in.", "37–45", "50–60"], ["5/8 in.", "46–55", "62–75"], ["3/4 in.", "72–87", "97–118"]]}},
+   {tip: "When reconnecting an old flare, cut it off and make a new one. Many manufacturers require it, especially on A2L (R-32, R-454B) equipment."},
+   {p: "After connecting: pressure-test with nitrogen, check each flare with bubble solution, then evacuate."}]},
+ {id: "charge", cat: 1, i: "🧪", t: "How to charge refrigerant", d: "Weigh-in, superheat and subcooling methods.",
+  safe: ["In the US, you must hold <b>EPA Section 608</b> certification to buy refrigerant or open a refrigerant circuit. Students charge only under a certified instructor.",
+         "Wear safety glasses and gloves — liquid refrigerant causes frostbite.",
+         "Never heat a cylinder with a torch, and never refill a disposable cylinder."],
+  tools: ["Manifold gauges (digital or analog) with low-loss fittings", "Refrigerant scale", "Pipe clamp thermometers", "Psychrometer (for superheat method)", "Correct refrigerant (check the nameplate)"],
+  body: [
+   {h: "Before you charge"},
+   {ul: ["<b>Fix airflow first</b>: clean filter, clean coils, blower on the right speed. Charging with bad airflow gives a wrong charge.",
+         "Confirm the refrigerant type on the nameplate. Never mix refrigerants.",
+         "Run the system 10–15 minutes to stabilize before judging the charge."]},
+   {h: "Methods"},
+   {dl: [["Weigh-in (most accurate)", "Use the nameplate charge plus the manufacturer's adjustment for line-set length (for example, extra ounces per foot over 15 ft). Essential after a recovery or new install."],
+         ["Superheat — fixed orifice / piston", "Measure suction pressure and suction line temperature at the outdoor unit. Compare with the target superheat from the manufacturer's chart (indoor wet bulb and outdoor dry bulb)."],
+         ["Subcooling — TXV / EEV", "Measure liquid pressure and liquid line temperature. Compare with the target subcool on the nameplate (often {d:8-12})."]]},
+   {go: ["charge", "Open the SH / SC calculator"]},
+   {h: "Adding refrigerant"},
+   {ol: ["Put the cylinder on the scale and zero it.",
+         "Purge the air from the center hose briefly (a second or less) — or use a vacuum on the hose.",
+         "<b>Blends (400-series, like R-410A and R-454B) must leave the cylinder as liquid.</b> Turn the cylinder upside down (unless it has a dip tube) and meter the liquid slowly into the <b>suction</b> side so it flashes to vapor before the compressor — throttle with the manifold valve.",
+         "Add in small amounts, then wait 5–10 minutes for readings to settle.",
+         "Record how much you added."]},
+   {h: "Removing refrigerant"},
+   {p: "If it's overcharged, <b>recover</b> the excess into a recovery cylinder — never vent it."},
+   {tip: "A2L refrigerant cylinders (R-32, R-454B) have a <b>red band</b> and <b>left-hand threads</b>. You'll need adapters rated for them."}]},
+ {id: "recover", cat: 1, i: "♻️", t: "How to recover refrigerant", d: "Recovery machine, cylinder, 80% fill limit and required vacuum levels.",
+  safe: ["EPA Section 608 certification is required. <b>Venting refrigerant is illegal</b> (Clean Air Act).",
+         "Never fill a recovery cylinder past <b>80%</b> of its capacity — liquid expands with heat and can burst it.",
+         "Check the cylinder's hydrostatic test date (stamped on the collar — usually every 5 years).",
+         "A2L refrigerants need a recovery machine and cylinder rated for them."],
+  tools: ["EPA-certified recovery machine", "Recovery cylinder (gray body, yellow top), DOT rated", "Scale", "Hoses with valves (short and large diameter is faster)", "Filter-drier for the machine inlet", "Core removal tool"],
+  body: [
+   {h: "Steps (vapor recovery)"},
+   {ol: ["Label the recovery cylinder for the refrigerant you're recovering. <b>One refrigerant per cylinder.</b>",
+         "Weigh the cylinder and work out the maximum you can add (80% rule, from its stamped water capacity and tare weight).",
+         "Pull a vacuum on the recovery cylinder if it's empty, to remove air.",
+         "Connect: system → filter-drier → recovery machine inlet; recovery machine outlet → cylinder vapor (or liquid) port. Remove Schrader cores to speed things up.",
+         "Open the valves, start the machine and follow its instructions.",
+         "Recover until the system reaches the required level (below). Wait a few minutes — if pressure rises (refrigerant boiling out of the oil), recover again.",
+         "Use the machine's <b>purge / clear</b> mode to push the refrigerant left in the machine into the cylinder.",
+         "Close all valves, weigh the cylinder and record the amount."]},
+   {h: "Speeding it up"},
+   {ul: ["Recover <b>liquid</b> first when possible — it's much faster.", "For large charges use the <b>push-pull</b> method: the machine pulls vapor from the recovery cylinder and pushes it into the system's vapor side, which pushes liquid out of the system into the cylinder's liquid port.",
+         "Keep the recovery cylinder cool (shade, or a bucket of cool water)."]},
+   {h: "Required recovery levels (EPA, using recovery equipment made after Nov. 15, 1993)"},
+   {tbl: {head: ["Appliance", "Recover to"], rows: [
+     ["R-22 appliance, under 200 lb charge", "0 in. Hg"], ["R-22 appliance, 200 lb or more", "10 in. Hg vacuum"],
+     ["Other high-pressure (R-410A, R-454B, R-134a…), under 200 lb", "10 in. Hg vacuum"], ["Other high-pressure, 200 lb or more", "15 in. Hg vacuum"],
+     ["Small appliance (fridge, window unit), compressor runs", "90% recovered, or 4 in. Hg"], ["Small appliance, compressor doesn't run", "80% recovered, or 4 in. Hg"]]}}]},
+ {id: "evac", cat: 1, i: "🌀", t: "How to pressure test and evacuate", d: "Nitrogen test, vacuum to 500 microns, and the decay test.",
+  safe: ["Use <b>nitrogen</b> with a regulator — never oxygen or compressed air, and never refrigerant as a test gas.",
+         "Never exceed the test pressure on the nameplate or installation manual (low-side test pressure)."],
+  tools: ["Dry nitrogen, regulator", "Vacuum pump", "Micron gauge", "Core removal tools", "Large-diameter (3/8 in. or larger) short vacuum hoses", "Bubble solution"],
+  body: [
+   {h: "Pressure test"},
+   {ol: ["Pressurize with nitrogen to the manufacturer's test pressure (commonly 150–450 psig; follow the manual).",
+         "Close the cylinder and let it stand — 15–30 minutes minimum, longer if the manual says so.",
+         "Check every joint and flare with bubble solution. The gauge shouldn't drop (small changes follow temperature).",
+         "Release the nitrogen outdoors."]},
+   {h: "Evacuate"},
+   {ol: ["Remove the Schrader cores with core tools and connect the vacuum hoses directly to them.",
+         "Put the <b>micron gauge at the system</b>, away from the pump, so it reads the system, not the hose.",
+         "Change the pump oil if it's dirty, then start the pump.",
+         "Pull down below <b>500 microns</b> (or the manufacturer's value).",
+         "<b>Decay test</b>: isolate the pump and watch the micron gauge for 10 minutes.",
+         "Rises and stays below about <b>1,000 microns</b>: good. Rises and then levels off higher: moisture — keep evacuating. Rises steadily toward atmosphere: <b>leak</b> — find it."]},
+   {p: "When it passes, reinstall the cores (with the tool, under vacuum), then release the factory charge or weigh in refrigerant."}]},
+ {id: "shsc", cat: 1, i: "🌡️", t: "How to measure superheat and subcool", d: "Where to put the clamps and how to do the math.",
+  tools: ["Manifold gauges", "Two pipe clamp thermometers", "P-T chart (built into this app)"],
+  body: [
+   {h: "Superheat (suction side)"},
+   {ol: ["Clamp a thermometer on the suction line about 6 in. from the service valve; insulate it.", "Read suction pressure and convert it to the saturation (boiling) temperature with the P-T chart — for blends use the <b>dew</b> point.",
+         "<b>Superheat = suction line temp − saturation temp.</b>"]},
+   {h: "Subcooling (liquid side)"},
+   {ol: ["Clamp a thermometer on the liquid line near the service valve.", "Read liquid pressure and convert it to saturation temperature — for blends use the <b>bubble</b> point.",
+         "<b>Subcool = saturation temp − liquid line temp.</b>"]},
+   {tbl: {head: ["Reading", "Low means", "High means"], rows: [
+     ["Superheat", "Overcharge (piston), TXV overfeeding, or low indoor airflow / load", "Undercharge, TXV underfeeding, or a restriction"],
+     ["Subcool", "Undercharge", "Overcharge, or a restriction backing refrigerant up (check superheat too)"]]}},
+   {go: ["charge", "Open the SH / SC calculator"]}, {go: ["pt", "Open the P-T chart"]}]},
+
+ /* ===================== GAS HEAT ===================== */
+ {id: "gas", cat: 2, i: "🔥", t: "How to check gas pressure on a gas furnace", d: "Inlet and manifold pressure with a manometer.",
+  safe: ["Gas work is done by qualified, licensed technicians under local code. Students work only under instructor supervision.",
+         "If you smell gas: no switches, no flames — leave, and call the gas utility from outside.",
+         "Leak-test every fitting you disturb with bubble solution. <b>Never</b> use a flame."],
+  tools: ["Digital manometer (in. WC)", "1/8 in. NPT hose barb fitting", "Hex keys / screwdrivers", "Bubble leak solution", "Pipe thread sealant rated for gas"],
+  body: [
+   {p: "Gas pressure is measured in <b>inches of water column (in. WC)</b>. 1 psi = 27.7 in. WC, so these are very low pressures. There are two readings:"},
+   {dl: [["Inlet (supply) pressure", "The gas coming into the valve from the house piping. Too low = weak flames, lockouts."],
+         ["Manifold (outlet) pressure", "The gas leaving the valve to the burners. This sets the furnace's firing rate and is what you adjust."]]},
+   {h: "Steps"},
+   {ol: ["Turn the thermostat off, turn off the furnace power and close the furnace's gas shutoff valve.",
+         "Find the pressure taps on the gas valve, marked <b>INLET</b> and <b>OUTLET</b> (or IN P / OUT P). Some are plugs, others have a screw you loosen about one turn.",
+         "Install the hose barb (or loosen the screw) and connect the manometer. Zero the manometer.",
+         "Open the gas, restore power and call for heat.",
+         "Inlet: read with the furnace — and other gas appliances in the house — running.",
+         "Manifold: read with the burners lit on <b>high fire</b> (and on <b>low fire</b> for two-stage furnaces).",
+         "Compare with the rating plate / installation manual (typical values below).",
+         "To adjust manifold pressure: remove the regulator cap and turn the screw in small steps (clockwise usually raises pressure). Replace the cap.",
+         "Shut off gas and power, remove the fitting, reinstall the plug with gas-rated sealant (or tighten the screw).",
+         "Turn the gas on, run the furnace, and <b>leak-test the tap</b> with bubble solution."]},
+   {h: "Typical pressures (always check the rating plate)"},
+   {tbl: {head: ["", "Natural gas", "Propane (LP)"], rows: [
+     ["Inlet (supply)", "about 5–7 in. WC (min usually 4.5–5)", "about 11–13 in. WC (min usually 11)"], ["Manifold, high fire", "about 3.5 in. WC", "about 10 in. WC"], ["Manifold, low fire (2-stage)", "about 1.6–2.0 in. WC", "about 5–6 in. WC"]]}},
+   {tip: "After setting pressure, check the temperature rise is inside the rating-plate range. A combustion analyzer check is the next step on a real service call."}]},
+ {id: "furn-seq", cat: 2, i: "🔁", t: "Gas furnace sequence of operation", d: "What happens, in order, on a heat call — and where it stops.",
+  body: [
+   {ol: ["Thermostat closes <b>R to W</b> (24 V heat call).", "Board checks the safeties: <b>high limit</b> and <b>rollout</b> closed, <b>pressure switch open</b> (proves it isn't stuck closed).",
+         "<b>Inducer</b> starts and pulls combustion gases through the heat exchanger.", "<b>Pressure switch closes</b>, proving draft.",
+         "<b>Hot surface igniter</b> heats (about 15–45 seconds) — or a spark igniter sparks.", "<b>Gas valve</b> opens; burners light.",
+         "<b>Flame sensor</b> proves flame within a few seconds (flame rectification, µA). If not, the valve closes and the board retries, then locks out.",
+         "After a delay (about 30–60 s) the <b>blower</b> starts on heat speed.", "Call ends: gas valve closes, inducer post-purges, blower runs its off-delay, then stops."]},
+   {tip: "Count the flashes on the board's LED and look up the code on the door label. Watch the sequence — the step where it stops points to the fault."}]},
+
+ /* ===================== COMPONENTS ===================== */
+ {id: "c-ref", cat: 3, i: "❄️", t: "What refrigeration components do", d: "Compressor, coils, metering devices and more.",
+  body: [
+   {dl: [["Compressor", "The pump of the system. Squeezes low-pressure vapor into high-pressure, hot vapor. Common types: reciprocating, scroll, rotary (mini-splits)."],
+         ["Condenser coil", "Outdoor coil. Releases heat to the outdoor air; the vapor condenses into a high-pressure liquid."],
+         ["Condenser fan", "Moves outdoor air across the condenser. No fan = very high head pressure."],
+         ["Metering device", "Drops liquid pressure so it can boil in the evaporator. <b>Piston / fixed orifice</b> (fixed size), <b>TXV</b> (a sensing bulb keeps superheat steady), <b>EEV</b> (electronic, controlled by a board)."],
+         ["Evaporator coil", "Indoor coil. Cold refrigerant boils, absorbing heat and removing moisture from the air."],
+         ["Filter-drier", "Traps moisture and debris in the liquid line. A temperature drop across it means it's restricted."],
+         ["Accumulator", "On the suction line (mostly heat pumps). Catches liquid so it doesn't reach the compressor."],
+         ["Reversing valve", "Heat pumps only. Switches the direction of flow so the indoor coil becomes the condenser in heating."],
+         ["Service valves", "Let you isolate the refrigerant in the outdoor unit and connect gauges. Back-seated = normal operating position."],
+         ["Schrader valve", "Tire-style valve for gauge connections. Remove the core for faster evacuation."],
+         ["Line set", "Copper pipes connecting indoor and outdoor units: larger insulated <b>suction</b> line, smaller <b>liquid</b> line."],
+         ["Pressure switches", "<b>High-pressure</b> switch opens on excessive head pressure; <b>low-pressure / loss-of-charge</b> switch opens on low suction."],
+         ["Crankcase heater", "Keeps the compressor warm when off so refrigerant doesn't settle in the oil."]]}]},
+ {id: "c-elec", cat: 3, i: "🔋", t: "What electrical and control components do", d: "Contactors, capacitors, transformers, relays and boards.",
+  body: [
+   {dl: [["Contactor", "A heavy-duty relay. A 24 V coil pulls in contacts that switch line voltage to the compressor and outdoor fan."],
+         ["Run capacitor", "Gives a motor the phase shift it needs to start and run efficiently. Dual caps have 3 terminals: C, HERM (compressor), FAN."],
+         ["Start capacitor / hard-start kit", "A large capacitor switched in for a moment to help a compressor start, then removed by a relay or PTC."],
+         ["Transformer", "Steps line voltage (120/208/240 V) down to 24 V for the control circuit. Rated in VA."],
+         ["Control board", "The furnace or air handler's brain: runs the sequence, controls blower speeds, and flashes diagnostic codes."],
+         ["Relay", "A small switch operated by a coil. A blower relay lets 24 V from G turn on a line-voltage blower."],
+         ["Thermostat", "Senses the room and closes R to Y, G, W or O/B to call for cooling, fan, heat or reversing valve."],
+         ["Defrost board", "Heat pumps: runs defrost cycles based on time and a coil temperature sensor."],
+         ["Sequencer", "In electric heat, turns heat strips on one after another to avoid a huge current surge."],
+         ["Fuses and breakers", "Protect wiring from overcurrent. A 3–5 A fuse on the board protects the 24 V circuit."],
+         ["Disconnect", "Outdoor switch next to the condenser so it can be de-energized for service. Often fused."]]}]},
+ {id: "c-furn", cat: 3, i: "🏠", t: "What furnace and air-handler components do", d: "Inducer, igniter, flame sensor, limits, blower and more.",
+  body: [
+   {dl: [["Inducer (draft) motor", "Pulls combustion gases through the heat exchanger and pushes them out the vent."],
+         ["Pressure switch", "Proves the inducer is creating draft before ignition is allowed."],
+         ["Hot surface igniter (HSI)", "Glows orange-hot to light the gas. Fragile — don't touch the element."],
+         ["Gas valve", "Opens on a 24 V signal after the safeties prove. Has a built-in regulator that sets manifold pressure."],
+         ["Burners", "Mix gas and air and hold the flames inside the heat exchanger."],
+         ["Flame sensor", "A metal rod in the flame. Proves flame by flame rectification (a small DC µA current)."],
+         ["Heat exchanger", "Separates combustion gases from the house air. A crack can let CO into the home."],
+         ["High limit", "Opens if the air temperature gets too high (low airflow). Resets automatically."],
+         ["Rollout switch", "Opens if flames roll out of the burner area. Usually manual reset — find the cause before resetting."],
+         ["Blower motor", "Moves house air. <b>PSC</b> motors use speed taps; <b>ECM</b> motors are programmed or use 24 V taps."],
+         ["Condensate trap (90%+ furnaces)", "Drains water from the secondary heat exchanger and vent while keeping a seal."],
+         ["Heat strips (air handlers)", "Electric resistance heaters, protected by limits and fusible links."],
+         ["Float switch", "Opens the control circuit if condensate backs up."]]}]},
+
+ /* ===================== BASICS ===================== */
+ {id: "cycle", cat: 4, i: "🔄", t: "The refrigeration cycle", d: "How an AC moves heat from inside to outside.",
+  body: [
+   {p: "An air conditioner doesn't make cold — it <b>moves heat</b>. Refrigerant absorbs heat indoors by boiling and gives it up outdoors by condensing."},
+   {ol: ["<b>Compressor</b>: low-pressure vapor in, high-pressure hot vapor out.", "<b>Condenser</b>: gives off heat outdoors; vapor turns to high-pressure liquid (subcooling happens here).",
+         "<b>Metering device</b>: pressure drops sharply; liquid becomes a cold, low-pressure mix.", "<b>Evaporator</b>: boils while absorbing heat from indoor air; leaves as vapor (superheat happens here). Back to the compressor."]},
+   {tip: "Heat always moves from hot to cold. Refrigerant boils at a low temperature when its pressure is low — that's why the P-T chart matters."},
+   {go: ["pt", "Open the P-T chart"]}]},
+ {id: "tstat", cat: 4, i: "🌡️", t: "Thermostat terminals and wire colors", d: "What R, C, Y, G, W, O/B and the rest do.",
+  body: [
+   {tbl: {head: ["Terminal", "Usual color", "What it does"], rows: [
+     ["R / Rh / Rc", "Red", "24 V power from the transformer (Rh heating, Rc cooling on some systems)"], ["C", "Blue or black", "Common — the other side of the transformer; powers smart thermostats"],
+     ["Y / Y1", "Yellow", "Cooling (compressor) — and heat pump heating"], ["Y2", "Light blue / varies", "Second-stage compressor"], ["G", "Green", "Fan / blower"],
+     ["W / W1", "White", "Heat (furnace or strips)"], ["W2 / AUX / E", "Brown / varies", "Second-stage, auxiliary or emergency heat"],
+     ["O / B", "Orange / dark blue", "Reversing valve — O energizes in cooling, B in heating"]]}},
+   {warn: "Colors are only a habit — installers don't always follow them. Always check which terminal each wire lands on at both ends."}]},
+ {id: "seq", cat: 4, i: "📋", t: "Cooling and heat pump sequence of operation", d: "What should happen, in order, on a cooling or heat pump call.",
+  body: [
+   {h: "Cooling (split AC)"},
+   {ol: ["Thermostat closes <b>R to Y</b> and <b>R to G</b>.", "G starts the indoor blower.", "Y goes through the safeties (pressure switches, float switch) to the <b>contactor coil</b> outdoors.",
+         "Contactor pulls in: compressor and condenser fan start.", "Call ends: outdoor unit stops; blower may run a short off-delay."]},
+   {h: "Heat pump"},
+   {ul: ["Heating: R to Y (and G). The reversing valve is <b>not</b> energized on most brands (O-type), so hot gas goes to the indoor coil.",
+         "Cooling: R to Y, G and <b>O</b> — O energizes the reversing valve.", "Auxiliary heat (W2/AUX) adds strips when the heat pump can't keep up; emergency heat (E) uses strips only.",
+         "Defrost: the outdoor fan stops, the valve shifts to cooling mode for a few minutes, and the strips come on to temper the air."]}]},
+ {id: "air", cat: 4, i: "💨", t: "Airflow basics", d: "CFM per ton, temperature split, temperature rise and filters.",
+  body: [
+   {ul: ["Cooling systems need about <b>350–450 CFM per ton</b> (400 is the usual rule). 1 ton = 12,000 BTU/h.",
+         "<b>Temperature split</b> across the evaporator in cooling is usually about {d:16-22} (return minus supply).",
+         "Furnace <b>temperature rise</b> (supply minus return) must be within the range on the rating plate.",
+         "Filters: arrow points <b>toward the unit</b> (with the airflow). A clogged filter is the number-one cause of low airflow.",
+         "<b>Static pressure</b> is measured in in. WC with a manometer. Most residential equipment is rated for about 0.5 in. WC total external static."]},
+   {go: ["air", "Open the airflow calculator"]}]},
+ {id: "cond", cat: 4, i: "💧", t: "Condensate drains", d: "Traps, slope, float switches and clearing a clog.",
+  body: [
+   {ul: ["Slope the drain line at least <b>1/8–1/4 in. per foot</b> toward the drain.", "Install a <b>trap</b> on draw-through coils (most air handlers), per the manufacturer, and a vent after it when required.",
+         "A <b>float switch</b> in the primary line or secondary pan shuts the system off before water overflows.", "A water-filled secondary pan means the primary drain is blocked."]},
+   {h: "Clearing a clog"},
+   {ol: ["Power off.", "Use a wet/dry vacuum on the outside end of the drain, or flush from the cleanout with water.", "Clean the trap, check the pan, and pour water in to confirm it drains.", "Reset/verify the float switch and restore power."]}]},
+ {id: "math", cat: 4, i: "🧮", t: "Formulas and conversions every tech uses", d: "Ohm's law, watts, BTU, pressure and temperature.",
+  body: [
+   {tbl: {head: ["Formula / conversion", "Use it for"], rows: [
+     ["Volts = Amps × Ohms (E = I × R)", "Ohm's law"], ["Watts = Volts × Amps", "Power of resistive loads (heaters). For motors, W = V × A × power factor"], ["VA = Volts × Amps", "Transformer loading"],
+     ["1 kW = 3,412 BTU/h", "Electric heat capacity"], ["1 ton = 12,000 BTU/h", "Cooling capacity"], ["1 HP ≈ 746 W", "Motor size"],
+     ["1 psi = 27.7 in. WC", "Gas and static pressure"], ["°C = (°F − 32) × 5 ÷ 9", "Temperature"], ["BTU/h = 1.08 × CFM × ΔT", "Sensible heat (standard air)"]]}},
+   {p: "Series circuits: the same current flows through every part and voltages add up. Parallel circuits: every branch gets the full voltage and currents add up. Loads in HVAC are wired in <b>parallel</b>; switches in <b>series</b> with their load."}]},
+ {id: "tools", cat: 4, i: "🧰", t: "Basic tool kit for a new tech", d: "What to carry on day one.",
+  body: [
+   {dl: [["Hand tools", "Multi-bit screwdriver and 1/4 in. / 5/16 in. nut drivers, needle-nose and lineman's pliers, wire strippers, adjustable wrenches, hex keys, flashlight or headlamp, tape measure."],
+         ["Meters", "CAT III multimeter with µF and µA, clamp meter, non-contact voltage tester."],
+         ["Refrigerant", "Manifold gauges, pipe clamp thermometers, refrigeration service wrench, core tool, tubing cutter, deburring tool."],
+         ["Air and gas", "Probe thermometer, manometer."],
+         ["Safety", "Safety glasses, gloves, hearing protection, your lockout lock and tags, first-aid kit."]]},
+   {tip: "Buy good meters first — your safety depends on them. Other tools can be upgraded later."}]},
+ {id: "epa", cat: 4, i: "📜", t: "EPA 608 certification", d: "Which certification you need to handle refrigerant.",
+  body: [
+   {dl: [["Core", "Required for all types: ozone depletion, Clean Air Act, regulations, recovery, safety and shipping."],
+         ["Type I", "Small appliances (5 lb of refrigerant or less, factory sealed): refrigerators, window units, dehumidifiers."],
+         ["Type II", "High-pressure and very-high-pressure appliances: residential split systems, heat pumps, most commercial refrigeration."],
+         ["Type III", "Low-pressure appliances, such as centrifugal chillers."],
+         ["Universal", "Core + Types I, II and III."]]},
+   {p: "The certification doesn't expire. It's required to buy most refrigerant and to open a refrigerant circuit. Most residential techs need <b>Type II</b> or <b>Universal</b>."}]},
+];
+
+TITLES.howto = "How To";
+let htCat = -1, htOpen = null;
+const htT = s => fTemp(s);                                   // trusted HTML; temps follow °F / °C
+
+function htBlock(b){
+  if (b.h) return `<h4>${htT(b.h)}</h4>`;
+  if (b.p) return `<p class="fp">${htT(b.p)}</p>`;
+  if (b.ol) return `<ol class="htol">${b.ol.map(x => `<li>${htT(x)}</li>`).join("")}</ol>`;
+  if (b.ul) return `<ul>${b.ul.map(x => `<li>${htT(x)}</li>`).join("")}</ul>`;
+  if (b.dl) return `<dl class="htdl">${b.dl.map(([k, v]) => `<dt>${htT(k)}</dt><dd>${htT(v)}</dd>`).join("")}</dl>`;
+  if (b.tip) return `<div class="gverd ok"><b>Tip:</b> ${htT(b.tip)}</div>`;
+  if (b.warn) return `<div class="gverd bad"><b>Warning:</b> ${htT(b.warn)}</div>`;
+  if (b.tbl) return `<div class="httw"><table class="httbl"><tr>${b.tbl.head.map(x => `<th>${htT(x)}</th>`).join("")}</tr>${b.tbl.rows.map(r => `<tr>${r.map(x => `<td>${htT(x)}</td>`).join("")}</tr>`).join("")}</table></div>`;
+  if (b.svg) return `<div class="htfig">${b.svg}</div>`;
+  if (b.sym) return `<div class="htsym">${HT_SYMBOLS.map(([n, d]) => `<figure><svg viewBox="-2 -2 74 38" class="htsvg">${d}</svg><figcaption>${esc(n)}</figcaption></figure>`).join("")}</div>`;
+  if (b.go) return `<button class="ghost fbtn" type="button" data-go="${b.go[0]}">${esc(b.go[1])} →</button>`;
+  return "";
+}
+function htCard(g){
+  if (htOpen !== g.id) return `<details class="issue howto" data-id="${g.id}"><summary><div><div class="it">${g.i} ${esc(g.t)}</div><div class="fsub">${esc(g.d)}</div></div></summary></details>`;
+  let h = `<details class="issue howto" data-id="${g.id}" open><summary><div><div class="it">${g.i} ${esc(g.t)}</div><div class="fsub">${esc(g.d)}</div></div></summary><div class="fbody">`;
+  if (g.safe) h += `<div class="finst"><b>⚠️ Safety first</b><ul>${g.safe.map(x => `<li>${htT(x)}</li>`).join("")}</ul></div>`;
+  if (g.tools) h += `<h4>Tools</h4><div class="tags">${g.tools.map(t => `<span class="tag">🧰 ${esc(t)}</span>`).join("")}</div>`;
+  h += g.body.map(htBlock).join("") + `</div></details>`;
+  return h;
+}
+const htText = g => (g.t + " " + g.d + " " + JSON.stringify(g.body) + " " + (g.tools || []).join(" ")).replace(/<[^>]+>/g, " ").toLowerCase();
+function renderHowto(){
+  const box = $("h-cats"); if (!box) return;
+  box.innerHTML = ["All", ...HOWTO_CATS].map((c, i) => `<button type="button" data-c="${i - 1}" class="${i - 1 === htCat ? "on" : ""}">${esc(c)}</button>`).join("");
+  const q = $("h-search").value.trim().toLowerCase(), words = q.split(/\s+/).filter(Boolean);
+  const list = HOWTO.filter(g => (htCat < 0 || g.cat === htCat) && words.every(w => htText(g).includes(w)));
+  $("h-list").innerHTML = list.length ? list.map(htCard).join("") : `<p class="note">No guides match “${esc(q)}”.</p>`;
+}
+$("h-cats").addEventListener("click", e => { const b = e.target.closest("button[data-c]"); if (!b) return; htCat = +b.dataset.c; renderHowto(); });
+$("h-search").addEventListener("input", renderHowto);
+$("h-list").addEventListener("click", e => {
+  const go = e.target.closest("button[data-go]");
+  if (go){ showTab(go.dataset.go); save(); window.scrollTo(0, 0); return; }
+  const sum = e.target.closest("summary"); if (!sum) return;
+  e.preventDefault();                                       // we render the open guide ourselves (keeps the list light)
+  const id = sum.parentElement.dataset.id; htOpen = htOpen === id ? null : id; renderHowto();
+  const el = document.querySelector(`#h-list details[data-id="${id}"]`);
+  if (el && htOpen) el.scrollIntoView({block: "start", behavior: S.reduceMotion ? "auto" : "smooth"});
+});
+const _htShowTab = showTab;
+showTab = function(v){
+  if (v === "howto" && !S.student) v = "settings";
+  const r = _htShowTab(v);
+  if (v === "howto") renderHowto();
+  return r;
+};
+if (S.tab === "howto" && !S.student) S.tab = "settings";
 
 
 /* ---------- init ---------- */
