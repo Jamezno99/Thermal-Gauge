@@ -467,6 +467,10 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 @keyframes btFade{to{opacity:1}}
 @keyframes btLoad{to{width:100%}}
 #boot.calm *{animation-duration:.01s!important;animation-delay:0s!important}
+/* Gary emergency card */
+.gemerg{border:2px solid var(--bad);border-radius:12px;background:var(--bad-bg);padding:10px 12px;margin:2px 0}
+.gemh{color:var(--bad);font-weight:900;font-size:16px;margin-bottom:4px}
+.gemerg ol{margin:4px 0 6px;padding-left:20px}.gemerg li{margin:6px 0}
 /* safety tab */
 .sfem{border-color:color-mix(in srgb,var(--bad) 45%,var(--line));background:linear-gradient(180deg,color-mix(in srgb,var(--bad-bg) 70%,var(--card)),var(--card))}
 .sfem h2{color:var(--bad)}
@@ -808,7 +812,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.44 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.45 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -2105,7 +2109,7 @@ renderChecklist();
 TITLES.safety = "Safety";
 /* {t:x} / {d:x} = temperatures, shown in the selected unit */
 const SAFETY = [
- {id: "elec", i: "⚡", t: "Electrical & lockout / tagout", keys: ["lockout tagout", "lock out tag out", "loto", "lock out the", "electrical safety", "shock", "arc flash", "discharge a cap", "discharge the cap", "discharge capacitor", "live-dead-live", "zero energy", "single pole", "single-pole", "one leg", "contactor open", "still be live", "still live", "still hot", "is it live", "still have power", "rubber gloves", "electrical gloves", "class 0", "class 00", "mini split wiring", "s1 s2 s3", "interconnect", "460", "three phase safety", "3 phase safety", "work it live", "working live", "hot work electrical"], items: [
+ {id: "elec", i: "⚡", t: "Electrical & lockout / tagout", keys: ["lockout tagout", "lock out tag out", "loto", "lock out the", "electrical safety", "shock", "arc flash", "discharge a cap", "discharge the cap", "discharge capacitor", "live-dead-live", "zero energy", "single pole", "single-pole", "one leg", "contactor open", "still be live", "still live", "still hot", "is it live", "still have power", "rubber gloves", "electrical gloves", "gloves for live", "live electrical", "electrocuted by", "shocked by", "class 0", "class 00", "mini split wiring", "s1 s2 s3", "interconnect", "460", "three phase safety", "3 phase safety", "work it live", "working live", "hot work electrical"], items: [
   "Shut off power at the disconnect <b>and</b> the breaker, then <b>lock and tag it</b> with your own lock — you keep the key.",
   "<b>Verify zero energy</b> with a working meter: test it on a known live source, test the circuit (every leg and to ground), then test the meter again (<b>live-dead-live</b>).",
   "Look for <b>more than one power source</b>: heat strips or the air handler on another breaker, 24 V from the indoor unit still live with the condenser off.",
@@ -2118,14 +2122,14 @@ const SAFETY = [
   "Use GFCI protection for power tools outdoors or in wet areas, and check cords for damage. Never work with wet hands or standing in water.",
   "Never leave a safety jumpered or bypassed — restore every safety and cover before you leave.",
  ]},
- {id: "moving", i: "🌀", t: "Fans, belts & units that start by themselves", keys: ["fan blade", "moving parts", "belt safety", "belts", "rooftop unit", "rtu", "auto restart", "starts by itself", "start on its own", "defrost fan"], items: [
+ {id: "moving", i: "🌀", t: "Fans, belts & units that start by themselves", keys: ["fan blade", "moving parts", "belt safety", "belts", "rooftop unit", "rtu", "auto restart", "starts by itself", "start by itself", "start on its own", "turn on by itself", "come on by itself", "start up by itself", "defrost fan"], items: [
   "Units can <b>start on their own</b>: a thermostat call, a reset overload, a time delay ending, a defrost cycle or a building control. Lock out before putting hands near fans, belts or pulleys.",
   "Condenser and blower wheels keep spinning after power is off — wait until they stop. Never stop a blade with your hand or a tool.",
   "Keep belt and fan guards on. Tie back loose clothing, long hair, lanyards and hoodie strings.",
   "On rooftop units, lock out at the unit disconnect <b>and</b> make sure the building control can't restart it.",
   "Heat pumps: the outdoor fan and compressor can start or change mode for defrost with no warning.",
  ]},
- {id: "ref", i: "🧊", t: "Refrigerant & cylinders", keys: ["refrigerant safety", "frostbite", "refrigerant burn", "cylinder safety", "tank safety", "heat a cylinder", "heat the tank", "a2l safety", "oxygen displace", "breathing refrigerant", "inhale refrigerant", "refrigerant exposure", "refrigerant leak inside", "hydro test", "disposable cylinder", "recovery tank safety"], items: [
+ {id: "ref", i: "🧊", t: "Refrigerant & cylinders", keys: ["refrigerant safety", "frostbite", "refrigerant burn", "cylinder safety", "tank safety", "heat a cylinder", "heat the tank", "heat a refrigerant", "heat the cylinder", "warm the cylinder", "warm a cylinder", "heat up the tank", "heat up the cylinder", "a2l safety", "oxygen displace", "breathing refrigerant", "inhale refrigerant", "refrigerant exposure", "refrigerant leak inside", "hydro test", "disposable cylinder", "recovery tank safety"], items: [
   "Wear <b>safety glasses and gloves</b> whenever you connect hoses or open a system — liquid refrigerant causes frostbite instantly.",
   "Refrigerant is <b>heavier than air and pushes out oxygen</b>. Ventilate basements, crawlspaces and mechanical rooms; if you feel dizzy, get to fresh air.",
   "Breathing high concentrations can cause <b>dizziness, irregular heartbeat and suffocation</b>. Never sniff refrigerant or work with your face at a leak.",
@@ -2153,7 +2157,7 @@ const SAFETY = [
   "Oxy-acetylene: acetylene <b>never above 15 psig</b>, cylinders upright and chained, flashback arrestors, leak-check, and light with a striker. Ask Gary \"how do I light a torch\".",
   "Flux and rod fumes are harmful — ventilate and use cadmium-free rod.",
  ]},
- {id: "gas", i: "💨", t: "Gas & carbon monoxide", keys: ["gas leak", "smell gas", "gas smell", "co safety", "co monitor", "carbon monoxide safety", "propane leak", "propane safety", "natural gas safety", "combustible gas"], items: [
+ {id: "gas", i: "💨", t: "Gas & carbon monoxide", keys: ["gas leak", "smell gas", "smelling gas", "smells like gas", "gas odor", "gas smell", "co safety", "co monitor", "carbon monoxide safety", "propane leak", "propane safety", "natural gas safety", "combustible gas"], items: [
   "<b>Smell gas?</b> Don't flip switches, use a phone or light anything inside. Get everyone out, shut the gas at the meter if it's safe, and call the gas utility or 911 from outside.",
   "<b>Propane is heavier than air</b> and pools in basements and low spots. Natural gas is lighter and rises. Check low for propane and high for natural gas.",
   "Wear a <b>personal CO monitor</b> and check the ambient CO when you walk in. <b>9–35 ppm</b>: tell the customer and ventilate. <b>36–69 ppm</b>: elevated, ventilate and shut off sources. <b>70+ ppm</b>: everyone out, call 911.",
@@ -2185,7 +2189,7 @@ const SAFETY = [
   "Know your way out and tell someone you're going in. Leave right away if you feel dizzy — refrigerant and gas can collect low.",
   "Some tanks, vaults, pits and mechanical spaces are <b>permit-required confined spaces</b> (OSHA). Don't enter without the proper permit, air testing and an attendant.",
  ]},
- {id: "health", i: "🦠", t: "Asbestos, lead, mold, rodents & chemicals", keys: ["asbestos", "lead paint", "lead-based", "rrp", "mold", "hantavirus", "rodent", "mouse droppings", "mice droppings", "coil cleaner safety", "chemical safety", " sds ", "fiberglass", "silica", "concrete dust", "drilling concrete"], items: [
+ {id: "health", i: "🦠", t: "Asbestos, lead, mold, rodents & chemicals", keys: ["asbestos", "lead paint", "lead-based", "rrp", "mold", "hantavirus", "rodent", "mouse droppings", "mice droppings", "coil cleaner safety", "chemical safety", " sds ", "fiberglass", "silica", "concrete dust", "drilling concrete", "drill concrete", "concrete pad", "cutting concrete", "drilling a concrete"], items: [
   "<b>Asbestos</b>: older homes (roughly pre-1980s) may have it in flue tape, duct wrap and furnace gaskets. Don't cut, sand or disturb it — stop and recommend testing.",
   "<b>Lead paint</b>: in homes built before 1978, disturbing more than 6 sq ft of painted surface inside (20 sq ft outside) falls under EPA's lead RRP rule — it needs a certified renovator and lead-safe practices.",
   "<b>Rodent droppings (hantavirus)</b>: don't sweep or vacuum. Ventilate 30 minutes, wear gloves, soak with 1 part bleach to 9 parts water for 5 minutes, then wipe up with paper towels (CDC).",
@@ -2483,7 +2487,7 @@ const KB = [
   {k: ["charge a txv", "charging txv", "charge txv", "txv charge"], t: "Charging a TXV system", a: "Run 15+ minutes with proper airflow, then charge to the <b>nameplate subcooling</b> ({d:8-12} typical). Add refrigerant as liquid in small amounts for blends and let it settle 10–15 minutes between adjustments. Check superheat stays in range."},
   {k: ["charge a piston", "charging piston", "charge piston", "piston charge", "fixed orifice charge"], t: "Charging a piston system", a: "Measure indoor wet bulb and outdoor dry bulb, get the <b>target superheat</b> (ask me \"target superheat WB 63 ODB 85\"), then add refrigerant if superheat is high or recover if it's low. Don't charge by superheat if the target is under {d:5}."},
   {k: ["leak check", "leak search", "find a leak", "leak detection"], t: "Finding leaks", a: "Look for oily spots first. Use an electronic detector (A2L-rated if needed) and bubble solution to confirm. For stubborn leaks, recover and pressure test with dry nitrogen (within the unit's rated test pressure) and watch for pressure drop."},
-  {k: ["flame sensor", "clean flame sensor", "flame rod"], t: "Flame sensor", a: "Proves flame to the control board. If the furnace lights then shuts off after a few seconds, clean the rod with fine abrasive pad (not sandpaper), check the ground, and measure microamps against the board spec."},
+  {p: 1, k: ["flame sensor", "clean flame sensor", "flame rod"], t: "Flame sensor", a: "Proves flame to the control board. If the furnace lights then shuts off after a few seconds, clean the rod with fine abrasive pad (not sandpaper), check the ground, and measure microamps against the board spec."},
   {k: ["capacitor", "cap test", "microfarad", "µf", "uf"], t: "Testing a run capacitor", a: "Kill power and discharge it. Measure µF across C–HERM and C–FAN; it should be within the rating on the label (usually ±5% or ±6%). Bulging tops or leaking oil mean replace it."},
   {k: ["contactor"], t: "Contactor", a: "The relay that switches line voltage to the compressor and fan when it gets 24 V on Y. Check for 24 V at the coil, and pitted or burned contacts; a voltage drop across closed contacts means it's worn."},
   {"p": 1, "k": ["manifold pressure", "gas pressure", "inlet pressure", "propane pressure", "lp pressure", "natural gas pressure", "gas valve pressure", "manometer"], "t": "Gas pressures (furnace)", "a": "Always set to the <b>rating plate</b>, measured with a manometer at the gas valve taps. Typical: <b>natural gas</b> manifold about <b>3.5 in. WC</b> on high fire, with inlet (supply) around 7 in. WC. <b>Propane (LP)</b> manifold about <b>10–11 in. WC</b>, inlet about 11–13 in. WC and never over 14 in. WC. Two-stage valves have a separate, lower low-fire setting. Check inlet pressure with the other gas appliances running, and verify the conversion kit/orifices match the fuel."},
@@ -3223,6 +3227,7 @@ function answer(raw){
   const q = " " + normalizeSpoken(raw.toLowerCase()).replace(/[’']/g, "'").replace(/º|˚/g, "°").replace(/(\d),(\d{3})\b/g, "$1$2").replace(/,/g, " ") + " ";
   const ref = findRef(q); if (ref) G.ref = ref;
   const cur = G.ref || S.ref || "r410a";
+  let em; if ((em = emergencyAnswer(q))) return em;     // emergencies are answered before anything else
   if (/^\s*(hi|hey|hello|yo|sup|good (morning|afternoon|evening))\b/.test(q)) return {html: `Hey! I'm Gary. ${HELP}`};
   if (/\b(thanks|thank you|thx|appreciate)\b/.test(q)) return {html: "Anytime. Stay safe out there."};
   if (/^\s*(help|commands|examples)\s*[?!.]?\s*$|what can you do|what do you know/.test(q)) return {html: HELP};
@@ -3232,8 +3237,8 @@ function answer(raw){
   if ((r = convertAnswer(q))) return {html: r};
   if ((r = tagTextAnswer(q))) return r;
   if ((r = chargeAnswer(q))) return r;
-  if (/acetylene|\boxy\b|oxygen|torch|braz/.test(q) && !/safety|safe\b|fire watch|hot work/.test(q) && (r = kbAnswer(q, true))) return {html: r};
-  if ((r = safetyAnswer(q))) return r;                    // safety topics -> Safety tab section   // torch / brazing questions before the P-T lookup                    // charging sheet / curve for the refrigerant in use                   // typed model / serial -> decode
+  if ((r = safetyAnswer(q))) return r;                    // safety topics -> Safety tab section
+  if (/acetylene|\boxy\b|oxygen|torch|braz/.test(q) && (r = kbAnswer(q, true))) return {html: r};   // torch / brazing questions before the P-T lookup   // torch / brazing questions before the P-T lookup                    // charging sheet / curve for the refrigerant in use                   // typed model / serial -> decode
   if (/target\s*(superheat|sh)|\bwb\b|wet ?bulb.*(outdoor|odb|dry)/.test(q) && !/%|percent|\brh\b/.test(q)) return targetSH(q);
   if ((r = diagAnswer(q, cur))) return r;                 // several labeled readings in one message -> full diagnosis
   const hasNum = pressures(q).length || temps(q).length || bare(stripRefs(q)).length;
@@ -4209,6 +4214,101 @@ $("c-askgary").addEventListener("click", () => {
   if (!txv && isFinite(v("c-wb"))) parts.push(`wb ${v("c-wb")}°`); if (!txv && isFinite(v("c-odb"))) parts.push(`odb ${v("c-odb")}°`);
   showTab("gary"); save(); window.scrollTo(0, 0); ask(parts.join(" "));
 });
+
+/* ---------- Gary: emergencies come FIRST ----------
+   Anything that sounds like an emergency (gas smell, CO alarm, shock, fire, refrigerant exposure, heat stroke,
+   burns, a fall) is answered with the emergency steps before any other matching can run. */
+const EMERG = [
+ {id: "gas", t: "Gas smell — act now", sec: "gas",
+  re: /(smell|smelling|smells|smelled|smelt|odor|odour|whiff|stink|stinks)\w*\b.{0,30}\b(gas|propane|lp|natural gas)\b|\b(gas|propane)\b.{0,20}\b(smell|smells|smelling|odor|odour)\b|rotten eggs?|sulfur smell|sulphur smell|(gas|propane) (is )?(hissing|leaking)|(hissing|leaking) (gas|propane)|\bgas leak\b|propane leak|natural gas leak|leak(ing)? gas/,
+  steps: [
+   "<b>Strong smell, a hissing sound, or you can't tell where it's coming from: get everyone out now.</b> Don't stop to find the leak.",
+   "<b>Don't make a spark:</b> no light switches, phones, doorbells, thermostats, appliance controls, garage-door openers or power tools inside. No flames or smoking. Don't start vehicles nearby.",
+   "<b>Call 911 or the gas utility's emergency line from outside,</b> well away from the smell.",
+   "Shut the gas at the meter only if you're trained, it's outside and it's safe to do right away.",
+   "Don't go back in until the gas utility or fire department says it's safe, and don't turn the gas back on until the leak is found and fixed.",
+   "<b>Only a faint smell right at the appliance you're working on:</b> shut that appliance's gas valve, ventilate, and find the leak with a gas detector or soap bubbles — never a flame. If you can't find and stop it quickly, follow the steps above.",
+   "Propane is heavier than air and collects low (basements, crawlspaces). Natural gas rises.",
+  ], say: "Gas smell. If it's strong, hissing, or you can't tell where it's from, get everyone out now. Don't touch switches, phones or anything that can spark. Call 911 or the gas utility from outside."},
+ {id: "co", t: "Carbon monoxide — act now", sec: "gas",
+  re: /\b(co|carbon monoxide)\b.{0,25}\b(alarm|detector|monitor)s?\b.{0,20}(going off|goes off|went off|sounding|beeping|alarming|chirping|ringing|reading)|\b(alarm|detector|monitor)\b.{0,20}(going off|went off|beeping|sounding).{0,20}\b(co|carbon monoxide)\b|carbon monoxide poison|co poison|poisoned by (co|carbon)|\b(7\d|[89]\d|\d{3,})\s*ppm\b.{0,30}\b(house|home|room|inside|indoors|ambient|air|basement|living)\b|\b(house|home|room|inside|indoors|ambient|basement)\b.{0,30}\b(7\d|[89]\d|\d{3,})\s*ppm\b|(headache|dizzy|nause|sick).{0,40}\b(co|carbon monoxide)\b|(could|might|is|may) (it|this|that) be (co|carbon monoxide)\b|suspect (co|carbon monoxide)\b|think (it'?s|there'?s|there is) (co|carbon monoxide)\b/,
+  steps: [
+   "<b>Get everyone outside to fresh air now.</b>",
+   "<b>Call 911</b> (or the fire department). Tell them if anyone has a headache, dizziness, nausea, confusion or sleepiness — those need medical care.",
+   "Account for everyone, and don't go back in until emergency services clear the building. Never silence an alarm and ignore it.",
+   "Ambient CO action levels: <b>70 ppm or more — evacuate and call 911</b>; 36–69 ppm — elevated, ventilate and shut off sources; 9–35 ppm — tell the customer and ventilate.",
+   "Once it's safe: check every fuel-burning appliance (furnace, water heater, boiler, range), the venting and heat exchanger, and whether a vehicle or generator was running in or near the garage.",
+  ], say: "Carbon monoxide. Get everyone outside to fresh air now and call 911. Don't go back in until the fire department clears it."},
+ {id: "shock", t: "Electric shock — act now", sec: "elec",
+  re: /(got|get|getting|been|was|were|is|just) (shocked|electrocuted|zapped|hit by (power|voltage|current))|electrocut|(shocked|zapped) (me|him|her|them|myself)|(someone|coworker|helper|he|she|buddy|partner).{0,20}(shock|electrocut|zapped)|(stuck|hanging) (on|to) (a |the )?(wire|power|live)|(can'?t|cannot) let go/,
+  steps: [
+   "<b>Don't touch the person if they may still be in contact with power.</b>",
+   "<b>Shut off the power</b> at the disconnect or breaker. If you can't, move the source away with something dry that doesn't conduct (wood, plastic, cardboard).",
+   "<b>Call 911</b> for burns, confusion, trouble breathing, irregular heartbeat, muscle pain or twitching, seizures or passing out. After any real shock, get checked — heart problems can show up later.",
+   "If they aren't breathing or moving, <b>start CPR</b> and use an AED if one is available.",
+   "Don't move them unless they're in danger. Cover burns loosely with sterile gauze or a clean cloth.",
+   "High-voltage lines: stay at least 20 ft away and call 911 — don't approach until the utility cuts the power.",
+  ], say: "Electric shock. Don't touch them if they may still be in contact with power. Shut off the power, call 911, and start CPR if they're not breathing."},
+ {id: "fire", t: "Fire or burning smell — act now", sec: "hot",
+  re: /on fire|caught fire|catch(ing)? fire|started a fire|fire (in|inside|at) the|electrical fire|attic fire|(flames?|fire) (coming|shooting|is coming) (out|from)|\b(units?|furnaces?|motors?|wires?|wiring|panels?|breakers?|boards?|compressors?|capacitors?|caps?|outlets?|attic|walls?|condenser|air handler|contactor)\b.{0,20}\b(is |are |started |keeps |was )?(smoking|sparking|burning up|on fire|melting)|smoke (is )?(coming|pouring)|\bsparks?\b.{0,25}\bsmok|\bsmok\w*.{0,25}\bsparks?\b|\bsmoke\b.{0,10}\b(from|out of) (the |a )?\w+|smell(s|ing)? (like )?(something )?(is )?burn(ing|t)|burning smell|burnt smell|smell of (something )?burning/,
+  steps: [
+   "<b>Flames or smoke that's growing: get everyone out and call 911.</b> Close doors behind you.",
+   "Only fight a fire if it's <b>small</b>, you have a <b>clear way out</b>, and you have the right extinguisher (ABC works on electrical fires). <b>P.A.S.S.</b>: Pull the pin, Aim at the base, Squeeze, Sweep.",
+   "<b>Electrical fire: cut the power</b> at the breaker or disconnect if you can do it safely. <b>Never use water</b> on it.",
+   "Burning smell with no flames: shut the equipment off at the disconnect or breaker and look for overheated wiring, a motor or a board. If the smoke keeps coming or gets worse, treat it as a fire.",
+   "After hot work, keep watching for at least 30 minutes for smoldering fires.",
+  ], say: "Fire. Get everyone out and call 911. Only use an extinguisher on a small fire with a clear way out. Never use water on an electrical fire."},
+ {id: "ref", t: "Refrigerant exposure — act now", sec: "ref",
+  re: /refrigerant (in|on|hit|sprayed|got in|got on) (my |his |her |the )?(eye|eyes|skin|face|hand|hands|arm|leg)|(sprayed|blew|shot) (in|on) (my |his |her )?(eye|eyes|face|hand|hands)|(freon|refrigerant|410a|r-?22|liquid) (burn|burned|frostbite|frost bit)|frostbite (from|by) (the )?(refrigerant|freon|liquid|hose|line)|breathed (in )?(a lot of )?(refrigerant|freon)|(passed out|dizzy|can'?t breathe).{0,30}(refrigerant|freon)|(refrigerant|freon).{0,30}(passed out|dizzy|can'?t breathe)/,
+  steps: [
+   "<b>Eyes:</b> flush with clean lukewarm water for <b>15 minutes</b>, holding the lids open. Get medical care.",
+   "<b>Skin (frostbite):</b> soak in lukewarm — <b>not hot</b> — water. Don't rub it and don't use direct heat. Get medical care if the skin is white, waxy, numb or blistered.",
+   "<b>Breathed a lot in</b> (dizzy, irregular heartbeat, trouble breathing): move to fresh air right away and <b>call 911</b> if breathing is hard or they pass out. Start CPR if needed.",
+   "Tell responders which refrigerant it was and show them the SDS if you have it.",
+  ], say: "Refrigerant exposure. For eyes, flush with lukewarm water for 15 minutes. For skin, soak in lukewarm, not hot, water and don't rub. If they breathed a lot in, get them to fresh air and call 911 if breathing is hard."},
+ {id: "heat", t: "Heat stroke / heat illness — act now", sec: "heat",
+  re: /heat ?stroke|heat exhaustion|(passed out|fainted|collapsed|confused|stopped sweating|not sweating).{0,30}(heat|hot|attic|roof|sun)|(heat|hot|attic|roof|sun).{0,30}(passed out|fainted|collapsed|confused|stopped sweating)|overheat(ed|ing) (tech|worker|helper|coworker|myself|guy)/,
+  steps: [
+   "<b>Heat stroke</b> — confusion, passing out, seizures, very high body temperature, hot dry skin or heavy sweating: <b>call 911</b>. It's life-threatening.",
+   "Move them to shade or a cool area, loosen clothing, and <b>cool them fast</b> — cold water or ice on the skin, wet cloths, a fan. Stay with them.",
+   "Don't give fluids to someone who's confused or unconscious.",
+   "<b>Heat exhaustion</b> — headache, nausea, dizziness, weakness, heavy sweating: stop work, rest somewhere cool, drink water, and get checked by a clinic.",
+  ], say: "Heat stroke is life-threatening. Call 911, move them somewhere cool, and cool them fast with water, ice and a fan. Stay with them."},
+ {id: "burn", t: "Burn — first aid", sec: "hot",
+  re: /(burned|burnt|scalded) (myself|my|his|her|their)|(i|he|she) (got|have) (a )?burn(ed)?\b|torch burn|burn (on|to) my|brazing burn|burned (by|with|on) (the )?(torch|pipe|copper|line|rod)/,
+  steps: [
+   "<b>Cool it</b> with cool (not cold) running water for about 10 minutes. No ice, butter or ointment on a fresh burn.",
+   "Remove rings, watches or tight clothing near the burn before it swells. Don't pop blisters or pull off stuck clothing.",
+   "Cover loosely with a clean, dry cloth or sterile gauze.",
+   "<b>Call 911 / get emergency care</b> for burns that look white, leathery or charred, are larger than 3 inches, are on the face, hands, feet, groin or a joint, wrap around a limb — and for <b>every electrical or chemical burn</b>.",
+  ], say: "Burn. Cool it under cool running water for about 10 minutes, no ice. Cover it loosely. Get emergency care for large, deep, electrical or chemical burns, or burns on the face, hands or joints."},
+ {id: "fall", t: "Fall or serious injury — act now", sec: "fall",
+  re: /(fell|fallen|falling) (off|from|through) (the |a )?(ladder|roof|attic|joist|ceiling|truck|scaffold)|(someone|he|she|coworker|helper|i) (fell|has fallen)|hit (my|his|her) head|can'?t (feel|move) (my|his|her) (legs|arms|feet)|(bleeding|bleeds) (badly|a lot|won'?t stop)|deep cut/,
+  steps: [
+   "<b>Call 911</b> for a fall from a ladder or roof, a head injury, trouble breathing, heavy bleeding, or if they can't move or feel their arms or legs.",
+   "<b>Don't move them</b> if there may be a head, neck or back injury — unless they're in immediate danger.",
+   "Heavy bleeding: press firmly on the wound with a clean cloth and keep pressure on it.",
+   "If they aren't breathing, start CPR and use an AED if available.",
+  ], say: "Serious injury. Call 911. Don't move them if the head, neck or back could be hurt. Press firmly on heavy bleeding."},
+];
+const HYPO = /\b(can|could|will|would|might|does|do) (i|you|it|a|an|the|someone|anyone|refrigerant|that|this) (\w+ )?(get|be|give|cause|hurt|burn|shock)\b|\bhow (do|can) (i|you) (avoid|prevent|protect)|\bis it (safe|dangerous)/;
+function emergencyAnswer(q){
+  const hypo = HYPO.test(q) && !/what (do|should) (i|we) do|what to do/.test(q);
+  if (/\b(fire watch|flame sensor|flame rollout|rollout|fires? up|won'?t fire|firing rate|burner|pilot)\b/.test(q) && !/on fire|caught fire|smok/.test(q)) {
+    const e = EMERG.filter(x => x.id !== "fire").find(x => x.re.test(q)); if (!e) return null; return emergCard(e);
+  }
+  const burnout = /\b(oil|acid|burnout|burn ?out|burned out|burnt out|recovered|recovery)\b/.test(q) && !/smok|flame|on fire|spark/.test(q);   // compressor burnout smell, not a fire
+  const e = EMERG.find(x => x.re.test(q) && !(hypo && /shock|burn|fall|ref|heat/.test(x.id)) && !(burnout && x.id === "fire"));
+  return e ? emergCard(e) : null;
+}
+function emergCard(e){
+  const sec = SAFETY.find(s => s.id === e.sec);
+  return {html: `<div class="gemerg"><div class="gemh">🚨 ${esc(e.t)}</div><ol>${e.steps.map(x => `<li>${x}</li>`).join("")}</ol>
+    <p class="gdim">Life-threatening? Call 911 first. Follow your company's emergency plan and the equipment manufacturer's instructions.</p></div>`,
+    say: e.say,
+    act: {label: "Open Safety tab", fn: () => { showTab("safety"); save(); $("sf-search").value = ""; renderSafety(); window.scrollTo(0, 0);
+      const d = sec && document.querySelector(`.sfsec[data-id="${sec.id}"]`); if (d) d.open = true; }}};
+}
 
 
 
