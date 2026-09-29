@@ -467,6 +467,19 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 @keyframes btFade{to{opacity:1}}
 @keyframes btLoad{to{width:100%}}
 #boot.calm *{animation-duration:.01s!important;animation-delay:0s!important}
+/* safety tab */
+.sfem{border-color:color-mix(in srgb,var(--bad) 45%,var(--line));background:linear-gradient(180deg,color-mix(in srgb,var(--bad-bg) 70%,var(--card)),var(--card))}
+.sfem h2{color:var(--bad)}
+.sful{margin:6px 0 0;padding-left:18px}.sful li{margin:7px 0;line-height:1.45}
+.sfhead{display:flex;justify-content:space-between;align-items:center}.sfhead h2{margin:0}
+.sfcount{font-size:13px;font-weight:800;color:var(--muted)}
+.sfpre{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.sfchk{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--field);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;font-size:15px}
+.sfchk .box{flex:none;width:24px;height:24px;border-radius:7px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--on-accent)}
+.sfchk.on{border-color:color-mix(in srgb,var(--ok) 50%,var(--line));background:var(--ok-bg)}
+.sfchk.on .box{background:var(--ok);border-color:var(--ok)}
+.sfi{margin-right:8px}
+#v-safety .field{margin-top:14px}
 /* web / iPhone */
 .kval{font-size:16px}
 header{padding-top:max(10px, env(safe-area-inset-top))}
@@ -723,6 +736,29 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
 </section>
 
 <!-- ================= COMMON ISSUES ================= -->
+<section class="view" id="v-safety">
+  <div class="card sfem">
+    <h2>🚨 Emergencies</h2>
+    <ul class="sful">
+      <li><b>Smell gas:</b> no switches, phones or flames inside. Get everyone out, shut the gas at the meter if safe, call the gas utility / 911 from outside.</li>
+      <li><b>CO 70 ppm or more:</b> everyone out and call 911. 36–69 ppm: ventilate and shut off sources. 9–35 ppm: tell the customer and ventilate.</li>
+      <li><b>Electric shock:</b> don't touch the person until the power is off. Call 911; start CPR / use an AED if trained.</li>
+      <li><b>Refrigerant on skin or eyes:</b> get to fresh air; warm (not hot) water on skin — don't rub; flush eyes 15 minutes; get medical help.</li>
+      <li><b>Heat stroke</b> (confusion, hot dry skin, collapse): call 911 and cool them down right away.</li>
+      <li><b>Burns:</b> cool running water for 10+ minutes; get help for large or deep burns.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="sfhead"><h2>Before every job</h2><span id="sf-count" class="sfcount"></span></div>
+    <div id="sf-pre" class="sfpre"></div>
+    <button type="button" class="ghost" id="sf-reset" style="margin-top:10px">Clear checks</button>
+    <p class="note" style="margin:8px 0 0">Checks clear by themselves each new day.</p>
+  </div>
+  <div class="field"><input id="sf-search" type="search" placeholder="Search safety (e.g. ladder, capacitor, asbestos)"></div>
+  <div id="sf-list"></div>
+  <p class="note" style="margin-top:14px">General field safety guide. Always follow OSHA rules, your company's safety program, the equipment manufacturer's instructions and local codes.</p>
+</section>
+
 <section class="view" id="v-issues">
   <div class="field"><input id="i-search" type="search" placeholder="Search symptoms or causes"></div>
   <div class="chips" id="i-cats"></div>
@@ -772,7 +808,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.41 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.44 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -983,6 +1019,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   <button data-v="check"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 12.5l2 2 4-4.5"/><path d="M9 18h6"/></svg>Checklist</button>
   <button data-v="load"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v5M10 15.5h4"/></svg>Load Calc</button>
   <button data-v="gary"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>Ask Gary</button>
+  <button data-v="safety"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 8.2-8 9-4.6-.8-8-4.4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Safety</button>
   <button data-v="notes"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>Notes</button>
   </div>
   <div class="menu-foot"><button class="ghost" id="nav-reset" type="button">Reset to default order</button></div>
@@ -2064,6 +2101,199 @@ $("k-clear").addEventListener("click", () => {
 });
 renderChecklist();
 
+/* ================= SAFETY ================= */
+TITLES.safety = "Safety";
+/* {t:x} / {d:x} = temperatures, shown in the selected unit */
+const SAFETY = [
+ {id: "elec", i: "⚡", t: "Electrical & lockout / tagout", keys: ["lockout tagout", "lock out tag out", "loto", "lock out the", "electrical safety", "shock", "arc flash", "discharge a cap", "discharge the cap", "discharge capacitor", "live-dead-live", "zero energy", "single pole", "single-pole", "one leg", "contactor open", "still be live", "still live", "still hot", "is it live", "still have power", "rubber gloves", "electrical gloves", "class 0", "class 00", "mini split wiring", "s1 s2 s3", "interconnect", "460", "three phase safety", "3 phase safety", "work it live", "working live", "hot work electrical"], items: [
+  "Shut off power at the disconnect <b>and</b> the breaker, then <b>lock and tag it</b> with your own lock — you keep the key.",
+  "<b>Verify zero energy</b> with a working meter: test it on a known live source, test the circuit (every leg and to ground), then test the meter again (<b>live-dead-live</b>).",
+  "Look for <b>more than one power source</b>: heat strips or the air handler on another breaker, 24 V from the indoor unit still live with the condenser off.",
+  "<b>Single-pole contactors leave one leg live</b> — the compressor and fan can still have 120 V to ground with the contactor open. Kill the disconnect.",
+  "<b>Mini-splits</b>: the indoor/outdoor interconnect (S1-S2-S3 on many brands) carries line voltage. Turn off the outdoor disconnect before touching it.",
+  "<b>Capacitors, inverter and ECM boards hold a charge</b> after power is off — discharge caps with an insulated resistor tool, and wait the time printed on inverter/VFD boards.",
+  "If you must test live: CAT III/IV meter and leads on the right setting, insulated tools, <b>rated rubber gloves</b> (Class 00 up to 500 V AC, Class 0 up to 1,000 V AC) with leather protectors, dry footing, one hand where you can, and a face shield on bigger gear.",
+  "Commercial gear is often <b>460 V or 3-phase</b> — treat it with the same lockout steps and more arc-flash respect.",
+  "A thermostat set to \"off\" is <b>not</b> a lockout. Neither is pulling a fuse you can't lock.",
+  "Use GFCI protection for power tools outdoors or in wet areas, and check cords for damage. Never work with wet hands or standing in water.",
+  "Never leave a safety jumpered or bypassed — restore every safety and cover before you leave.",
+ ]},
+ {id: "moving", i: "🌀", t: "Fans, belts & units that start by themselves", keys: ["fan blade", "moving parts", "belt safety", "belts", "rooftop unit", "rtu", "auto restart", "starts by itself", "start on its own", "defrost fan"], items: [
+  "Units can <b>start on their own</b>: a thermostat call, a reset overload, a time delay ending, a defrost cycle or a building control. Lock out before putting hands near fans, belts or pulleys.",
+  "Condenser and blower wheels keep spinning after power is off — wait until they stop. Never stop a blade with your hand or a tool.",
+  "Keep belt and fan guards on. Tie back loose clothing, long hair, lanyards and hoodie strings.",
+  "On rooftop units, lock out at the unit disconnect <b>and</b> make sure the building control can't restart it.",
+  "Heat pumps: the outdoor fan and compressor can start or change mode for defrost with no warning.",
+ ]},
+ {id: "ref", i: "🧊", t: "Refrigerant & cylinders", keys: ["refrigerant safety", "frostbite", "refrigerant burn", "cylinder safety", "tank safety", "heat a cylinder", "heat the tank", "a2l safety", "oxygen displace", "breathing refrigerant", "inhale refrigerant", "refrigerant exposure", "refrigerant leak inside", "hydro test", "disposable cylinder", "recovery tank safety"], items: [
+  "Wear <b>safety glasses and gloves</b> whenever you connect hoses or open a system — liquid refrigerant causes frostbite instantly.",
+  "Refrigerant is <b>heavier than air and pushes out oxygen</b>. Ventilate basements, crawlspaces and mechanical rooms; if you feel dizzy, get to fresh air.",
+  "Breathing high concentrations can cause <b>dizziness, irregular heartbeat and suffocation</b>. Never sniff refrigerant or work with your face at a leak.",
+  "<b>Never let refrigerant hit an open flame or hot surface</b> — it breaks down into toxic, acidic gases (hydrogen fluoride; phosgene from older refrigerants like R-22). Recover it before brazing.",
+  "<b>A2L refrigerants</b> (R-454B, R-32) are mildly flammable: no ignition sources nearby, and use A2L-rated recovery machines, tanks, gauges and leak detectors.",
+  "Never heat a cylinder with a torch or leave it where it can pass {t:125}. Keep cylinders upright and secured, valve caps on for transport.",
+  "Recovery tanks: fill to <b>80% max</b> (weigh them), check the 5-year hydro test date, and never mix refrigerants. Never refill disposable jugs.",
+  "Never vent refrigerant — it's illegal (EPA Section 608).",
+ ]},
+ {id: "press", i: "🔩", t: "Pressure testing & nitrogen", keys: ["nitrogen safety", "pressure test safety", "pressure testing", "nitrogen regulator", "test with oxygen", "pressurize with", "schrader", "core blew", "trapped liquid", "hydrostatic", "valve core safety", "shop air"], items: [
+  "<b>Always use a regulator on nitrogen</b> — a full cylinder is over 2,000 psi. Use a relief valve downstream.",
+  "<b>Never pressurize a system with oxygen</b> (it can explode with oil) or with shop air (moisture and contaminants).",
+  "Don't exceed the unit's rated test pressure — use the low-side design pressure on the data tag.",
+  "Open cylinder and system valves slowly. Keep your face and hands away from valve cores and gauge ports.",
+  "Schrader cores can shoot out under pressure — use a core-removal tool with its own valve, not pliers.",
+  "Never trap liquid refrigerant between two closed valves and let it warm up — it expands and can burst the line or hose.",
+  "Relieve all pressure before removing cores, cutting lines or opening fittings. Use hoses rated for the refrigerant and pressure.",
+ ]},
+ {id: "hot", i: "🔥", t: "Brazing & hot work", keys: ["hot work", "fire watch", "brazing safety", "torch safety", "fire extinguisher", "lens shade", "what shade", "safe to braze", "braze safely", "brazing fumes", "cadmium"], items: [
+  "Keep a <b>fire extinguisher within reach</b>. Move combustibles away or protect them with a heat shield or flame blanket — check behind walls and in attics.",
+  "Keep a <b>fire watch for at least 30 minutes</b> after you finish brazing to catch smoldering fires (OSHA).",
+  "Wear brazing goggles or a face shield — <b>shade 3–4</b> for torch brazing — plus gloves and non-synthetic clothing.",
+  "Recover the refrigerant and open the system before you heat it. On A2L systems (R-454B, R-32), purge with nitrogen and check with a leak detector before lighting a torch.",
+  "Flow nitrogen and ventilate the area. Never point the flame at hoses, cylinders or wiring.",
+  "Oxy-acetylene: acetylene <b>never above 15 psig</b>, cylinders upright and chained, flashback arrestors, leak-check, and light with a striker. Ask Gary \"how do I light a torch\".",
+  "Flux and rod fumes are harmful — ventilate and use cadmium-free rod.",
+ ]},
+ {id: "gas", i: "💨", t: "Gas & carbon monoxide", keys: ["gas leak", "smell gas", "gas smell", "co safety", "co monitor", "carbon monoxide safety", "propane leak", "propane safety", "natural gas safety", "combustible gas"], items: [
+  "<b>Smell gas?</b> Don't flip switches, use a phone or light anything inside. Get everyone out, shut the gas at the meter if it's safe, and call the gas utility or 911 from outside.",
+  "<b>Propane is heavier than air</b> and pools in basements and low spots. Natural gas is lighter and rises. Check low for propane and high for natural gas.",
+  "Wear a <b>personal CO monitor</b> and check the ambient CO when you walk in. <b>9–35 ppm</b>: tell the customer and ventilate. <b>36–69 ppm</b>: elevated, ventilate and shut off sources. <b>70+ ppm</b>: everyone out, call 911.",
+  "Leak-check gas connections with soap solution or a combustible gas detector, never a flame.",
+  "After gas work, check manifold pressure, draft and flue CO (furnaces: 400 ppm air-free max), and leak-check everything you touched.",
+  "Never bypass rollout, limit or pressure switches. Check flue connections and clearances before you leave.",
+ ]},
+ {id: "fall", i: "🪜", t: "Ladders, roofs & weather", keys: ["ladder", "roof safety", "fall protection", "falls", "skylight", "lightning", "thunder", "storm", "power line", "harness"], items: [
+  "Inspect the ladder first — damaged ladders get tagged \"Do Not Use\". Use fiberglass, <b>not metal</b>, near electrical equipment.",
+  "Extension ladders: about <b>1 ft out for every 4 ft up</b> (4:1), and rails at least <b>3 ft above</b> the roof edge, or tie it off.",
+  "Face the ladder, keep <b>three points of contact</b>, and never stand on the top step of a stepladder.",
+  "Stay at least <b>10 ft away from overhead power lines</b> with ladders and long materials.",
+  "Use fall protection near roof edges (required at 6 ft on construction work, 4 ft in general industry), and watch for skylights — cover or guard them.",
+  "Don't carry heavy parts up the ladder: hoist them with a rope. Stay off wet, icy or steep roofs and out of high wind.",
+  "<b>When thunder roars, go indoors</b> (National Weather Service) — get off the roof, and wait 30 minutes after the last thunder before going back up.",
+ ]},
+ {id: "heat", i: "🌡️", t: "Heat, cold & attics", keys: ["heat stroke", "heat exhaustion", "heat illness", "hot attic", "attic safety", "cold weather", "hydrat", "how much water", "dehydrat", "frostbite from cold"], items: [
+  "Heat illness is a real risk in summer and attics: <b>water, rest and shade</b>. Drink about <b>1 cup every 15–20 minutes</b> in the heat, even if you're not thirsty (OSHA/NIOSH).",
+  "New to the heat or back from a week off? <b>Ease in</b> — lighter work and more breaks for the first week.",
+  "<b>Heat exhaustion</b>: headache, nausea, dizziness, weakness, heavy sweating. Stop, cool down, drink water, get checked.",
+  "<b>Heat stroke</b>: confusion, passing out, seizures, very high temperature — <b>call 911</b> and cool the person right away.",
+  "Do attic work early in the day. Walk <b>only on joists or walk boards</b>, use good lighting, and watch for roofing nails overhead.",
+  "Tell someone when you're in an attic or on a roof alone.",
+  "In cold weather, dress in layers and watch for ice on roofs, pads and ladders.",
+ ]},
+ {id: "tight", i: "🕳️", t: "Crawlspaces & confined spaces", keys: ["crawlspace", "crawl space", "confined space", "tight space", "under the house", "snakes", "spiders"], items: [
+  "Before crawling in: check for standing water with power nearby, sewage, damaged wiring, gas smell and animals (snakes, spiders, rodents).",
+  "Wear knee pads, gloves, long sleeves and an N95, and bring a good light.",
+  "Know your way out and tell someone you're going in. Leave right away if you feel dizzy — refrigerant and gas can collect low.",
+  "Some tanks, vaults, pits and mechanical spaces are <b>permit-required confined spaces</b> (OSHA). Don't enter without the proper permit, air testing and an attendant.",
+ ]},
+ {id: "health", i: "🦠", t: "Asbestos, lead, mold, rodents & chemicals", keys: ["asbestos", "lead paint", "lead-based", "rrp", "mold", "hantavirus", "rodent", "mouse droppings", "mice droppings", "coil cleaner safety", "chemical safety", " sds ", "fiberglass", "silica", "concrete dust", "drilling concrete"], items: [
+  "<b>Asbestos</b>: older homes (roughly pre-1980s) may have it in flue tape, duct wrap and furnace gaskets. Don't cut, sand or disturb it — stop and recommend testing.",
+  "<b>Lead paint</b>: in homes built before 1978, disturbing more than 6 sq ft of painted surface inside (20 sq ft outside) falls under EPA's lead RRP rule — it needs a certified renovator and lead-safe practices.",
+  "<b>Rodent droppings (hantavirus)</b>: don't sweep or vacuum. Ventilate 30 minutes, wear gloves, soak with 1 part bleach to 9 parts water for 5 minutes, then wipe up with paper towels (CDC).",
+  "<b>Mold and insulation</b>: wear an N95 (or better), long sleeves and gloves.",
+  "<b>Concrete dust (silica)</b>: drilling or cutting pads and block makes harmful dust — use water or a dust-collecting vacuum and a respirator.",
+  "<b>Coil cleaners and chemicals</b>: read the label/SDS, wear goggles and chemical gloves, never mix products, and rinse well.",
+  "Oil from a burned-out compressor is acidic — wear gloves and eye protection.",
+ ]},
+ {id: "lift", i: "🏋️", t: "Lifting, tools & your vehicle", keys: ["lifting", "lift a condenser", "back injury", "vehicle safety", "van safety", "transport cylinders", "tool safety", "sheet metal", "cut hand", "power tool", "driving"], items: [
+  "Team-lift or use a dolly for condensers and furnaces. Lift with your legs, keep the load close, and don't twist.",
+  "Sheet metal edges are razor sharp — wear cut-resistant gloves and deburr cut edges.",
+  "Use guards and eye/ear protection on saws, grinders and drills. Unplug tools or pull the battery before changing blades or bits.",
+  "Transport cylinders <b>upright and secured</b>, with regulators removed and valve caps on (OSHA), in a ventilated space.",
+  "Don't leave refrigerant cylinders in a hot, closed vehicle. Secure ladders and loads, and don't text and drive.",
+ ]},
+ {id: "ppe", i: "🦺", t: "PPE checklist", keys: [" ppe ", "personal protective", "safety glasses", "what gloves", "respirator", "hearing protection", "ear plugs", "noise"], items: [
+  "<b>Safety glasses</b> — always around refrigerant, pressure, cutting and brazing.",
+  "<b>Gloves</b> — cut-resistant for sheet metal, insulated for refrigerant, chemical-resistant for cleaners, rated rubber gloves for live electrical work.",
+  "<b>Brazing goggles or face shield</b> (shade 3–4).",
+  "<b>Boots</b> with good soles and <b>knee pads</b> for crawlspaces and attics.",
+  "<b>Hearing protection</b> for loud tools and equipment rooms. If you have to raise your voice to talk to someone 3 ft away, it's probably over 85 dBA (OSHA).",
+  "<b>N95 or half-mask respirator</b> for attics, insulation, mold, silica and dust.",
+  "<b>Hard hat and hi-vis</b> on commercial and construction sites or near traffic.",
+ ]},
+ {id: "prep", i: "🧰", t: "First aid & working alone", keys: ["first aid", "eyewash", "eye wash", "working alone", "alone on", "check in", "emergency plan"], items: [
+  "Keep a <b>first-aid kit, burn gel and eyewash</b> in the truck, and a fire extinguisher.",
+  "Know the job address before you need 911, and where the nearest urgent care is.",
+  "Working alone? <b>Check in</b> with the office or someone at set times, especially for roofs, attics and crawlspaces.",
+  "Report injuries and near-misses — even small ones.",
+ ]},
+ {id: "home", i: "🏠", t: "In the customer's home", keys: ["customer home safety", "pets and kids", "red tag", "red-tag", "dog", "aggressive customer", "unsafe customer"], items: [
+  "Keep kids and pets away from open panels, tools, chemicals and ladders. Ask for dogs to be put away before you go in the yard.",
+  "Put every panel and cover back on, restore power, and test the system before you leave.",
+  "Tell the customer about any unsafe condition you find (gas leak, CO, cracked heat exchanger, bad wiring). Red-tag unsafe equipment and shut it off — don't leave it running.",
+  "If a situation feels unsafe, leave and call your office. No job is worth it.",
+ ]},
+];
+const SAFETY_PREJOB = ["PPE on (glasses, gloves, boots)", "Meter tested on a known live source", "Know where the breaker, disconnect and gas shutoff are", "CO monitor on", "Fire extinguisher reachable (brazing or gas work)", "Ladder inspected and set up 4:1", "Water on hand — plan for heat", "Cylinders secured, caps on", "Someone knows where you are (attic, roof, crawlspace)"];
+
+(function(){
+  const day = new Date().toDateString();
+  let done = {};
+  try { const s = JSON.parse(localStorage.getItem("hvac_safety") || "{}"); if (s.day === day) done = s.done || {}; } catch(e){}
+  const saveDone = () => { try { localStorage.setItem("hvac_safety", JSON.stringify({day, done})); } catch(e){} };
+  const pre = $("sf-pre");
+  function renderPre(){
+    const n = SAFETY_PREJOB.filter((_, i) => done[i]).length;
+    $("sf-count").textContent = `${n} of ${SAFETY_PREJOB.length}`;
+    pre.innerHTML = SAFETY_PREJOB.map((t, i) => `<button type="button" class="sfchk${done[i] ? " on" : ""}" data-i="${i}"><span class="box">${done[i] ? "✓" : ""}</span>${t}</button>`).join("");
+  }
+  pre.addEventListener("click", e => { const b = e.target.closest("[data-i]"); if (!b) return; const i = b.dataset.i; if (done[i]) delete done[i]; else done[i] = 1; saveDone(); renderPre(); });
+  $("sf-reset").addEventListener("click", () => { done = {}; saveDone(); renderPre(); });
+  renderPre();
+  function renderSafety(){
+    const q = $("sf-search").value.trim().toLowerCase();
+    const items = SAFETY.map(s => ({s, hits: s.items.filter(x => !q || uT(x).toLowerCase().replace(/<[^>]+>/g, "").includes(q) || s.t.toLowerCase().includes(q))})).filter(x => x.hits.length);
+    $("sf-list").innerHTML = items.length ? items.map(({s, hits}) => `
+      <details class="issue sfsec" data-id="${s.id}"${q ? " open" : ""}>
+        <summary><div><div class="it"><span class="sfi">${s.i}</span>${esc(s.t)}</div><div class="tags"><span class="tag">${s.items.length} rules</span></div></div></summary>
+        <div class="ibody"><ul class="sful">${hits.map(x => `<li>${uT(x)}</li>`).join("")}</ul></div>
+      </details>`).join("") : `<div class="empty">Nothing matches.</div>`;
+  }
+  $("sf-search").addEventListener("input", renderSafety);
+  renderSafety();
+  window.renderSafety = renderSafety;
+})();
+
+/* Gary: safety questions -> the matching section, with a button to open it in the Safety tab */
+function safetyAnswer(q){
+  if (/safety switch|float switch|safety control/.test(q)) return null;          // equipment safeties -> troubleshooting answers
+  let best = null, bl = 0;
+  const qq = " " + q.replace(/[?!.,;:]/g, " ").replace(/\s+/g, " ") + " ";
+  SAFETY.forEach(s => s.keys.forEach(k => { if (qq.includes(k) && k.length > bl){ best = s; bl = k.length; } }));
+  if (!best && /\bsafety\b|\bsafe\b|stay safe|be careful/.test(q)){
+    const r = safetySearch(q); if (r) return r;
+    return {html: `${b("Safety")}<br>The Safety tab covers ${SAFETY.map(s => s.t.toLowerCase()).join(", ")} — plus emergencies and a before-the-job checklist. Ask me about any of them, like "lockout tagout", "ladder safety" or "hantavirus".`,
+      act: {label: "Open Safety tab", fn: () => { showTab("safety"); save(); window.scrollTo(0, 0); }}};
+  }
+  if (!best && /\bsafe|danger|hazard|hurt|injur|protect|osha|kill you|killed|electrocut|burn(ed|s)? myself|shock me/.test(q)) return safetySearch(q);
+  if (!best) return null;
+  // most relevant rules first (by the words used), the rest of the section after
+  const words = sfWords(q), sc = x => { const t = uT(x).toLowerCase().replace(/<[^>]+>/g, " "); return words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0); };
+  const items = best.items.map((x, i) => [sc(x), i, x]).sort((a, c) => c[0] - a[0] || a[1] - c[1]).map(v => v[2]);
+  return {html: `${b(best.i + " " + best.t)}<ul>${items.map(x => `<li>${x}</li>`).join("")}</ul>`,
+    act: {label: "Open in Safety tab", fn: () => { showTab("safety"); save(); $("sf-search").value = ""; renderSafety(); const d = document.querySelector(`.sfsec[data-id="${best.id}"]`); if (d){ d.open = true; setTimeout(() => d.scrollIntoView({block: "start"}), 50); } }}};
+}
+
+/* "is it safe to ...?" style questions: find the individual rules that best match the words used */
+const SF_STOP = new Set("is it a an the to of in on at for with and or my i me can you do does how what when should be safe safety dangerous danger hazard hazards any are there ok okay if while from this that".split(" "));
+const SF_SYN = {rain: "wet", raining: "wet", rainy: "wet", storm: "thunder", storms: "thunder", lightning: "thunder", electrocuted: "shock", electrocute: "shock", zapped: "shock", zap: "shock",
+  fall: "ladder", falling: "ladder", roof: "roof", attic: "attic", hot: "heat", sun: "heat", summer: "heat", dust: "respirator", mask: "respirator", eyes: "glasses", ears: "hearing", loud: "hearing"};
+const sfWords = q => q.toLowerCase().replace(/[^a-z0-9\- ]/g, " ").split(/\s+/).filter(w => w.length > 2 && !SF_STOP.has(w)).map(w => SF_SYN[w] || (w.length > 4 ? w.replace(/(ing|ed|es|s)$/, "") : w));
+function safetySearch(q){
+  const words = sfWords(q);
+  if (!words.length) return null;
+  const hits = [];
+  SAFETY.forEach(s => s.items.forEach(x => {
+    const t = uT(x).toLowerCase().replace(/<[^>]+>/g, " ");
+    const sc = words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0) + words.reduce((n, w) => n + (s.t.toLowerCase().includes(w) ? 0.5 : 0), 0);
+    if (sc >= 1 && words.some(w => t.includes(w))) hits.push([sc, s, x]);
+  }));
+  if (!hits.length) return null;
+  hits.sort((a, c) => c[0] - a[0]);
+  const top = hits.filter(h => h[0] >= hits[0][0] - 0.5).slice(0, 4), sec = top[0][1];
+  return {html: `${b("Safety")}<ul>${top.map(h => `<li>${h[2]} <span class="gdim">(${h[1].t})</span></li>`).join("")}</ul>`,
+    act: {label: "Open in Safety tab", fn: () => { showTab("safety"); save(); $("sf-search").value = ""; renderSafety(); const d = document.querySelector(`.sfsec[data-id="${sec.id}"]`); if (d){ d.open = true; setTimeout(() => d.scrollIntoView({block: "start"}), 50); } }}};
+}
+
 /* ================= HVAC LOAD CALCULATOR =================
    Quick: rule-of-thumb BTU per sq ft by climate, insulation and sun.
    Detailed: simplified whole-house block load (CLTD-style cooling, steady-state heating).
@@ -2265,6 +2495,10 @@ const KB = [
   {"p": 1, "k": ["hot surface", "ignitor", "igniter"], "t": "Hot-surface ignitor", "a": "Should glow bright orange within the warm-up time. Check that it gets voltage (usually 120 V; some are 80 V) during the ignition step, then ohm it cold against the manufacturer's range. Don't touch the element (skin oil shortens its life) and handle carefully — it's brittle. Silicon nitride ignitors last longer than silicon carbide."},
   {"k": ["temperature rise", "temp rise", "heat rise"], "t": "Furnace temperature rise", "a": "Supply air temp − return air temp in heating, after about 10 minutes. It must be inside the range on the rating plate (often around {d:30-60} or {d:35-65}). Too high = low airflow or overfiring; too low = too much airflow or underfiring. To get CFM from it, ask me \"80000 btu rise 50\"."},
   {"p": 1, "k": ["heat exchanger"], "t": "Heat exchanger inspection", "a": "Look for cracks, holes or rust-through with a light and camera, especially at bends and seams. Warning signs: flame that moves or changes when the blower starts, soot, rollout trips, and rising flue CO. A cracked heat exchanger can leak CO into the home — red-tag it, shut it off and explain the risk to the customer."},
+  {"p": 1, "k": ["acetylene", "oxyacetylene", "oxy-acetylene", "oxy acetylene", "oxygen and acet", "oxygen tank", "oxygen bottle", "torch pressure", "torch setting", "regulator setting", "regulator pressure", "tanks be set", "tanks set", "tanks be at", "b tank", "mc tank"], "t": "Oxy-acetylene settings for brazing", "a": "<b>Regulator (working) pressures</b> — set with the torch valves open, and always go by the chart for <i>your</i> tip:<ul><li><b>Small tip, tubing up to about 1\"</b>: acetylene ≈ <b>5 psi</b>, oxygen ≈ <b>5 psi</b> (e.g. Uniweld 17-1 tip: 5 / 5).</li><li><b>Rosebud / larger tip, up to about 1-5/8\"</b>: acetylene <b>5–7 psi</b>, oxygen <b>5–8 psi</b> (e.g. Uniweld 28-2: 5–7 / 5–8).</li><li><b>Bigger pipe</b>: bigger tip from the chart — never more pressure than the chart says.</li></ul>⚠ <b>Never run acetylene above 15 psig</b> (OSHA) — above that it can become unstable. Keep acetylene cylinders <b>upright</b>, and don't draw more than 1/7 of the cylinder's capacity per hour (small B/MC tanks run out of flow on big tips — use a larger cylinder).<br><b>Full cylinders</b> read about <b>2,200 psi oxygen</b> and <b>250 psi acetylene</b> at {t:70}. The acetylene gauge moves with temperature, so it's only a rough fuel gauge.<br>Aim for a <b>neutral flame</b> (a crisp inner cone, no feather) or slightly carburizing — never oxidizing (short, hissing, pointed cone). Ask me \"how do I light a torch\" or \"how do I braze\"."},
+  {"p": 1, "k": ["light a torch", "light the torch", "lighting a torch", "lighting the torch", "shut down the torch", "shut off the torch", "turn off the torch", "torch shutdown", "setting up a torch", "set up a torch", "set up the torch", "flashback", "backfire"], "t": "Setting up, lighting and shutting down an oxy-acetylene torch", "a": "<b>Set up</b><ol><li>Cylinders chained upright; regulator adjusting screws backed out (loose).</li><li>Open oxygen cylinder valve slowly, all the way. Open acetylene cylinder valve only about <b>¾ turn</b> (so you can shut it fast) — leave the wrench on it if it needs one.</li><li>Turn the regulators in to the working pressures for your tip (≈5 psi each for a small tip). Leak-check connections with soapy water. Use check valves / flashback arrestors.</li><li>Purge each hose briefly, one at a time, in open air.</li></ol><b>Light</b><ol><li>Open the torch acetylene valve about ½ turn and light it with a <b>striker</b> (never a lighter).</li><li>Add acetylene until the flame stops smoking, then open the torch oxygen valve until the feather just disappears into a sharp inner cone — a <b>neutral flame</b>.</li></ol><b>Shut down</b><ol><li>Close the torch valves in the order your torch maker says (Victor and Uniweld: <b>oxygen first</b>, then acetylene).</li><li>Close both cylinder valves, open the torch valves to bleed the hoses to zero, close them, and back out the regulator screws.</li></ol>A popping <b>backfire</b> or a hissing/squealing <b>flashback</b>: shut the oxygen then the acetylene torch valves right away, close the cylinders, and check the tip and pressures before relighting."},
+  {"p": 1, "k": ["air acetylene", "air-acetylene", "turbotorch", "turbo torch", "turbo-torch", "b tank torch"], "t": "Air-acetylene (TurboTorch-style) settings", "a": "No oxygen tank — the tip mixes in air. TurboTorch lists <b>14 psi</b> acetylene for its tips. Pick the tip by tube size: <b>A-3</b> ¼–1\" · <b>A-5</b> ¾–1½\" · <b>A-8</b> 1–2\" · <b>A-11</b> 1½–3\". Same acetylene rules: under 15 psig, cylinder upright, and a bigger cylinder if the tip outruns a small tank."},
+  {"p": 1, "k": ["how to braze", "how do i braze", "how do you braze", "brazing step", "braze a joint", "braze copper", "brazing copper", "brazing rod", "filler rod", "silfos", "sil-fos", "15% silver", "what rod"], "t": "Brazing a copper joint (step by step)", "a": "<ol><li><b>Prep</b>: cut square, deburr with the tube pointing down so chips fall out, clean both surfaces bright with sand cloth or a brush, and push the tube fully into the fitting.</li><li><b>Protect</b>: wrap service valves / TXV with a wet rag or heat paste, and pull the Schrader cores.</li><li><b>Nitrogen</b>: purge the air out, then flow dry nitrogen at about <b>2–5 SCFH</b> the whole time you braze.</li><li><b>Heat</b>: heat the tube first, then the fitting (the heavier part needs more), moving the flame so the whole joint comes up evenly to a dull cherry red (about {t:1300}–{t:1500}).</li><li><b>Feed the rod</b> on the side opposite the flame — the hot metal melts the rod and capillary action pulls it into the joint. Stop when a full fillet shows all the way around.</li><li><b>Cool</b> naturally (keep the nitrogen flowing), then clean off any flux and pressure/leak test before evacuating.</li></ol><b>Rod</b>: copper-to-copper — 15% silver (Sil-Fos, BCuP-5) or 0–6% phos-copper, <b>no flux</b>. Copper to brass/steel (valves, driers, compressor stubs) — 45% silver with flux. Don't overheat: it burns the rod, oxidizes the pipe and can damage valves."},
   {"p": 1, "k": ["brazing", "braze", "nitrogen purge", "flow nitrogen", "flowing nitrogen", "sweat a joint"], "t": "Brazing with nitrogen", "a": "Flow dry nitrogen through the pipe while brazing so copper doesn't form oxide scale inside (it forms quickly once copper is above about {t:500}). Remove Schrader cores, purge the air out first at a higher flow, then braze at about <b>2–5 SCFH</b> — just a whisper out the far end. Keep flowing until the joint cools. Use 15% silver (Sil-Fos) on copper-to-copper without flux; use a high-silver rod and flux on brass or steel. Wrap valves with a wet rag or heat paste."},
   {"p": 1, "k": ["recover", "recovery", "epa 608", "section 608", "recovery tank", "recovery cylinder", "venting refrigerant"], "t": "Refrigerant recovery (EPA 608)", "a": "Never vent refrigerant. Required recovery levels with post-1993 equipment: high-pressure systems under 200 lb — <b>0 psig</b>; 200 lb or more — <b>10 in. Hg</b> vacuum. Small appliances (5 lb or less) — 90% recovered (80% if the compressor is dead) or 4 in. Hg. Fill recovery cylinders to <b>80%</b> max (weigh them), use A2L-rated machines and tanks for A2L refrigerants, and never mix refrigerants in one cylinder. Recovery goes faster with liquid first, then vapor."},
   {"p": 1, "k": ["phase out", "phase-out", "phased out", "phasing out", "being phased", "phasedown", "phase down", "aim act", "410a ban", "410a phase", "refrigerant transition", "install 410a", "install r-410a", "install r410a", "use 410a", "use r-410a", "410a still"], "t": "R-410A phase-down (AIM Act)", "a": "Under the AIM Act, new home AC and heat pump systems built from Jan 1, 2025 must use a refrigerant with GWP under 700 (R-454B or R-32). In 2026 EPA amended the rule (effective July 27, 2026): R-410A systems made or imported <b>before</b> Jan 1, 2025 can still be installed until that stock runs out. R-410A is still legal to use for servicing existing units, but production cuts mean higher prices — fix leaks instead of topping off. Never mix R-410A and A2L refrigerants or swap one into the other's equipment."},
@@ -2982,7 +3216,7 @@ function diagAnswer(q, cur){
 const HELP = `I work completely offline. Try asking:<ul>
 <li>"R-410A at 40°" or "454B 300 psi"</li><li>"Superheat 410A 118 psi 52°"</li><li>"Subcool R-22 260 psi 105°"</li>
 <li>"500 psi high side, 115° liquid line, what's wrong?"</li><li>"Head 450 suction 130 liquid 105 outdoor 95"</li><li>"Target superheat WB 63 ODB 85"</li><li>"CFM for 3 tons" or "80000 btu rise 50"</li><li>"Dew point 75°F 50%"</li><li>"How many tons for 1800 sq ft?"</li>
-<li>"High head low suction"</li><li>"Why is my coil freezing?"</li><li>"How can I help a unit run better?" or "Make it last longer"</li><li>"Check my readings" (reviews what's in the calculators)</li><li>"What is glide?" or "How do I evacuate?"</li><li>"Gas pressure for propane", "CO limits", "Defrost board", "Thermostat wire colors", "Megger a compressor", "Can I still install 410A?"</li><li>"75 F to C"</li><li>"R-410A charging sheet" or "How do I charge this 454B piston unit?"</li><li>📷 Tap the camera to read a data tag or gauges, or type "decode Lennox serial 5807H14681"</li></ul>
+<li>"High head low suction"</li><li>"Why is my coil freezing?"</li><li>"How can I help a unit run better?" or "Make it last longer"</li><li>"Check my readings" (reviews what's in the calculators)</li><li>"What is glide?" or "How do I evacuate?"</li><li>"Gas pressure for propane", "CO limits", "Defrost board", "Thermostat wire colors", "Megger a compressor", "Can I still install 410A?"</li><li>"75 F to C"</li><li>"What should my oxygen and acetylene be set at?" or "How do I braze?"</li><li>"Lockout tagout", "ladder safety", "hantavirus" (safety)</li><li>"R-410A charging sheet" or "How do I charge this 454B piston unit?"</li><li>📷 Tap the camera to read a data tag or gauges, or type "decode Lennox serial 5807H14681"</li></ul>
 After any reading, ask ${b("\"What should I do?\"")} for next steps.`;
 
 function answer(raw){
@@ -2997,7 +3231,9 @@ function answer(raw){
   if (/check (my|the|these) readings|review (my|the) readings|analy[sz]e (my|the)|how('s| is) (my|the|this) (unit|system) (doing|running)|look at my readings|diagnose (my|the) (readings|unit|system)/.test(q)) return reviewAnswer();
   if ((r = convertAnswer(q))) return {html: r};
   if ((r = tagTextAnswer(q))) return r;
-  if ((r = chargeAnswer(q))) return r;                    // charging sheet / curve for the refrigerant in use                   // typed model / serial -> decode
+  if ((r = chargeAnswer(q))) return r;
+  if (/acetylene|\boxy\b|oxygen|torch|braz/.test(q) && !/safety|safe\b|fire watch|hot work/.test(q) && (r = kbAnswer(q, true))) return {html: r};
+  if ((r = safetyAnswer(q))) return r;                    // safety topics -> Safety tab section   // torch / brazing questions before the P-T lookup                    // charging sheet / curve for the refrigerant in use                   // typed model / serial -> decode
   if (/target\s*(superheat|sh)|\bwb\b|wet ?bulb.*(outdoor|odb|dry)/.test(q) && !/%|percent|\brh\b/.test(q)) return targetSH(q);
   if ((r = diagAnswer(q, cur))) return r;                 // several labeled readings in one message -> full diagnosis
   const hasNum = pressures(q).length || temps(q).length || bare(stripRefs(q)).length;
