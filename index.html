@@ -77,6 +77,39 @@
 :root[data-theme="livewire"] button.ghost{border-color:#1e8bff;color:#5aa9ff}
 :root[data-theme="livewire"] .chips button.on{background:#1e8bff;border-color:#1e8bff;color:#fff}
 :root[data-theme="livewire"] .gverd.ok b{color:var(--ok)}
+:root[data-theme="fireice"]{
+  /* Fire and Ice: charred black, ember orange & glacier cyan */
+  --navy:#0d0705; --heat:#ff5a1f; --flame:#ffb020; --ice:#6fe3ff; --cool:#1fb6d8;
+  --bg:#0a0607; --card:#170f10; --ink:#fff2e6; --muted:#b89a8c; --line:#3a1f18;
+  --brand:#0d0705; --brand-ink:#ffffff; --accent:#ff5a1f; --on-accent:#1a0800;
+  --ok:#63e6be; --ok-bg:#08211d; --warn:#ffb020; --warn-bg:#2b1904; --bad:#ff3b30; --bad-bg:#2a0806;
+  --field:#120c0c; --chip:#21100c;
+  --title-a:#6fe3ff; --title-b:#ff5a1f; --sub:#c9a896;
+  --stripe:repeating-linear-gradient(135deg,#6fe3ff 0 8px,#0a0607 8px 10px,#ff5a1f 10px 18px,#0a0607 18px 20px);
+  --grad:linear-gradient(90deg,#6fe3ff,#ff5a1f);
+}
+:root[data-theme="fireice"] body{background-color:#0a0607;background-image:radial-gradient(55% 45% at 15% 8%,rgba(111,227,255,.14),transparent 60%),radial-gradient(60% 55% at 88% 96%,rgba(255,90,31,.18),transparent 60%);background-attachment:fixed}
+:root[data-theme="fireice"] .card,:root[data-theme="fireice"] details.issue{border-top:2px solid var(--ice);border-bottom:2px solid var(--heat);box-shadow:0 -2px 14px rgba(111,227,255,.10),0 6px 18px rgba(255,90,31,.14)}
+:root[data-theme="fireice"] h2,:root[data-theme="fireice"] h3{background:linear-gradient(90deg,var(--ice),var(--heat));-webkit-background-clip:text;background-clip:text;color:transparent}
+:root[data-theme="fireice"] button.ghost{border-color:var(--ice);color:var(--ice)}
+:root[data-theme="fireice"] .chips button.on{background:linear-gradient(90deg,var(--ice),var(--heat));border-color:transparent;color:#12100e}
+:root[data-theme="fireice"] .gmsg.gary .gbub{border-left:3px solid var(--ice)}
+:root[data-theme="fireice"] .gmsg.gary .gbub::before{color:var(--ice)}
+:root[data-theme="coastal"]{
+  /* Coastal: seafoam teal & sand gold */
+  color-scheme: light;
+  --navy:#ffffff; --heat:#1f9e93; --flame:#7fc9bc; --ice:#e0a83e; --cool:#c9871f;
+  --bg:#f3faf9; --card:#ffffff; --ink:#123632; --muted:#5c7d76; --line:#cfe9e3;
+  --brand:#ffffff; --brand-ink:#123632; --accent:#1f9e93; --on-accent:#ffffff;
+  --ok:#2f8f52; --ok-bg:#e6f5ea; --warn:#c9871f; --warn-bg:#fbf0dc; --bad:#c1503f; --bad-bg:#fbe6e1;
+  --field:#ffffff; --chip:#e2f4f0;
+  --title-a:#1f9e93; --title-b:#e0a83e; --sub:#5c7d76;
+  --stripe:linear-gradient(90deg,#1f9e93,#7fc9bc 45%,#e0a83e 100%);
+  --grad:linear-gradient(90deg,#1f9e93,#e0a83e);
+}
+:root[data-theme="coastal"] body{background-color:#f3faf9;background-image:radial-gradient(50% 40% at 92% 0%,rgba(224,168,62,.10),transparent 60%);background-attachment:fixed}
+:root[data-theme="coastal"] .card,:root[data-theme="coastal"] details.issue{border:1.5px dashed var(--accent);box-shadow:none}
+:root[data-theme="coastal"] h2,:root[data-theme="coastal"] h3{background:linear-gradient(90deg,var(--title-a),var(--title-b));-webkit-background-clip:text;background-clip:text;color:transparent}
 :root[data-theme="blueprint"]{
   /* Developer theme: Blueprint */
   --navy:#082c66; --heat:#ffffff; --flame:#9cc7ff; --ice:#ffffff; --cool:#9cc7ff;
@@ -535,6 +568,14 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 #boot[data-theme="livewire"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#0d1a33 0%,#05070b 50%,#000 100%);--bt-ink:#f5f7fa;--bt-sub:#a3adbd;
   --bt-a1:#1565ff;--bt-a2:#1e8bff;--bt-a3:#ffd400;--bt-a4:#ffe866;--bt-h:linear-gradient(90deg,#ffd400,#ffe866);--bt-c:linear-gradient(90deg,#1e8bff,#5aa9ff);
   --bt-glow:conic-gradient(from 200deg,rgba(255,212,0,.28),rgba(30,139,255,.2),rgba(255,212,0,.12),rgba(255,212,0,.28));--bt-arcglow:rgba(255,212,0,.5);--bt-needle:#ffd400}
+#boot[data-theme="fireice"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#241009 0%,#0d0705 55%,#000000 100%);--bt-ink:#fff2e6;--bt-sub:#c9a896;
+  --bt-a1:#6fe3ff;--bt-a2:#1fb6d8;--bt-a3:#ff5a1f;--bt-a4:#ffb020;--bt-h:linear-gradient(90deg,#6fe3ff,#1fb6d8);--bt-c:linear-gradient(90deg,#ff5a1f,#ffb020);
+  --bt-glow:conic-gradient(from 200deg,rgba(111,227,255,.28),rgba(255,90,31,.26),rgba(255,176,32,.16),rgba(111,227,255,.28));
+  --bt-track:rgba(255,242,230,.08);--bt-tick:rgba(255,242,230,.3);--bt-needle:#ffb020;--bt-nglow:rgba(255,176,32,.7);--bt-arcglow:rgba(255,90,31,.55);--bt-barbg:rgba(255,242,230,.08);--bt-shadow:rgba(0,0,0,.6)}
+#boot[data-theme="coastal"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#ffffff 0%,#eef8f6 50%,#dcf0ea 100%);--bt-ink:#123632;--bt-sub:#5c7d76;
+  --bt-a1:#1f9e93;--bt-a2:#7fc9bc;--bt-a3:#e0a83e;--bt-a4:#f0c777;--bt-h:linear-gradient(90deg,#1f9e93,#7fc9bc);--bt-c:linear-gradient(90deg,#e0a83e,#f0c777);
+  --bt-glow:conic-gradient(from 200deg,rgba(31,158,147,.22),rgba(224,168,62,.22),rgba(127,201,188,.18),rgba(31,158,147,.22));
+  --bt-track:rgba(18,54,50,.1);--bt-tick:rgba(18,54,50,.32);--bt-needle:#1f9e93;--bt-nglow:rgba(31,158,147,.45);--bt-arcglow:rgba(31,158,147,.35);--bt-barbg:rgba(18,54,50,.1);--bt-shadow:rgba(18,54,50,.2)}
 #boot[data-theme="blueprint"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#1b56b3 0%,#0d3b85 50%,#072a63 100%);--bt-ink:#ffffff;--bt-sub:#c3dcff;
   --bt-a1:#ffffff;--bt-a2:#c3dcff;--bt-a3:#9cc7ff;--bt-a4:#ffffff;--bt-h:linear-gradient(90deg,#ffffff,#e3efff);--bt-c:linear-gradient(90deg,#9cc7ff,#ffffff);
   --bt-glow:conic-gradient(from 200deg,rgba(255,255,255,.18),rgba(156,199,255,.22),rgba(255,255,255,.18));--bt-arcglow:rgba(255,255,255,.5)}
@@ -917,8 +958,10 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     <div class="themes" id="s-theme">
       <button data-v="default"><span class="sw" style="background:#0a1a3f"><i style="background:#000a28;border-bottom:3px solid #ff2a14"></i><b style="background:#ff2a14"></b><u style="background:#34b9fc"></u></span>Default</button>
       <button data-v="light"><span class="sw" style="background:#f3f6fa"><i style="background:#1565c0"></i><b style="background:#1976d2"></b><u style="background:#bbdefb"></u></span>Light Mode</button>
+      <button data-v="coastal"><span class="sw" style="background:#f3faf9"><i style="background:#ffffff;border-bottom:3px solid #1f9e93"></i><b style="background:#1f9e93"></b><u style="background:#e0a83e"></u></span>Coastal</button>
       <button data-v="dark"><span class="sw" style="background:#121214"><i style="background:#000;border-bottom:3px solid #ff3b30"></i><b style="background:#e53935"></b><u style="background:#f4f4f5"></u></span>Dark Mode</button>
       <button data-v="livewire"><span class="sw" style="background:#050608"><i style="background:#000;border-bottom:3px solid #ffd400"></i><b style="background:#ffd400"></b><u style="background:#1e8bff"></u></span>Live Wire</button>
+      <button data-v="fireice"><span class="sw" style="background:#0a0607"><i style="background:#0d0705;border-bottom:3px solid #6fe3ff"></i><b style="background:#ff5a1f"></b><u style="background:#6fe3ff"></u></span>Fire and Ice</button>
     </div>
   </div>
   <div class="card">
@@ -6291,7 +6334,7 @@ function heardNote(fixes){
 const LOGOS = {base: $("logo").src, aurora: window.TG_LOGO_AURORA};           // aurora shield is defined up top (boot screen uses it too)
 if (S.theme === "aurora") S.aurora = true;                         // was picked from Settings in v1.7-1.8
 delete S.egg;                                                      // old hidden theme (removed in v1.9)
-if (!["default","light","dark","livewire"].includes(S.theme)) S.theme = "default";
+if (!["default","light","dark","livewire","fireice","coastal"].includes(S.theme)) S.theme = "default";
 function applyTheme(){
   const t = S.aurora ? "aurora" : S.theme;
   if (t === "default") delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
