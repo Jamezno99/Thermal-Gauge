@@ -60,6 +60,23 @@
   --stripe:linear-gradient(90deg,#34e0a1,#22d3ee 45%,#38bdf8 70%,#a78bfa);
   --grad:linear-gradient(90deg,#34e0a1,#38bdf8);
 }
+:root[data-theme="livewire"]{
+  /* Live Wire: electric blue, high-vis yellow & black */
+  --navy:#000000; --heat:#ffd400; --flame:#ffb300; --ice:#1e8bff; --cool:#1565ff;
+  --bg:#050608; --card:#0f1217; --ink:#f5f7fa; --muted:#a3adbd; --line:#242b36;
+  --brand:#000000; --brand-ink:#ffffff; --accent:#ffd400; --on-accent:#000000;
+  --ok:#35d07f; --ok-bg:#0c2618; --warn:#ffa126; --warn-bg:#2e2008; --bad:#ff5a4a; --bad-bg:#3a1212;
+  --field:#07090c; --chip:#1a2230;
+  --title-a:#ffd400; --title-b:#1e8bff; --sub:#a3adbd;
+  --stripe:repeating-linear-gradient(135deg,#ffd400 0 10px,#000 10px 20px);
+  --grad:linear-gradient(90deg,#ffd400,#ffbf00);
+}
+:root[data-theme="livewire"] header{box-shadow:inset 0 -6px 0 -3px #1e8bff}
+:root[data-theme="livewire"] .card,:root[data-theme="livewire"] details.issue{border-left:3px solid #1e8bff}
+:root[data-theme="livewire"] h2{color:#ffd400}
+:root[data-theme="livewire"] button.ghost{border-color:#1e8bff;color:#5aa9ff}
+:root[data-theme="livewire"] .chips button.on{background:#1e8bff;border-color:#1e8bff;color:#fff}
+:root[data-theme="livewire"] .gverd.ok b{color:var(--ok)}
 :root[data-theme="blueprint"]{
   /* Developer theme: Blueprint */
   --navy:#082c66; --heat:#ffffff; --flame:#9cc7ff; --ice:#ffffff; --cool:#9cc7ff;
@@ -126,6 +143,7 @@ header p{margin:1px 0 0;font-size:13px;color:var(--sub)}
 #menu-btn.on{background:rgba(255,255,255,.16)}
 .themes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .themes button{border:2px solid var(--line);background:var(--field);color:var(--ink);border-radius:14px;padding:8px;text-align:left;font:inherit;font-weight:700;font-size:14px}
+#s-theme{grid-template-columns:repeat(2,1fr)}
 .themes button.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
 .themes .sw{display:block;height:54px;border-radius:9px;margin-bottom:7px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
 .themes .sw i{position:absolute;left:0;right:0;top:0;height:16px}
@@ -514,6 +532,9 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 @keyframes btUp{to{opacity:1;transform:none}}
 @keyframes btFade{to{opacity:1}}
 @keyframes btLoad{to{width:100%}}
+#boot[data-theme="livewire"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#0d1a33 0%,#05070b 50%,#000 100%);--bt-ink:#f5f7fa;--bt-sub:#a3adbd;
+  --bt-a1:#1565ff;--bt-a2:#1e8bff;--bt-a3:#ffd400;--bt-a4:#ffe866;--bt-h:linear-gradient(90deg,#ffd400,#ffe866);--bt-c:linear-gradient(90deg,#1e8bff,#5aa9ff);
+  --bt-glow:conic-gradient(from 200deg,rgba(255,212,0,.28),rgba(30,139,255,.2),rgba(255,212,0,.12),rgba(255,212,0,.28));--bt-arcglow:rgba(255,212,0,.5);--bt-needle:#ffd400}
 #boot[data-theme="blueprint"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#1b56b3 0%,#0d3b85 50%,#072a63 100%);--bt-ink:#ffffff;--bt-sub:#c3dcff;
   --bt-a1:#ffffff;--bt-a2:#c3dcff;--bt-a3:#9cc7ff;--bt-a4:#ffffff;--bt-h:linear-gradient(90deg,#ffffff,#e3efff);--bt-c:linear-gradient(90deg,#9cc7ff,#ffffff);
   --bt-glow:conic-gradient(from 200deg,rgba(255,255,255,.18),rgba(156,199,255,.22),rgba(255,255,255,.18));--bt-arcglow:rgba(255,255,255,.5)}
@@ -562,6 +583,24 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 .sfchk.on .box{background:var(--ok);border-color:var(--ok)}
 .sfi{margin-right:8px}
 #v-safety .field{margin-top:14px}
+/* Student Mode: Faults */
+body:not(.student) #nav-menu .menu-list [data-v="faults"]{display:none}
+.fprog{display:flex;align-items:center;gap:12px;margin-bottom:10px}.fprog b{white-space:nowrap;font-size:14px}
+.fbarw{flex:1;height:8px;border-radius:6px;background:var(--chip);overflow:hidden}#f-bar{height:100%;width:0;background:var(--accent);transition:width .3s ease}
+details.frules summary{padding:4px 0}details.frules ol{margin:8px 0 0;padding-left:20px;font-size:13.5px;line-height:1.45}details.frules li{margin:4px 0}
+.ftiers button .fcount{font-size:11px;opacity:.75;margin-left:3px}
+details.fault .fhead{display:flex;gap:8px;align-items:center;margin-bottom:3px}
+.fcode{font-size:11px;font-weight:800;letter-spacing:.5px;background:var(--accent);color:var(--on-accent);border-radius:8px;padding:2px 7px}
+.fok{font-size:11px;font-weight:700;color:var(--ok)}
+.fsub{font-size:12.5px;color:var(--muted);margin-top:3px}
+details.fault.solved{border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
+.fbody{padding:0 14px 14px}.fbody h4{margin:14px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.fbody ul{margin:4px 0;padding-left:20px;font-size:14px;line-height:1.45}.fbody .fp{margin:0;font-size:14px;line-height:1.45}
+.fhint{display:flex;gap:9px;font-size:14px;line-height:1.45;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin:5px 0;background:var(--chip)}
+.fhint span{flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.finst{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);font-size:14px}.finst b{display:block;color:var(--warn);margin-top:4px}
+.fbody .fbtn{margin-top:10px}.fbody .fans{margin-top:12px}
+#f-random{margin-bottom:4px}
 /* web / iPhone */
 .kval{font-size:16px}
 header{padding-top:max(10px, env(safe-area-inset-top))}
@@ -596,7 +635,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     var logErr = function(m, src){ try { var a = JSON.parse(localStorage.getItem("tg_errlog") || "[]"); a.push({t: Date.now(), m: String(m).slice(0, 300), s: src ? String(src).slice(0, 160) : ""}); localStorage.setItem("tg_errlog", JSON.stringify(a.slice(-50))); } catch(e){} };
     window.addEventListener("error", function(e){ logErr(e.message || "error", (e.filename ? e.filename.split("/").pop() : "") + (e.lineno ? ":" + e.lineno + ":" + e.colno : "")); });
     window.addEventListener("unhandledrejection", function(e){ logErr("Unhandled: " + (e.reason && e.reason.message || e.reason), ""); });
-    try { var s = JSON.parse(localStorage.getItem("hvac") || "{}"), t = s.devTheme ? s.devTheme : (s.aurora || s.theme === "aurora") ? "aurora" : (s.theme === "light" || s.theme === "dark") ? s.theme : "default";
+    try { var s = JSON.parse(localStorage.getItem("hvac") || "{}"), t = s.devTheme ? s.devTheme : (s.aurora || s.theme === "aurora") ? "aurora" : (s.theme === "light" || s.theme === "dark" || s.theme === "livewire") ? s.theme : "default";
       if (s.flags && s.flags.no_boot) b.classList.add("skip");
       b.dataset.theme = t; if (t === "aurora") document.getElementById("boot-logo").src = window.TG_LOGO_AURORA; if (t === "panhandle") document.getElementById("boot-logo").src = window.TG_LOGO_PANHANDLE; if (s.reduceMotion) b.classList.add("calm"); } catch(e){}
     if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) b.classList.add("calm"); })();</script>
@@ -867,6 +906,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
       <button data-v="default"><span class="sw" style="background:#0a1a3f"><i style="background:#000a28;border-bottom:3px solid #ff2a14"></i><b style="background:#ff2a14"></b><u style="background:#34b9fc"></u></span>Default</button>
       <button data-v="light"><span class="sw" style="background:#f3f6fa"><i style="background:#1565c0"></i><b style="background:#1976d2"></b><u style="background:#bbdefb"></u></span>Light Mode</button>
       <button data-v="dark"><span class="sw" style="background:#121214"><i style="background:#000;border-bottom:3px solid #ff3b30"></i><b style="background:#e53935"></b><u style="background:#f4f4f5"></u></span>Dark Mode</button>
+      <button data-v="livewire"><span class="sw" style="background:#050608"><i style="background:#000;border-bottom:3px solid #ffd400"></i><b style="background:#ffd400"></b><u style="background:#1e8bff"></u></span>Live Wire</button>
     </div>
   </div>
   <div class="card">
@@ -895,12 +935,19 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     <p class="note">The 🎤 button uses your phone's speech recognition and may need a signal. If it doesn't work, tap the microphone on your keyboard instead.</p>
   </div>
   <div class="card">
+    <h2>Student Mode</h2>
+    <div class="switch-row">
+      <div><div class="lbl">Student Mode</div><p class="note" style="margin:2px 0 0">Adds <b>Faults</b> to the Menu: 40 practice troubleshooting faults in 4 tiers, from Beginner to Expert Technician. Faults are set by an instructor on a trainer or practice system.</p></div>
+      <button class="switch" id="s-student" role="switch" aria-checked="false" aria-label="Student Mode"></button>
+    </div>
+  </div>
+  <div class="card">
     <h2>Developer</h2>
     <button class="ghost" id="s-dev" type="button">🔒 Developer Settings</button>
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.51 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.54 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -1093,6 +1140,23 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
 </section>
 
 <!-- ================= SERVICE NOTES ================= -->
+<section class="view" id="v-faults">
+  <div class="card">
+    <div class="fprog"><b id="f-prog"></b><div class="fbarw"><div id="f-bar"></div></div></div>
+    <details class="frules"><summary><b>⚠️ Safety rules — read before setting any fault</b></summary><ol id="f-rules"></ol></details>
+  </div>
+  <div class="chips ftiers" id="f-tiers"></div>
+  <p class="note" id="f-tdesc" style="margin-top:0"></p>
+  <div class="card switch-row">
+    <div><div class="lbl">Instructor view</div><p class="note" style="margin:2px 0 0">Shows how to set each fault, its safety limits and the answer. Turns off when you leave this page.</p></div>
+    <button class="switch" id="f-inst" role="switch" aria-checked="false" aria-label="Instructor view"></button>
+  </div>
+  <button class="primary" id="f-random" type="button">🎲 Random fault from this tier</button>
+  <div id="f-list"></div>
+  <button class="ghost" id="f-reset" type="button" style="margin-top:14px">Reset progress</button>
+  <p class="note">Practice only, on equipment an instructor has approved. Always follow the manufacturer's instructions, lockout/tagout, and your school's safety rules.</p>
+</section>
+
 <section class="view" id="v-notes">
   <div id="n-listview">
     <button class="primary" id="n-new">+ New service note</button>
@@ -1161,6 +1225,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   <button data-v="gary"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>Ask Gary</button>
   <button data-v="safety"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 8.2-8 9-4.6-.8-8-4.4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Safety</button>
   <button data-v="notes"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>Notes</button>
+  <button data-v="faults"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>Faults</button>
   </div>
   <div class="menu-foot"><button class="ghost" id="nav-reset" type="button">Reset to default order</button></div>
 </nav>
@@ -6206,7 +6271,7 @@ function heardNote(fixes){
 const LOGOS = {base: $("logo").src, aurora: window.TG_LOGO_AURORA};           // aurora shield is defined up top (boot screen uses it too)
 if (S.theme === "aurora") S.aurora = true;                         // was picked from Settings in v1.7-1.8
 delete S.egg;                                                      // old hidden theme (removed in v1.9)
-if (!["default","light","dark"].includes(S.theme)) S.theme = "default";
+if (!["default","light","dark","livewire"].includes(S.theme)) S.theme = "default";
 function applyTheme(){
   const t = S.aurora ? "aurora" : S.theme;
   if (t === "default") delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
@@ -6565,6 +6630,385 @@ $("dev-copy").addEventListener("click", async () => {
   toast(ok ? "Diagnostics report copied" : "Couldn't copy — take a screenshot instead");
 });
 applyFlags();
+
+/* ================= STUDENT MODE: Faults tab ================= */
+/* ================= Student Mode: troubleshooting faults =================
+   40 faults an instructor can set on a working trainer or residential system, 10 per tier.
+   Every fault is set with the power OFF and locked out, uses only entry-level tools, and never
+   requires adding or removing refrigerant, opening the gas train, or bypassing a flame safety.
+   Fields: id, tier (0-3), t = title (hidden until solved), eq = equipment needed, c = customer complaint,
+   tools, set = instructor setup, safe = safety limits while it runs, hints (3, easy -> specific),
+   ans = diagnosis, why = what the readings show, fix = restore & verify. {t:x}/{d:x} = temperatures. */
+const FAULT_TIERS = [
+  {n: "Beginner", d: "Easiest — look, listen and check the basics. Few or no tools."},
+  {n: "Apprentice", d: "Meter work — find the part that stopped the call or the power."},
+  {n: "Journeyman", d: "Challenging — gauges, temperatures, amps and line voltage together."},
+  {n: "Expert Technician", d: "Hardest — subtle or combined faults; readings must be interpreted, not just read."},
+];
+const FAULT_RULES = [
+  "An instructor sets, supervises and restores every fault. Students never set faults.",
+  "Set and restore faults with the power OFF at the breaker and disconnect, locked and tagged, and verified dead (live-dead-live).",
+  "Never add, remove or vent refrigerant, never open the gas piping, and never jumper or disable a flame, rollout, limit or high-pressure safety.",
+  "Stay with the equipment while a fault is running. Respect each fault's time limit and stop limits.",
+  "Students take line-voltage readings only with instructor approval, rated meters and leads, and proper PPE.",
+  "When done, restore the fault, then run the system and confirm normal operation before the next student.",
+];
+const FAULTS = [
+ // ---------------- BEGINNER ----------------
+ {id: "B-01", tier: 0, t: "Thermostat in the wrong mode", eq: "Any cooling system", c: "\"The AC isn't coming on at all.\"",
+  tools: ["Your eyes"], set: ["Set the thermostat mode to HEAT (with the setpoint below room temperature) or to OFF."],
+  safe: ["No hazards — no panels are opened."],
+  hints: ["Before opening any equipment, start where the customer controls the system.", "Look closely at everything on the thermostat display.", "What mode is it in?"],
+  ans: "The thermostat is set to HEAT/OFF instead of COOL, so there's no cooling call.",
+  why: "Nothing runs, and there's no fault anywhere in the equipment. Checking the thermostat first saves a truck-roll's worth of time.",
+  fix: ["Set the mode back to COOL with the setpoint below room temperature.", "Confirm the blower and outdoor unit start (allow up to 5 minutes for a compressor delay)."]},
+ {id: "B-02", tier: 0, t: "Fan set to ON", eq: "Any system", c: "\"Air blows all the time, even when the AC isn't cooling, and the house feels sticky.\"",
+  tools: ["Your eyes"], set: ["Set the thermostat fan to ON."], safe: ["No hazards."],
+  hints: ["The blower runs even when there's no call for cooling. What tells the blower to run?", "There are two settings on most thermostats: mode and fan.", "Check the fan setting."],
+  ans: "The fan is set to ON instead of AUTO.",
+  why: "With the fan ON the blower runs nonstop. In cooling, water left on the coil evaporates back into the house between cycles, raising humidity.",
+  fix: ["Set the fan to AUTO.", "Confirm the blower stops when the cooling call ends."]},
+ {id: "B-03", tier: 0, t: "Setpoint / hold set too high", eq: "Any cooling system", c: "\"The thermostat is on COOL but the house keeps getting warmer.\"",
+  tools: ["Your eyes", "Thermometer (optional)"], set: ["In COOL mode, set a HOLD (or the setpoint) about {d:5} above the current room temperature."], safe: ["No hazards."],
+  hints: ["The mode is right. What else decides whether the thermostat calls for cooling?", "Compare the room temperature to the setpoint.", "Is there a hold or schedule overriding it?"],
+  ans: "The setpoint (or a hold) is above room temperature, so the thermostat never calls for cooling.",
+  why: "Cooling only runs when the room is warmer than the setpoint. A hold keeps a setting until someone cancels it.",
+  fix: ["Cancel the hold and set the setpoint below room temperature.", "Confirm the system starts."]},
+ {id: "B-04", tier: 0, t: "Thermostat batteries dead", eq: "Battery-powered thermostat (no C wire)", c: "\"The thermostat screen is blank and nothing works.\"",
+  tools: ["Your eyes", "Spare batteries"], set: ["Remove the thermostat's batteries (or install flat ones). Only use this fault on a thermostat that runs on batteries."], safe: ["No hazards."],
+  hints: ["The screen is blank. Where does this thermostat get its power?", "Does it have a C wire, or does it run on batteries?", "Check the batteries."],
+  ans: "Dead or missing thermostat batteries.",
+  why: "A battery-powered thermostat can't make a call with no power. The equipment itself is fine.",
+  fix: ["Install fresh batteries.", "Set the correct mode and setpoint and confirm the system runs."]},
+ {id: "B-05", tier: 0, t: "Furnace / air handler service switch off", eq: "Furnace or air handler with a service switch", c: "\"Nothing comes on and the thermostat is blank.\"",
+  tools: ["Your eyes", "Non-contact voltage tester (optional)"], set: ["Turn off the light-switch-style service switch at the furnace or air handler (leave the breaker on)."], safe: ["Students look and operate the switch only — no panels open."],
+  hints: ["If the thermostat is blank and powered by the equipment, the equipment has no power.", "Follow the power: panel → wiring → switch at the unit.", "Look for a switch mounted on or near the furnace/air handler."],
+  ans: "The service switch at the indoor unit is off.",
+  why: "The indoor unit's transformer supplies the 24 V for the thermostat and the outdoor unit, so everything goes dead.",
+  fix: ["Turn the service switch on.", "Confirm the thermostat powers up and the system runs."]},
+ {id: "B-06", tier: 0, t: "Outdoor disconnect pulled", eq: "Split AC or heat pump", c: "\"Air is blowing but it's not cold.\"",
+  tools: ["Your eyes", "Ears"], set: ["Breaker off. Pull the disconnect's handle/block out (or switch it off) and leave it beside the disconnect. Turn the breaker back on so the indoor unit still runs."], safe: ["Students must not reach into the disconnect box. The line side is live whenever the breaker is on."],
+  hints: ["Go outside. Is anything running?", "If the outdoor unit is silent, where does it get its power?", "Look at the disconnect box next to the unit."],
+  ans: "The outdoor disconnect is pulled/off, so the condenser has no power.",
+  why: "The blower runs from the indoor unit's power, but the compressor and outdoor fan can't run.",
+  fix: ["Instructor: breaker off, reinstall the disconnect, breaker on.", "Confirm the outdoor unit starts on a cooling call."]},
+ {id: "B-07", tier: 0, t: "Blocked air filter", eq: "Any forced-air system", c: "\"Hardly any air comes out of the vents, and it's not cooling well.\"",
+  tools: ["Your eyes", "Thermometer"], set: ["Power off. Cover about two-thirds of the filter face with cardboard or plastic sheet (or install a heavily loaded filter). Do not block it completely."], safe: ["Limit the run to 20 minutes in cooling so the coil doesn't freeze.", "Stop if you see frost on the suction line or coil."],
+  hints: ["Weak airflow from every vent points to something common to the whole system.", "Follow the air backward from the vents to where it enters the unit.", "Check the filter."],
+  ans: "A clogged/blocked air filter is restricting airflow.",
+  why: "Low airflow: the temperature split rises above about {d:20-22}, supply air feels very cold but little of it, and the coil can start to freeze.",
+  fix: ["Remove the covering (or install a clean filter of the right size).", "Confirm strong airflow and a split around {d:16-22}."]},
+ {id: "B-08", tier: 0, t: "Condensate float switch tripped", eq: "System with a float switch in the secondary pan", c: "\"The AC stopped working this afternoon.\"",
+  tools: ["Your eyes", "Flashlight"], set: ["Power off. Pour a cup or two of clean water into the secondary drain pan until the float switch lifts. Keep water away from wiring."], safe: ["Keep the water in the pan only.", "Don't let students stick hands into wet electrical areas."],
+  hints: ["The system was fine earlier. Some safeties shut it off to protect the house.", "Look around and under the indoor unit.", "Is there water in the pan, and a switch on it?"],
+  ans: "Water in the secondary pan tripped the float (overflow) switch, which opens the control circuit.",
+  why: "Float switches protect ceilings from overflow. Depending on how it's wired, the outdoor unit or the whole system stops.",
+  fix: ["Power off, dry the pan, and confirm the float drops.", "In real life: find why water reached the pan (clogged primary drain).", "Confirm the system restarts."]},
+ {id: "B-09", tier: 0, t: "Closed supply registers", eq: "Any ducted system", c: "\"One bedroom never cools down.\"",
+  tools: ["Your eyes", "Thermometer"], set: ["Close the register dampers in one room (and/or move a piece of furniture over its return, if it has one)."], safe: ["No hazards."],
+  hints: ["Only one room is affected — so the equipment is probably fine.", "Compare the airflow at that room's registers with another room.", "Look at the registers themselves."],
+  ans: "The room's supply registers are closed.",
+  why: "Closed registers starve the room of air. Closing many registers also raises static pressure for the whole system.",
+  fix: ["Open the registers.", "Confirm airflow and supply temperature in the room."]},
+ {id: "B-10", tier: 0, t: "Y wire loose at the thermostat", eq: "Split AC with a conventional thermostat", c: "\"The fan runs but the air isn't cold.\"",
+  tools: ["Screwdriver", "Your eyes"], set: ["Power off. Remove the Y (yellow) wire from the thermostat base, fold it back, and cover the bare end with tape so it can't touch anything."], safe: ["24 V only at the thermostat — still turn the power off to set and restore it."],
+  hints: ["The blower runs, so the thermostat can talk to the indoor unit. The outdoor unit doesn't run.", "Which thermostat wire calls for the compressor?", "Take the thermostat off its base and look at the wiring."],
+  ans: "The Y wire is disconnected at the thermostat, so there's no compressor call.",
+  why: "G (fan) still works, so the blower runs. Without Y, the outdoor contactor never gets 24 V.",
+  fix: ["Power off, reconnect Y to the Y terminal, reinstall the thermostat.", "Confirm the outdoor unit starts."]},
+ // ---------------- APPRENTICE ----------------
+ {id: "A-01", tier: 1, t: "Low-voltage fuse removed from the board", eq: "Furnace or air handler with a board fuse", c: "\"The thermostat is blank and nothing runs.\"",
+  tools: ["Multimeter"], set: ["Power off. Remove the 3–5 A fuse from the control board and keep it."], safe: ["The board has 120/240 V on it — students measure 24 V points only, with instructor approval, and keep hands clear of line-voltage terminals."],
+  hints: ["Measure R to C at the board.", "The transformer's primary has power. Is 24 V leaving the transformer and reaching the board's R terminal?", "Look at the path between the transformer and R."],
+  ans: "The board's low-voltage fuse is missing/open, so R has no 24 V.",
+  why: "Transformer secondary reads about 24–28 V, but R to C on the board reads 0 V. Voltage across an open fuse holder reads about 24 V.",
+  fix: ["Power off, reinstall the fuse.", "In real life: find why a fuse blew before replacing it.", "Confirm 24–28 V R to C and normal operation."]},
+ {id: "A-02", tier: 1, t: "Y wire off the contactor coil", eq: "Split AC or heat pump", c: "\"The fan runs inside but it's blowing warm.\"",
+  tools: ["Multimeter"], set: ["Lock out the outdoor unit. Remove the low-voltage wire from one contactor coil terminal and put a wire nut on it."], safe: ["The contactor's line side is live when the disconnect is in. Students measure only across the coil terminals, with instructor approval, keeping clear of the line terminals."],
+  hints: ["Is the outdoor unit being told to run? Where would you measure that?", "Measure Y to C at the indoor board, then across the contactor coil.", "24 V at the board but not at the coil — follow the wires."],
+  ans: "One control wire is disconnected at the contactor coil.",
+  why: "Y–C at the indoor board reads about 24 V on a cooling call, but across the contactor coil it reads 0 V. The break is between them.",
+  fix: ["Lock out, reconnect the wire to the coil terminal.", "Confirm 24 V across the coil and that the contactor pulls in."]},
+ {id: "A-03", tier: 1, t: "Condenser fan motor disconnected", eq: "Split AC or heat pump", c: "\"The outside unit is running but the top fan isn't spinning.\"",
+  tools: ["Multimeter", "Clamp meter"], set: ["Lock out. Disconnect the fan motor's power lead at the contactor load terminal and cap it with a wire nut. Don't touch the capacitor wiring."], safe: ["Run no more than 3–5 minutes. Stop sooner if the compressor gets very hot or you're near the high-pressure switch setting (watch gauges if connected).", "Keep hands out of the fan area — the blade could be restored while someone is near it."],
+  hints: ["Compressor runs, fan doesn't. Is the motor bad, or not getting power?", "Measure voltage at the fan motor's leads with the contactor pulled in.", "No voltage at the motor — trace its wires back."],
+  ans: "The condenser fan motor has no power because its lead is disconnected at the contactor.",
+  why: "0 V at the motor with the contactor closed. The motor itself ohms OK. Head pressure and compressor amps climb quickly.",
+  fix: ["Lock out, reconnect the lead.", "Confirm the fan runs in the right direction and head pressure drops to normal."]},
+ {id: "A-04", tier: 1, t: "Blower on low speed for cooling", eq: "Furnace or air handler with a PSC (speed-tap) blower", c: "\"It cools, but not as well as it used to, and the vents feel very cold.\"",
+  tools: ["Thermometer", "Screwdriver"], set: ["Power off. Move the cooling blower lead to the lowest speed tap (or the heating tap if it's lower)."], safe: ["Limit the run to 20 minutes; stop if the coil or suction line starts to frost."],
+  hints: ["Measure the temperature split across the indoor coil.", "A big split with weak airflow points to the blower side.", "What sets the blower speed in cooling?"],
+  ans: "The blower is on too low a speed for cooling.",
+  why: "Split well above about {d:22}, weak airflow, and a colder suction line than normal. Blower amps are lower than on high speed.",
+  fix: ["Power off, move the lead back to the correct cooling tap (per the installation paperwork).", "Confirm a split around {d:16-22}."]},
+ {id: "A-05", tier: 1, t: "Pressure switch hose disconnected", eq: "Gas furnace (induced draft)", c: "\"The furnace starts making noise but never lights.\"",
+  tools: ["Your eyes", "Multimeter"], set: ["Power off. Pull the pressure switch hose off the switch (leave it on the inducer end)."], safe: ["The gas valve never opens without the pressure switch proving, so no gas is released. Let the furnace go into lockout, then restore.", "Don't let students jumper the pressure switch."],
+  hints: ["Watch the whole sequence of operation. Where does it stop?", "The inducer runs. What must happen next before ignition?", "Read the board's LED code and look at the pressure switch."],
+  ans: "The pressure switch hose is off, so the switch can't prove draft.",
+  why: "Inducer runs, no igniter glow, LED shows a pressure-switch-open code. About 24 V across the switch terminals with the inducer running shows it's open.",
+  fix: ["Power off, reconnect the hose (check it for cracks and water).", "Confirm the full sequence and normal heat."]},
+ {id: "A-06", tier: 1, t: "Flame sensor wire disconnected", eq: "Gas furnace with hot-surface ignition", c: "\"The furnace lights for a few seconds, then shuts off.\"",
+  tools: ["Your eyes", "Multimeter"], set: ["Power off. Remove the wire from the flame sensor rod's terminal and tuck it where it can't touch metal."], safe: ["This uses the furnace's own flame-failure safety: gas shuts off within seconds when no flame is proven. Stay with the furnace and let it run only until it locks out once.", "Keep faces away from the burner opening."],
+  hints: ["It lights, so ignition and gas supply work. What must happen next?", "How does the board know there's a flame?", "Check the flame sensor and its wiring."],
+  ans: "The flame sensor wire is off, so the board can't prove flame.",
+  why: "Burners light, then shut off in about 3–7 seconds; the board retries and locks out. Flame signal reads 0 µA.",
+  fix: ["Power off, reconnect the flame sensor wire.", "Confirm the burners stay lit and the flame signal is normal (usually 2–6 µA)."]},
+ {id: "A-07", tier: 1, t: "Thermostat O/B setting reversed", eq: "Heat pump", c: "\"The heat pump blows warm air when I set it to cool.\"",
+  tools: ["Thermometer", "Multimeter"], set: ["In the thermostat's installer settings, change the reversing valve setting to the opposite (O ↔ B)."], safe: ["No hazards at the thermostat. Limit the run to 15 minutes."],
+  hints: ["The system runs, but in the opposite mode. What decides heating vs cooling on a heat pump?", "Measure 24 V at the reversing valve terminal in cooling.", "Check how the thermostat is configured."],
+  ans: "The thermostat's O/B setting is reversed, so the reversing valve is in the wrong position.",
+  why: "Supply air is warm in COOL mode. O (or B) is energized in the wrong mode.",
+  fix: ["Set O/B to match the equipment (O for most brands, B for Rheem/Ruud and some others).", "Confirm cooling in COOL and heating in HEAT."]},
+ {id: "A-08", tier: 1, t: "Heat strip breaker off", eq: "Air handler with electric heat", c: "\"Emergency heat only blows cold air.\"",
+  tools: ["Clamp meter", "Thermometer"], set: ["Turn off the air handler's heat-strip breaker(s) (many units have separate breakers for the strips), leaving the blower circuit on."], safe: ["Heater compartments have 240 V — students use a clamp meter on accessible leads only, with instructor approval."],
+  hints: ["The blower runs but there's no heat. Are the strips getting power?", "Clamp the heater circuit amps.", "Check every breaker for the air handler."],
+  ans: "The heat strip breaker is off.",
+  why: "0 A on the heater circuit with the heat call present, and no temperature rise across the air handler.",
+  fix: ["Turn the heat-strip breaker(s) back on.", "Confirm heater amps and a temperature rise."]},
+ {id: "A-09", tier: 1, t: "C wire off the smart thermostat", eq: "Smart/Wi-Fi thermostat that needs a C wire", c: "\"The thermostat keeps going blank and the system acts weird.\"",
+  tools: ["Multimeter", "Screwdriver"], set: ["Power off. Disconnect the C wire at the thermostat base and tape its end."], safe: ["24 V only; still power off to set and restore."],
+  hints: ["Where does a smart thermostat get steady power?", "Measure R to C at the thermostat base.", "Check the C terminal at both ends."],
+  ans: "The C (common) wire is disconnected, so the thermostat has no steady 24 V power.",
+  why: "R to C at the thermostat reads 0 V (R to C at the board is fine). The thermostat goes blank, reboots or power-steals and causes odd cycling.",
+  fix: ["Power off, reconnect C.", "Confirm 24–28 V R–C at the thermostat and stable operation."]},
+ {id: "A-10", tier: 1, t: "Outdoor unit breaker off at the panel", eq: "Split AC or heat pump", c: "\"The outside unit won't turn on.\"",
+  tools: ["Multimeter (CAT III)"], set: ["Turn off the outdoor unit's breaker at the panel. Leave the disconnect installed."], safe: ["Line-voltage measurement: instructor approval, rated meter, PPE. The panel stays closed — students check breakers only by looking."],
+  hints: ["The outdoor unit is dead. Is it getting line voltage?", "Measure at the line side of the disconnect.", "No voltage at the disconnect — where does it come from?"],
+  ans: "The outdoor unit's breaker is off, so there's no line voltage at the disconnect.",
+  why: "0 V across the disconnect's line side and at the contactor, even though the thermostat call (24 V at the coil) is present.",
+  fix: ["Turn the breaker on (in real life: find out why it tripped first).", "Confirm 208–240 V at the disconnect and normal operation."]},
+ // ---------------- JOURNEYMAN ----------------
+ {id: "J-01", tier: 2, t: "Condenser airflow restricted", eq: "Split AC (any refrigerant)", c: "\"It's cooling poorly on hot afternoons and the outside unit sounds strained.\"",
+  tools: ["Manifold gauges", "Thermometer / pipe clamps", "Clamp meter"], set: ["Power off. Cover about half of the condenser coil's outside face with cardboard or plastic sheet (taped). Keep the fan discharge open."], safe: ["Watch head pressure the whole time. Stop at about 550 psig on R-410A (well below the usual 600–650 psig high-pressure switch; check the unit), or if compressor amps exceed RLA.", "Run no more than 10 minutes."],
+  hints: ["Connect gauges and compare head pressure with what's normal for today's outdoor temperature.", "Work out the condensing approach (condensing temp − outdoor air temp).", "What does a condenser need to reject heat?"],
+  ans: "Restricted airflow across the condenser coil.",
+  why: "High head pressure, condensing approach well over about {d:30}, higher compressor amps, and hot air recirculating. Suction also rises a bit.",
+  fix: ["Power off, remove the covering.", "Confirm head pressure and approach return to normal (about {d:15-30})."]},
+ {id: "J-02", tier: 2, t: "Indoor airflow restricted (gauges on)", eq: "Split AC with TXV or piston", c: "\"The AC runs constantly and the lines outside look frosty.\"",
+  tools: ["Manifold gauges", "Thermometer / pipe clamps"], set: ["Power off. Block roughly 60% of the return grille or filter face with cardboard."], safe: ["Stop if evaporator saturation falls below about {t:32} or frost forms. Run no more than 15 minutes."],
+  hints: ["Check suction pressure and convert it to evaporator saturation temperature.", "Low suction can be low charge or low load/airflow. Check superheat and subcool to tell which.", "Measure the split and check the air path."],
+  ans: "Low indoor airflow (return restriction), not a refrigerant problem.",
+  why: "Low suction and evaporator temperature, high temperature split. Subcool stays normal (unlike low charge). On a piston, superheat drops; on a TXV it stays near normal.",
+  fix: ["Remove the blockage.", "Confirm evaporator saturation around {t:38-45} and a normal split."]},
+ {id: "J-03", tier: 2, t: "Y and G wires swapped at the thermostat", eq: "Split AC (not a heat pump) with a conventional thermostat", c: "\"When I turn the fan to ON, the outside unit starts too — even with the system off.\"",
+  tools: ["Multimeter", "Screwdriver"], set: ["Power off. At the thermostat base, swap the yellow and green wires: yellow on G, green on Y. Tighten both and reinstall the thermostat."],
+  safe: ["24 V only at the thermostat — still turn the power off to set and restore it.", "Use in cooling weather only. The compressor runs whenever the fan is ON, so limit fan-only runs to 10 minutes and never leave the fan ON in HEAT mode."],
+  hints: ["Cooling works normally. What's different about fan-only mode?", "Set the mode to OFF and the fan to ON, then measure G–C and Y–C at the indoor board.", "Compare which thermostat terminal each wire color leaves from with where that color lands at the board."],
+  ans: "The Y and G wires are swapped at the thermostat, so a fan-only call energizes the compressor circuit.",
+  why: "With the fan ON and the mode OFF, Y–C at the indoor board reads about 24 V and G–C reads 0 V, so the contactor pulls in. In COOL the thermostat energizes both Y and G, so everything looks normal — that's why this is easy to miss.",
+  fix: ["Power off, put yellow back on Y and green on G.", "Confirm fan ON runs only the blower, and COOL runs both units."]},
+ {id: "J-04", tier: 2, t: "Furnace temperature rise too high", eq: "Gas furnace with a PSC or tap-selectable blower", c: "\"The furnace heats but then shuts off and the air is really hot.\"",
+  tools: ["Thermometer", "Screwdriver"], set: ["Power off. Move the heating blower lead to the lowest speed tap."], safe: ["The high limit will protect the furnace — let it trip once at most, then restore.", "Keep away from hot flue pipes."],
+  hints: ["Measure supply and return temperatures and calculate the rise.", "Compare it to the range on the furnace rating plate.", "What controls how much air moves across the heat exchanger?"],
+  ans: "The blower heating speed is too low, so the temperature rise exceeds the rated range (and can trip the high limit).",
+  why: "Temperature rise above the rating-plate range (for example over {d:65}), possible high-limit trip and LED code.",
+  fix: ["Power off, return the heat blower lead to the correct tap.", "Confirm the temperature rise is within the rating-plate range."]},
+ {id: "J-05", tier: 2, t: "Reversing valve solenoid unplugged", eq: "Heat pump (O-type, energized in cooling)", c: "\"It heats fine, but in cooling it blows warm.\"",
+  tools: ["Multimeter", "Thermometer"], set: ["Lock out the outdoor unit. Unplug the reversing valve solenoid's wires (or remove the coil lead) and tape the connector."], safe: ["Line voltage inside the outdoor unit — students test 24 V at the solenoid lead only, with approval.", "Run no more than 10 minutes."],
+  hints: ["The unit runs in heat when cooling is called. Which part sets the mode?", "Is 24 V getting to the reversing valve solenoid?", "Measure at the thermostat O terminal, then at the solenoid."],
+  ans: "The reversing valve solenoid isn't connected, so the valve stays in heat mode.",
+  why: "24 V from O to C at the indoor board in cooling, but 0 V at the solenoid (or it's unplugged). Warm supply air in COOL.",
+  fix: ["Lock out, reconnect the solenoid.", "Confirm the valve shifts and the system cools."]},
+ {id: "J-06", tier: 2, t: "One heat strip element disconnected", eq: "Air handler with two or more heat elements", c: "\"Emergency heat works but the house takes forever to warm up.\"",
+  tools: ["Clamp meter", "Thermometer", "Multimeter"], set: ["Lock out the air handler. Disconnect one element's lead at its limit/terminal and cap it."], safe: ["Heater compartment = 240 V. Students clamp amps on accessible leads only, with approval. Never ohm elements with power on."],
+  hints: ["Measure total heater amps and compare with the kW rating (kW × 1000 ÷ volts).", "Clamp each element's circuit separately.", "With power locked out, check that element's circuit."],
+  ans: "One heating element isn't connected, so only part of the heat is on.",
+  why: "Total amps about half of expected (a 10 kW kit at 240 V should draw about 42 A). One element shows 0 A; temperature rise is low.",
+  fix: ["Lock out, reconnect the element.", "Confirm every element draws current and the temperature rise is normal."]},
+ {id: "J-07", tier: 2, t: "Contactor pole insulated", eq: "Split AC or heat pump", c: "\"You can hear it click outside, but nothing starts.\"",
+  tools: ["Multimeter (CAT III)", "Clamp meter"], set: ["Lock out. Place a small piece of electrical tape over the moving contact of one switching pole so it can't make contact. Make sure it can't fall into the unit."], safe: ["Line-voltage readings with instructor approval and PPE.", "No current flows through the insulated pole, so it won't arc."],
+  hints: ["The contactor pulls in. Is power getting through it?", "Measure line side and load side of each pole with it pulled in.", "Voltage across a closed pole should be almost zero."],
+  ans: "One contactor pole isn't conducting, so the compressor and fan get only one leg.",
+  why: "Coil has 24 V and pulls in; one pole reads full line voltage across it (line side ~240 V, load side 0 V on that leg). Nothing runs.",
+  fix: ["Lock out, remove the tape completely.", "Confirm under 1–2 V across each closed pole and normal operation."]},
+ {id: "J-08", tier: 2, t: "One disconnect fuse removed (lost leg)", eq: "Split AC or heat pump with a fused disconnect", c: "\"The outside unit is dead but the breaker is on.\"",
+  tools: ["Multimeter (CAT III)"], set: ["Breaker off. Remove one of the two cartridge fuses from the disconnect block and keep it."], safe: ["Line voltage — instructor approval, rated meter and PPE. Measure with the disconnect installed; students don't handle the fuse block live."],
+  hints: ["Measure L1 to L2 at the load side of the disconnect.", "Now measure each leg to ground.", "One leg has voltage, the other doesn't — where is it lost?"],
+  ans: "A missing/blown fuse in the disconnect has dropped one leg.",
+  why: "L1–L2 on the load side reads 0 V; one leg to ground reads about 120 V and the other 0 V. Line side has full voltage.",
+  fix: ["Breaker off, reinstall the fuse (in real life: find why it blew).", "Confirm 208–240 V on the load side and normal operation."]},
+ {id: "J-09", tier: 2, t: "Heat pump thermostat set as conventional", eq: "Heat pump with electric heat and a configurable thermostat", c: "\"In heat mode the outside unit never runs and the electric bill is huge.\"",
+  tools: ["Multimeter", "Clamp meter"], set: ["In the thermostat's installer settings, change the equipment type from heat pump to conventional (gas/electric), so a heat call energizes W (the strips) instead of Y."], safe: ["Limit heat runs to 15 minutes.", "No panels need to be opened to set this fault."],
+  hints: ["In heat, which terminals should be energized on a heat pump call?", "Measure Y and W to C on a heat call.", "Why would W be energized instead of Y?"],
+  ans: "The thermostat is set up for a conventional system, so it calls the strips (W) instead of the heat pump (Y).",
+  why: "W–C has 24 V and heater amps are high, while Y–C is 0 V and the outdoor unit stays off in heat.",
+  fix: ["Set the thermostat back to heat pump with the correct O/B and aux settings.", "Confirm the compressor runs on a first-stage heat call."]},
+ {id: "J-10", tier: 2, t: "Low-pressure switch circuit open", eq: "Condenser with a low-pressure (loss-of-charge) switch", c: "\"The outdoor unit stopped and won't restart.\"",
+  tools: ["Multimeter", "Manifold gauges"], set: ["Lock out. Disconnect one wire from the low-pressure switch and cap it (the switch stays on the line; no refrigerant is touched)."], safe: ["Students measure 24 V points only, with approval. Don't let anyone jumper the switch."],
+  hints: ["Is the contactor getting 24 V? If not, voltage-drop the safeties in the Y circuit.", "Which part has 24 V across it?", "Pressures look normal — is it the refrigerant or the wiring?"],
+  ans: "The low-pressure switch circuit is open because a wire is disconnected, not because of low charge.",
+  why: "24 V across the low-pressure switch's wires shows the circuit is open there, but static pressures are normal. Checking pressures stops you from adding refrigerant that isn't needed.",
+  fix: ["Lock out, reconnect the wire.", "Confirm 0 V across the switch and normal operation."]},
+ // ---------------- EXPERT TECHNICIAN ----------------
+ {id: "E-01", tier: 3, t: "TXV starving (bulb chilled)", eq: "Split AC with a TXV", c: "\"It's not cooling well and it seems low on refrigerant.\"",
+  tools: ["Manifold gauges", "Pipe clamps", "Thermometer"], set: ["Power off. Remove the TXV sensing bulb from the suction line and place it in a sealed cup of ice water (keep the capillary from kinking). Insulate the spot on the line."], safe: ["Stop if suction falls to the low-pressure switch setting, evaporator saturation drops below about {t:25}, or 15 minutes pass.", "Don't bend or kink the capillary tube."],
+  hints: ["Measure superheat and subcool before deciding it's low charge.", "Low charge gives low subcool. What does high superheat with HIGH subcool mean?", "Look at the metering device and everything that controls it."],
+  ans: "The TXV is underfeeding because its bulb is chilled — a metering problem, not low charge.",
+  why: "Low suction, high superheat, but high subcool (refrigerant backing up in the condenser). Low charge would show low subcool.",
+  fix: ["Power off, dry the bulb and reinstall it on a clean, horizontal part of the suction line (12 o'clock on lines under 7/8\"), strapped tight and insulated.", "Confirm normal superheat and subcool."]},
+ {id: "E-02", tier: 3, t: "Liquid line restriction (partly closed service valve)", eq: "Split AC with a stem-type liquid service valve", c: "\"Poor cooling, and the small copper line outside feels oddly cold.\"",
+  tools: ["Manifold gauges", "Pipe clamps", "Service wrench"], set: ["With the system running, the instructor slowly turns the liquid valve stem clockwise until suction drops about 20–30%. Never close it fully. Replace the cap."], safe: ["Stop if suction drops near the low-pressure switch setting or evaporator saturation falls below about {t:25}.", "Run no more than 10 minutes. Only the instructor operates the valve."],
+  hints: ["Superheat is high and subcool is high. What do those two together suggest?", "Measure line temperature before and after each device in the liquid line.", "Where is there a temperature drop that shouldn't be there?"],
+  ans: "A restriction at the liquid line service valve.",
+  why: "High superheat, high subcool, low suction. A noticeable temperature drop across the valve (it may sweat or frost) marks the restriction — the same pattern as a plugged filter drier.",
+  fix: ["Instructor back-seats the valve (counterclockwise) and replaces the cap.", "Confirm no temperature drop across the valve and normal superheat/subcool."]},
+ {id: "E-03", tier: 3, t: "Two airflow faults at once", eq: "Split AC", c: "\"Not cooling right — the last tech cleaned the filter and it's still bad.\"",
+  tools: ["Manifold gauges", "Thermometer", "Clamp meter", "Manometer (optional)"], set: ["Power off. Cover about 40% of the condenser coil face AND about 50% of the return/filter face."], safe: ["Stop if head approaches the high-pressure switch setting, evaporator saturation drops below {t:32}, or 10 minutes pass."],
+  hints: ["Your readings don't match any single pattern. Could there be two problems?", "Check outdoor airflow (approach) and indoor airflow (split, static) separately.", "Fix one thing, retest, then look again."],
+  ans: "Two faults: restricted condenser airflow and restricted indoor airflow.",
+  why: "Head pressure/approach high (outdoor side) while evaporator temperature is low and split is high (indoor side). The combination looks confusing until you separate them.",
+  fix: ["Power off, remove both coverings.", "Confirm normal approach, split and pressures."]},
+ {id: "E-04", tier: 3, t: "Wrong transformer primary tap", eq: "Furnace or air handler with a multi-tap (208/240) transformer", c: "\"The outside unit sometimes buzzes and clicks when it starts.\"",
+  tools: ["Multimeter"], set: ["Power off. On a 208 V supply, move the primary lead to the 240 V tap (or on a 240 V supply, to the 208 V tap)."], safe: ["Primary is line voltage — power off to change taps. Students measure 24 V points only unless approved."],
+  hints: ["Measure R to C at the board, then under load with everything running.", "Measure the supply voltage feeding the transformer.", "Does the transformer tap match the supply?"],
+  ans: "The transformer is on the wrong primary tap.",
+  why: "On a 208 V supply with the 240 V tap, R–C reads low (about 20–21 V) and sags further under load, so the contactor may chatter. On a 240 V supply with the 208 V tap, it reads high (about 27–28 V+).",
+  fix: ["Power off, move the primary lead to the tap that matches the measured supply.", "Confirm 24–28 V R–C under load."]},
+ {id: "E-05", tier: 3, t: "Thermostat cycle rate set too high", eq: "Programmable thermostat with cycle-rate / CPH setting", c: "\"It turns on and off every few minutes and the house feels humid.\"",
+  tools: ["Timer / stopwatch", "Your eyes"], set: ["In the thermostat's installer settings, set the cooling cycle rate (CPH) to its maximum and the temperature differential to its minimum."], safe: ["Compressor delays in the thermostat protect the compressor. Limit to 20 minutes of short cycling."],
+  hints: ["Time the on and off cycles. What stops each cycle — a safety, or the thermostat?", "No safeties are opening. The thermostat is satisfied very quickly.", "Look at how the thermostat is configured."],
+  ans: "The thermostat's cycle rate/differential is set too aggressively, causing short cycles.",
+  why: "Short runs ending with the thermostat call dropping (Y goes to 0 V), not a safety tripping. Short runs remove little moisture.",
+  fix: ["Restore the default cycle rate (typically 3 CPH for cooling) and differential.", "Confirm normal run times."]},
+ {id: "E-06", tier: 3, t: "Weak condenser fan capacitor", eq: "Condenser with a separate fan capacitor (or a spare single cap you can wire in)", c: "\"The outside fan seems slow and the unit runs hot.\"",
+  tools: ["Multimeter with µF", "Clamp meter", "Manifold gauges"], set: ["Lock out. Discharge and replace the fan's run capacitor with one about 40–50% below the motor's rated µF (same voltage rating or higher)."], safe: ["Discharge capacitors before touching them.", "Stop after 10 minutes or if the fan motor gets too hot to touch."],
+  hints: ["Compare the fan motor's amps and speed with its nameplate.", "Head pressure is moderately high but the coil is clean.", "Test the capacitor's µF against the motor's requirement."],
+  ans: "The fan capacitor is well under its rated µF, so the motor runs slow and hot.",
+  why: "Fan RPM visibly low, motor amps off from FLA, head pressure moderately high with a clean coil. Capacitor reads far below the label/motor requirement.",
+  fix: ["Lock out, discharge, reinstall the correct capacitor.", "Confirm µF within ±6%, normal fan speed and head pressure."]},
+ {id: "E-07", tier: 3, t: "Partly restricted pressure switch hose", eq: "Gas furnace (induced draft)", c: "\"The furnace works most of the time, but sometimes it won't light.\"",
+  tools: ["Manometer", "Multimeter"], set: ["Power off. Put a small spring clamp (or tie) on the pressure switch hose to pinch it partly, so the switch barely makes."], safe: ["The gas valve can't open unless the switch proves — no gas is released on a failed try.", "Don't let students jumper the switch."],
+  hints: ["Intermittent means marginal. Which reading can you compare with a rated value?", "Measure the draft at the pressure switch with a manometer (tee into the hose).", "Compare with the switch's rating printed on it."],
+  ans: "The pressure switch sees marginal draft because its hose is partly restricted.",
+  why: "Measured draft at the switch is at or below the switch's rated setpoint (for example −0.5 in. WC on a −0.9 switch), so it sometimes won't close.",
+  fix: ["Power off, remove the clamp and check the hose for cracks or water.", "Confirm the draft is comfortably beyond the switch rating and reliable ignition."]},
+ {id: "E-08", tier: 3, t: "Weak (oxidized) flame sensor", eq: "Gas furnace with a flame sensor rod", c: "\"Sometimes the furnace runs fine; other times it lights and quits.\"",
+  tools: ["Multimeter with DC µA", "Fine abrasive pad"], set: ["Power off. Swap in a heavily oxidized/dirty flame sensor saved from a service call (same type)."], safe: ["The furnace's flame-failure safety shuts off gas within seconds. Stay with it and allow at most one lockout.", "Keep faces away from the burner opening."],
+  hints: ["It's intermittent. Which reading tells you how strong the flame proving is?", "Measure flame signal in µA DC, in series with the sensor.", "Compare with the board's minimum."],
+  ans: "A dirty/oxidized flame sensor gives a weak flame signal.",
+  why: "Flame signal low or unstable (for example under 1–2 µA), so the board sometimes drops out.",
+  fix: ["Power off, reinstall the original sensor (or clean the rod lightly and check its ground).", "Confirm a steady flame signal (usually 2–6 µA)."]},
+ {id: "E-09", tier: 3, t: "TXV overfeeding (bulb warmed)", eq: "Split AC with a TXV", c: "\"The outside unit is making a knocking/rattling sound and the big line is sweating all the way to the compressor.\"",
+  tools: ["Manifold gauges", "Pipe clamps"], set: ["Power off. Remove the TXV bulb from the suction line and tape a chemical hand warmer against it, then insulate it (hand warmers run about {t:120-140})."], safe: ["Liquid can reach the compressor: stop immediately if superheat at the compressor drops below {d:3} or the compressor gets noisy. Maximum run 5 minutes.", "Don't use a torch or heat gun on the bulb."],
+  hints: ["Superheat is very low. What's feeding too much refrigerant?", "Subcool is low and suction is high — does that look like overcharge or overfeeding?", "Check what the TXV bulb is sensing."],
+  ans: "The TXV is overfeeding because its bulb is being warmed.",
+  why: "High suction, very low superheat (possible floodback), low-to-normal subcool. Overcharge would show high subcool and high head.",
+  fix: ["Power off, remove the warmer, reinstall the bulb properly and insulate it.", "Confirm normal superheat (usually {d:8-12} at the evaporator)."]},
+ {id: "E-10", tier: 3, t: "Two electrical faults in series", eq: "Split AC with a float switch", c: "\"Another tech found a problem and fixed it, but it still won't cool.\"",
+  tools: ["Multimeter"], set: ["Power off. Trip the float switch (water in the secondary pan) AND disconnect one wire at the contactor coil (capped)."], safe: ["Contactor line side is live — students test only 24 V points, with approval.", "Keep water in the pan only."],
+  hints: ["After you fix the first problem, test again — don't assume it's done.", "Voltage-drop the whole Y circuit from the board to the contactor.", "Where does the 24 V stop now?"],
+  ans: "Two faults: a tripped float switch and a disconnected contactor coil wire.",
+  why: "First, 24 V across the float switch (open). After clearing it, 24 V is present at Y–C at the board but 0 V across the contactor coil.",
+  fix: ["Power off, dry the pan, reconnect the coil wire.", "Confirm the full cooling sequence."]},
+];
+
+TITLES.faults = "Faults";
+const FKEY = "tg_faults";
+const fLoad = () => { try { const o = JSON.parse(localStorage.getItem(FKEY) || "{}"); return (o && typeof o === "object") ? o : {}; } catch(e){ return {}; } };
+let FP = Object.assign({solved: {}, hints: {}, shown: {}}, fLoad());
+const fSave = () => { try { localStorage.setItem(FKEY, JSON.stringify(FP)); } catch(e){} };
+let fTier = Number.isInteger(S.faultTier) ? S.faultTier : 0, fInst = false, fOpen = null;
+
+/* {t:38-45} = absolute temperature, {d:16-22} = temperature difference (°F in the data) */
+const fTemp = s => String(s).replace(/\{([td]):([\d.]+)(?:-([\d.]+))?\}/g, (m, k, a, b) => {
+  const f = k === "t" ? tOut : dOut, r = v => String(Math.round(f(+v)));
+  return (b ? r(a) + "–" + r(b) : r(a)) + " " + DEG();
+});
+const fTxt = s => esc(fTemp(s));
+const fList = a => "<ul>" + a.map(x => "<li>" + fTxt(x) + "</li>").join("") + "</ul>";
+
+function faultCard(f){
+  const solved = !!FP.solved[f.id], shown = !!FP.shown[f.id] || fInst, nh = fInst ? 3 : Math.min(3, FP.hints[f.id] || 0);
+  const title = (solved || shown) ? fTxt(f.t) : "Unknown fault";
+  let h = `<details class="issue fault${solved ? " solved" : ""}" data-id="${f.id}"${fOpen === f.id ? " open" : ""}>
+  <summary><div><div class="fhead"><span class="fcode">${f.id}</span>${solved ? '<span class="fok">✓ Solved</span>' : ""}</div>
+    <div class="it">${fTxt(f.c)}</div><div class="fsub">${title}</div></div></summary>
+  <div class="fbody">
+    <div class="tags"><span class="tag">🏠 ${fTxt(f.eq)}</span>${f.tools.map(t => `<span class="tag">🧰 ${fTxt(t)}</span>`).join("")}</div>`;
+  if (fInst) h += `<div class="finst"><b>🔧 Instructor setup</b>${fList(f.set)}<b>⚠️ Safety limits while it runs</b>${fList(f.safe)}</div>`;
+  h += `<h4>Hints</h4><div class="fhints">`;
+  for (let i = 0; i < nh; i++) h += `<div class="fhint"><span>${i + 1}</span>${fTxt(f.hints[i])}</div>`;
+  if (nh < 3) h += `<button class="ghost fbtn" data-act="hint" type="button">💡 Show hint ${nh + 1} of 3</button>`;
+  h += `</div>`;
+  if (shown) h += `<div class="gverd ok fans"><b>Diagnosis:</b> ${fTxt(f.ans)}</div>
+    <h4>What the readings show</h4><p class="fp">${fTxt(f.why)}</p>
+    <h4>Restore &amp; verify</h4>${fList(f.fix)}`;
+  else h += `<button class="ghost fbtn" data-act="show" type="button">👁 Show the answer</button>`;
+  h += `<button class="${solved ? "ghost" : "primary"} fbtn" data-act="solve" type="button">${solved ? "↺ Mark as not solved" : "✓ Mark solved"}</button></div></details>`;
+  return h;
+}
+
+function renderFaults(){
+  const box = $("f-tiers"); if (!box) return;
+  box.innerHTML = FAULT_TIERS.map((t, i) => {
+    const n = FAULTS.filter(f => f.tier === i && FP.solved[f.id]).length;
+    return `<button type="button" data-t="${i}" class="${i === fTier ? "on" : ""}">${esc(t.n)} <span class="fcount">${n}/10</span></button>`;
+  }).join("");
+  $("f-tdesc").textContent = FAULT_TIERS[fTier].d;
+  const all = Object.keys(FP.solved).filter(id => FAULTS.some(f => f.id === id)).length;
+  $("f-prog").textContent = `${all} of ${FAULTS.length} solved`;
+  $("f-bar").style.width = (all / FAULTS.length * 100) + "%";
+  $("f-inst").setAttribute("aria-checked", fInst ? "true" : "false");
+  $("f-list").innerHTML = FAULTS.filter(f => f.tier === fTier).map(faultCard).join("");
+}
+
+$("f-rules").innerHTML = FAULT_RULES.map(r => "<li>" + esc(r) + "</li>").join("");
+$("f-tiers").addEventListener("click", e => {
+  const b = e.target.closest("button[data-t]"); if (!b) return;
+  fTier = +b.dataset.t; S.faultTier = fTier; fOpen = null; save(); renderFaults();
+});
+$("f-inst").addEventListener("click", () => {
+  fInst = !fInst; renderFaults();
+  toast(fInst ? "Instructor view: setups and answers shown" : "Instructor view off");
+});
+$("f-random").addEventListener("click", () => {
+  const pool = FAULTS.filter(f => f.tier === fTier), open = pool.filter(f => !FP.solved[f.id]);
+  const pick = (open.length ? open : pool)[Math.floor(Math.random() * (open.length ? open.length : pool.length))];
+  fOpen = pick.id; renderFaults();
+  const el = document.querySelector(`#f-list details[data-id="${pick.id}"]`);
+  if (el) el.scrollIntoView({block: "start", behavior: S.reduceMotion ? "auto" : "smooth"});
+});
+$("f-reset").addEventListener("click", () => {
+  if (!Object.keys(FP.solved).length && !Object.keys(FP.hints).length && !Object.keys(FP.shown).length){ toast("Nothing to reset"); return; }
+  const b = $("f-reset");
+  if (b.dataset.arm !== "1"){ b.dataset.arm = "1"; b.textContent = "Tap again to clear all progress"; setTimeout(() => { b.dataset.arm = ""; b.textContent = "Reset progress"; }, 3000); return; }
+  b.dataset.arm = ""; b.textContent = "Reset progress";
+  FP = {solved: {}, hints: {}, shown: {}}; fSave(); fOpen = null; renderFaults(); toast("Progress cleared");
+});
+$("f-list").addEventListener("toggle", e => {
+  const d = e.target; if (d.tagName !== "DETAILS") return;
+  if (d.open) fOpen = d.dataset.id; else if (fOpen === d.dataset.id) fOpen = null;
+}, true);
+$("f-list").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]"); if (!b) return;
+  const id = b.closest("details").dataset.id; fOpen = id;
+  if (b.dataset.act === "hint") FP.hints[id] = Math.min(3, (FP.hints[id] || 0) + 1);
+  else if (b.dataset.act === "show") FP.shown[id] = 1;
+  else if (b.dataset.act === "solve"){
+    if (FP.solved[id]) delete FP.solved[id]; else { FP.solved[id] = Date.now(); toast("Nice work — " + id + " solved"); }
+  }
+  fSave(); renderFaults();
+});
+
+/* ---------- Settings switch: Student Mode shows the Faults tab in the Menu ---------- */
+function applyStudent(){
+  document.body.classList.toggle("student", !!S.student);
+  $("s-student").setAttribute("aria-checked", S.student ? "true" : "false");
+}
+$("s-student").addEventListener("click", () => {
+  S.student = !S.student; applyStudent(); save();
+  toast(S.student ? "Student Mode on — Faults added to the Menu" : "Student Mode off");
+});
+const _fShowTab = showTab;
+showTab = function(v){
+  if (v === "faults" && !S.student) v = "settings";
+  if (S.tab === "faults" && v !== "faults") fInst = false;          // instructor view never stays on
+  const r = _fShowTab(v);
+  if (v === "faults") renderFaults();
+  return r;
+};
+if (S.tab === "faults" && !S.student) S.tab = "settings";
+applyStudent();
 
 
 /* ---------- init ---------- */
