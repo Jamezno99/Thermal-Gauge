@@ -95,6 +95,25 @@
 :root[data-theme="fireice"] .chips button.on{background:linear-gradient(90deg,var(--ice),var(--heat));border-color:transparent;color:#12100e}
 :root[data-theme="fireice"] .gmsg.gary .gbub{border-left:3px solid var(--ice)}
 :root[data-theme="fireice"] .gmsg.gary .gbub::before{color:var(--ice)}
+:root[data-theme="firehouse"]{
+  /* Developer theme: Firehouse (engine red & polished brass) */
+  --navy:#120405; --heat:#e3262b; --flame:#f2a922; --ice:#f2c14e; --cool:#c8931c;
+  --bg:#140607; --card:#230b0d; --ink:#fff4e3; --muted:#d6b59c; --line:#4a1c1d;
+  --brand:#120405; --brand-ink:#ffffff; --accent:#f2c14e; --on-accent:#1f0d00;
+  --ok:#5fd88f; --ok-bg:#0f2417; --warn:#ffb347; --warn-bg:#2e1a06; --bad:#ff5a4f; --bad-bg:#3a0d0f;
+  --field:#1a0708; --chip:#33110f;
+  --title-a:#e3262b; --title-b:#f2c14e; --sub:#d6b59c;
+  --stripe:linear-gradient(90deg,#8e0f14 0%,#e3262b 38%,#f2c14e 68%,#c8931c 100%);
+  --grad:linear-gradient(90deg,#c8931c,#f2c14e);
+}
+:root[data-theme="firehouse"] body{background-color:#140607;background-image:radial-gradient(60% 45% at 85% 0%,rgba(242,193,78,.09),transparent 60%),radial-gradient(60% 50% at 0% 100%,rgba(227,38,43,.12),transparent 60%);background-attachment:fixed}
+:root[data-theme="firehouse"] .card,:root[data-theme="firehouse"] details.issue{border:1px solid rgba(242,193,78,.38);box-shadow:inset 0 0 0 3px #230b0d,inset 0 0 0 4px rgba(242,193,78,.14)}
+:root[data-theme="firehouse"] h2{color:#f2c14e;letter-spacing:.3px}
+:root[data-theme="firehouse"] h3{color:#e9a99a}
+:root[data-theme="firehouse"] header{border-bottom:1px solid rgba(242,193,78,.35)}
+:root[data-theme="firehouse"] button.ghost{border-color:#f2c14e;color:#f2c14e}
+:root[data-theme="firehouse"] .chips button.on{background:#e3262b;border-color:#e3262b;color:#fff}
+:root[data-theme="firehouse"] .gmsg.gary .gbub{border-left:3px solid #f2c14e}
 :root[data-theme="coastal"]{
   /* Coastal: seafoam teal & sand gold */
   color-scheme: light;
@@ -572,6 +591,10 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
   --bt-a1:#6fe3ff;--bt-a2:#1fb6d8;--bt-a3:#ff5a1f;--bt-a4:#ffb020;--bt-h:linear-gradient(90deg,#6fe3ff,#1fb6d8);--bt-c:linear-gradient(90deg,#ff5a1f,#ffb020);
   --bt-glow:conic-gradient(from 200deg,rgba(111,227,255,.28),rgba(255,90,31,.26),rgba(255,176,32,.16),rgba(111,227,255,.28));
   --bt-track:rgba(255,242,230,.08);--bt-tick:rgba(255,242,230,.3);--bt-needle:#ffb020;--bt-nglow:rgba(255,176,32,.7);--bt-arcglow:rgba(255,90,31,.55);--bt-barbg:rgba(255,242,230,.08);--bt-shadow:rgba(0,0,0,.6)}
+#boot[data-theme="firehouse"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#3a0b0e 0%,#170507 55%,#080102 100%);--bt-ink:#fff4e3;--bt-sub:#d6b59c;
+  --bt-a1:#8e0f14;--bt-a2:#e3262b;--bt-a3:#f2c14e;--bt-a4:#ffe08a;--bt-h:linear-gradient(90deg,#e3262b,#ff5a3c);--bt-c:linear-gradient(90deg,#f2c14e,#ffe08a);
+  --bt-glow:conic-gradient(from 200deg,rgba(227,38,43,.3),rgba(242,193,78,.22),rgba(200,147,28,.16),rgba(227,38,43,.3));
+  --bt-track:rgba(255,244,227,.08);--bt-tick:rgba(255,244,227,.3);--bt-needle:#f2c14e;--bt-nglow:rgba(242,193,78,.7);--bt-arcglow:rgba(227,38,43,.55);--bt-barbg:rgba(255,244,227,.08);--bt-shadow:rgba(0,0,0,.6)}
 #boot[data-theme="coastal"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#ffffff 0%,#eef8f6 50%,#dcf0ea 100%);--bt-ink:#123632;--bt-sub:#5c7d76;
   --bt-a1:#1f9e93;--bt-a2:#7fc9bc;--bt-a3:#e0a83e;--bt-a4:#f0c777;--bt-h:linear-gradient(90deg,#1f9e93,#7fc9bc);--bt-c:linear-gradient(90deg,#e0a83e,#f0c777);
   --bt-glow:conic-gradient(from 200deg,rgba(31,158,147,.22),rgba(224,168,62,.22),rgba(127,201,188,.18),rgba(31,158,147,.22));
@@ -1002,7 +1025,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.57 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.58 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -1026,6 +1049,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
       <button data-v="blueprint"><span class="sw" style="background:#0d3b85;background-image:linear-gradient(rgba(255,255,255,.25) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.25) 1px,transparent 1px);background-size:8px 8px"><i style="background:#082c66;border-bottom:3px solid #fff"></i><b style="background:#fff"></b><u style="background:#9cc7ff"></u></span>Blueprint</button>
       <button data-v="terminal"><span class="sw" style="background:#000"><i style="background:#000;border-bottom:3px solid #33ff66"></i><b style="background:#33ff66"></b><u style="background:#0f3d1c"></u></span>Terminal</button>
       <button data-v="panhandle"><span class="sw" style="background:#eef2fa"><i style="background:#0443ca;border-bottom:3px solid #f4470c"></i><b style="background:#f4470c"></b><u style="background:#0443ca"></u></span>Panhandle</button>
+      <button data-v="firehouse"><span class="sw" style="background:#140607"><i style="background:#120405;border-bottom:3px solid #f2c14e"></i><b style="background:#e3262b"></b><u style="background:#f2c14e"></u></span>Firehouse</button>
     </div>
     <p class="note">Only available here. Picking a normal theme in Settings (or the Northern Lights easter egg) turns the developer theme off.</p>
   </div>
