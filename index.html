@@ -1025,7 +1025,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.60 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.61 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -1043,7 +1043,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     <div id="dev-flags"></div>
   </div>
   <div class="card">
-    <h2>Developers Theme</h2>
+    <h2>Developer Themes</h2>
     <div class="themes" id="dev-theme">
       <button data-v=""><span class="sw" style="background:#0a1a3f"><i style="background:#000a28"></i><b style="background:#9fb3d6"></b><u style="background:#1e3261"></u></span>Off</button>
       <button data-v="blueprint"><span class="sw" style="background:#0d3b85;background-image:linear-gradient(rgba(255,255,255,.25) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.25) 1px,transparent 1px);background-size:8px 8px"><i style="background:#082c66;border-bottom:3px solid #fff"></i><b style="background:#fff"></b><u style="background:#9cc7ff"></u></span>Blueprint</button>
@@ -2168,7 +2168,7 @@ const ISSUES = [
    s:["Superheat swings high and low while conditions are steady","Suction pressure rises and falls","Occasional frosting of the suction line"],
    causes:["Loose, uninsulated or badly placed sensing bulb","Oversized TXV","Low load or low airflow","Flash gas from low charge or a liquid-line restriction","Moisture freezing at the valve"],
    effects:["Floodback when the valve overfeeds","High superheat and poor capacity when it underfeeds","Compressor wear"],
-   checks:["Bulb clamped tight on a horizontal line, 12 o'clock on lines 7/8\" and smaller, and insulated","Airflow and filter","Subcooling (full column of liquid at the TXV)","Watch superheat for 10–15 minutes before adjusting"]},
+   checks:["Bulb clamped tight on a horizontal line, 12 o'clock on lines smaller than 7/8\" (4 or 8 o'clock on 7/8\" and up), and insulated","Airflow and filter","Subcooling (full column of liquid at the TXV)","Watch superheat for 10–15 minutes before adjusting"]},
   {t:"Low airflow / high static pressure", c:["Airflow","Cooling","Heating"],
    s:["Weak air at registers","Whistling grilles or noisy blower","Total external static above the rated value (often 0.5 in. WC)","Temperature split in cooling above about {d:22}"],
    causes:["Dirty or overly restrictive filter (thin high-MERV)","Dirty evaporator coil or blower wheel","Undersized or crushed ducts, closed dampers or registers","Blower on too low a speed tap","Too few return grilles"],
@@ -2802,7 +2802,7 @@ const KB = [
   {k: ["charge a txv", "charging txv", "charge txv", "txv charge"], t: "Charging a TXV system", a: "Run 15+ minutes with proper airflow, then charge to the <b>nameplate subcooling</b> ({d:8-12} typical). Add refrigerant as liquid in small amounts for blends and let it settle 10–15 minutes between adjustments. Check superheat stays in range."},
   {k: ["charge a piston", "charging piston", "charge piston", "piston charge", "fixed orifice charge"], t: "Charging a piston system", a: "Measure indoor wet bulb and outdoor dry bulb, get the <b>target superheat</b> (ask me \"target superheat WB 63 ODB 85\"), then add refrigerant if superheat is high or recover if it's low. Don't charge by superheat if the target is under {d:5}."},
   {k: ["leak check", "leak search", "find a leak", "leak detection"], t: "Finding leaks", a: "Look for oily spots first. Use an electronic detector (A2L-rated if needed) and bubble solution to confirm. For stubborn leaks, recover and pressure test with dry nitrogen (within the unit's rated test pressure) and watch for pressure drop."},
-  {p: 1, k: ["flame sensor", "clean flame sensor", "flame rod"], t: "Flame sensor", a: "Proves flame to the control board. If the furnace lights then shuts off after a few seconds, clean the rod with fine abrasive pad (not sandpaper), check the ground, and measure microamps against the board spec."},
+  {p: 1, k: ["flame sensor", "clean flame sensor", "flame rod"], t: "Flame sensor", a: "Proves flame to the control board. If the furnace lights then shuts off after a few seconds, clean the rod with a fine abrasive pad (not sandpaper), check the ground, and measure microamps against the board spec."},
   {k: ["capacitor", "cap test", "microfarad", "µf", "uf"], t: "Testing a run capacitor", a: "Kill power and discharge it. Measure µF across C–HERM and C–FAN; it should be within the rating on the label (usually ±5% or ±6%). Bulging tops or leaking oil mean replace it."},
   {k: ["contactor"], t: "Contactor", a: "The relay that switches line voltage to the compressor and fan when it gets 24 V on Y. Check for 24 V at the coil, and pitted or burned contacts; a voltage drop across closed contacts means it's worn."},
   {"p": 1, "k": ["manifold pressure", "gas pressure", "inlet pressure", "propane pressure", "lp pressure", "natural gas pressure", "gas valve pressure", "manometer"], "t": "Gas pressures (furnace)", "a": "Always set to the <b>rating plate</b>, measured with a manometer at the gas valve taps. Typical: <b>natural gas</b> manifold about <b>3.5 in. WC</b> on high fire, with inlet (supply) around 7 in. WC. <b>Propane (LP)</b> manifold about <b>10–11 in. WC</b>, inlet about 11–13 in. WC and never over 14 in. WC. Two-stage valves have a separate, lower low-fire setting. Check inlet pressure with the other gas appliances running, and verify the conversion kit/orifices match the fuel."},
@@ -2842,7 +2842,7 @@ const KB = [
   {"p": 1, "k": ["phase out", "phase-out", "phased out", "phasing out", "being phased", "phasedown", "phase down", "aim act", "410a ban", "410a phase", "refrigerant transition", "install 410a", "install r-410a", "install r410a", "use 410a", "use r-410a", "410a still"], "t": "R-410A phase-down (AIM Act)", "a": "Under the AIM Act, new home AC and heat pump systems built from Jan 1, 2025 must use a refrigerant with GWP under 700 (R-454B or R-32). In 2026 EPA amended the rule (effective July 27, 2026): R-410A systems made or imported <b>before</b> Jan 1, 2025 can still be installed until that stock runs out. R-410A is still legal to use for servicing existing units, but production cuts mean higher prices — fix leaks instead of topping off. Never mix R-410A and A2L refrigerants or swap one into the other's equipment."},
   {"p": 1, "k": ["cylinder color", "tank color", "jug color", "left hand thread", "left-hand thread"], "t": "Refrigerant cylinder colors", "a": "Since 2020 new refrigerant cylinders are all a light green-gray; read the label, not the paint. Flammable refrigerants (including A2Ls like R-454B and R-32) have a <b>red band or top</b>, and A2L cylinders use <b>left-hand threads</b>, so you need the right adapter. Recovery cylinders are gray with a yellow top."},
   {"p": 1, "k": ["line set", "lineset", "line length", "additional charge", "extra charge", "long line", "oil trap", "suction riser", "oil return"], "t": "Line sets & charge adjustment", "a": "Factory charge covers a set line length (often 15 ft — check the manual). For longer runs add charge per foot of <b>liquid line</b> per the manual (for 3/8\" R-410A it's often around 0.6 oz/ft). Stay within the maximum length and lift, size the suction line per the chart so oil returns, and follow the manual on traps and long-line kits. Insulate the suction line fully and keep line sets from sagging."},
-  {"p": 1, "k": ["txv bulb", "sensing bulb", "bulb placement", "bulb location", "where to put the bulb"], "t": "TXV sensing bulb placement", "a": "Mount it on a <b>horizontal</b> section of the suction line near the evaporator outlet, before any trap, with the manufacturer's strap tight and full metal contact. On lines 7/8\" and smaller put it on top (around 12 o'clock); on larger lines at 4 or 8 o'clock. Insulate it so it reads the pipe, not the air. A loose or uninsulated bulb causes hunting, floodback or high superheat."},
+  {"p": 1, "k": ["txv bulb", "sensing bulb", "bulb placement", "bulb location", "where to put the bulb"], "t": "TXV sensing bulb placement", "a": "Mount it on a <b>horizontal</b> section of the suction line near the evaporator outlet, before any trap, with the manufacturer's strap tight and full metal contact. On lines smaller than 7/8\" put it on top (around 12 o'clock); on 7/8\" and larger lines, at 4 or 8 o'clock. Insulate it so it reads the pipe, not the air. A loose or uninsulated bulb causes hunting, floodback or high superheat."},
   {"p": 1, "k": ["txv hunting", "hunting"], "t": "TXV hunting", "a": "Superheat swinging up and down (for example 3° to 20°) while conditions are steady. Common causes: loose or uninsulated bulb, bulb in a bad spot, oversized valve, low load or low airflow, or flash gas in the liquid line from a low charge or restriction. Fix the bulb and airflow first."},
   {"p": 1, "k": ["filter drier", "filter dryer", "liquid line drier", "drier"], "t": "Filter drier", "a": "Install a new liquid-line drier every time the system is opened (use the right type for the refrigerant). A temperature drop of more than about {d:3} across it means it's restricted. Use a suction-line drier after a burnout, then pull it once the acid test is clean."},
   {"p": 1, "k": ["pump down", "pumpdown"], "t": "Pumping down", "a": "With the unit running in cooling, front-seat the liquid service valve and watch suction pressure. When it falls to just above 0 psig, front-seat the suction valve and shut the unit off. Don't pull the system into a vacuum (it can draw in air and damage scroll compressors). Only pump down if the condenser can hold the whole charge."},
@@ -7866,7 +7866,7 @@ const FAULTS = [
   why: "Y–C at the indoor board reads about 24 V on a cooling call, but across the contactor coil it reads 0 V. The break is between them.",
   fix: ["Lock out, reconnect the wire to the coil terminal.", "Confirm 24 V across the coil and that the contactor pulls in."]},
  {id: "A-03", tier: 1, t: "Condenser fan motor disconnected", eq: "Split AC or heat pump", c: "\"The outside unit is running but the top fan isn't spinning.\"",
-  tools: ["Multimeter", "Clamp meter"], set: ["Lock out. Disconnect the fan motor's power lead at the contactor load terminal and cap it with a wire nut. Don't touch the capacitor wiring."], safe: ["Run no more than 3–5 minutes. Stop sooner if the compressor gets very hot or you're near the high-pressure switch setting (watch gauges if connected).", "Keep hands out of the fan area — the blade could be restored while someone is near it."],
+  tools: ["Multimeter", "Clamp meter"], set: ["Lock out. Disconnect the fan motor's power lead at the contactor load terminal and cap it with a wire nut. Don't touch the capacitor wiring."], safe: ["Run no more than 3–5 minutes. Stop sooner if the compressor gets very hot or you're near the high-pressure switch setting (watch gauges if connected).", "Keep hands out of the fan area — the blade starts instantly if power is restored."],
   hints: ["Compressor runs, fan doesn't. Is the motor bad, or not getting power?", "Measure voltage at the fan motor's leads with the contactor pulled in.", "No voltage at the motor — trace its wires back."],
   ans: "The condenser fan motor has no power because its lead is disconnected at the contactor.",
   why: "0 V at the motor with the contactor closed. The motor itself ohms OK. Head pressure and compressor amps climb quickly.",
@@ -8301,7 +8301,7 @@ const HOWTO = [
    {h: "Troubleshooting common problems"},
    {dl: [["Rod balls up / won't wet the copper", "Surface wasn't clean or bright, or has oil/flux residue. Re-clean back to bright copper with sand cloth."],
          ["Joint looks dull or grainy (cold joint)", "You melted the rod with the flame instead of letting the hot copper melt it. Heat the copper until it melts the rod on contact."],
-         ["Fitting turns black or green / leaks later", "Almost always a missing nitrogen purge — oxide scale formed inside and either kept the joint from sealing or later breaks loose and clogs a drier or TXV."],
+         ["Fitting turns black or green / leaks later", "Almost always a missing nitrogen purge — oxide scale formed inside and either kept the joint from sealing or later broke loose and clogged a drier or TXV."],
          ["Rod won't bridge a gap", "The tube wasn't bottomed out, or the fitting is worn oversize. Reseat it properly rather than trying to fill a gap with extra rod."],
          ["Burned-through or pitted copper", "Too much heat for too long. Let it cool, cut the joint out and redo it — don't patch a burned spot."]]},
    {p: "A joint that fails a leak or pressure test should be cut out and redone, not reflowed on top of the old braze."},
@@ -8353,7 +8353,7 @@ const HOWTO = [
          "Never fill a recovery cylinder past <b>80%</b> of its capacity — liquid expands with heat and can burst it.",
          "Check the cylinder's hydrostatic test date (stamped on the collar — usually every 5 years).",
          "A2L refrigerants need a recovery machine and cylinder rated for them."],
-  tools: ["EPA-certified recovery machine", "Recovery cylinder (gray body, yellow top), DOT rated", "Scale", "Hoses with valves (short and large diameter is faster)", "Filter-drier for the machine inlet", "Core removal tool"],
+  tools: ["EPA-certified recovery machine", "Recovery cylinder (gray body, yellow top), DOT rated", "Scale", "Hoses with valves (short, large-diameter hoses are faster)", "Filter-drier for the machine inlet", "Core removal tool"],
   body: [
    {h: "Steps (vapor recovery)"},
    {ol: ["Label the recovery cylinder for the refrigerant you're recovering. <b>One refrigerant per cylinder.</b>",
