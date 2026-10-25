@@ -274,6 +274,43 @@ table.phpts td{padding:5px 3px;border-bottom:1px solid var(--line);font-variant-
 #c-benchlist .bitem small{color:var(--muted);font-size:12.5px;margin-left:auto;text-align:right;line-height:1.35}
 #c-benchlist .bitem.on{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 30%,transparent)}
 #c-benchlist .bdel{color:var(--muted);padding:0 0 0 6px;font-size:15px}
+/* ---- Electrical Checks (v1.94) ---- */
+#v-elec .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#v-elec .esafety{margin:0 0 14px}
+#v-elec .ehead{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+#v-elec .ehead h2{margin:0}
+#v-elec .esub{font-size:15px;margin:16px 0 8px;padding-top:12px;border-top:1px solid var(--line)}
+#v-elec .echeck{border-left:3px solid var(--line)}
+#v-elec .echeck.ok{border-left-color:var(--ok)}
+#v-elec .echeck.warn{border-left-color:var(--warn)}
+#v-elec .echeck.bad{border-left-color:var(--bad)}
+#v-elec .epill{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--field);color:var(--muted);white-space:nowrap}
+#v-elec .epill.ok{background:var(--ok-bg);color:var(--ok)}
+#v-elec .epill.warn{background:var(--warn-bg);color:var(--warn)}
+#v-elec .epill.bad{background:var(--bad-bg);color:var(--bad)}
+#v-elec .esummary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+#v-elec .eoverall{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px}
+#v-elec .eoverall b{font-size:17px}
+#v-elec .esum{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 12px;color:var(--ink);font:inherit;cursor:pointer}
+#v-elec .esum b{font-size:14px;font-weight:600}
+#v-elec .ereadout{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+#v-elec .ereadout .big{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+#v-elec .ereadout .big small{font-size:13px;font-weight:600;color:var(--muted)}
+#v-elec .ereadout .vs{grid-column:1/-1;font-size:13px;color:var(--muted)}
+#v-elec .ev{font-weight:700;text-align:right;font-size:14px}
+#v-elec .ev.ok{color:var(--ok)}#v-elec .ev.warn{color:var(--warn)}#v-elec .ev.bad{color:var(--bad)}#v-elec .ev.none{color:var(--muted)}
+#v-elec .escale{position:relative;height:10px;border-radius:5px;background:var(--bg);border:1px solid var(--line);grid-column:1/-1;margin-top:8px}
+#v-elec .escale .band{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--ok) 45%,transparent);border-radius:5px}
+#v-elec .escale .mark{position:absolute;top:-4px;width:3px;height:16px;border-radius:2px;background:var(--ink);transform:translateX(-50%)}
+#v-elec .emotor{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:end;margin-top:10px}
+#v-elec .emotor .ev{padding-bottom:12px;min-width:84px}
+#v-elec .emotor input[readonly]{color:var(--muted)}
+#v-elec .egary{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px}
+#v-elec .egary p{margin:0 0 8px;font-size:14.5px}
+#v-elec .egary p:last-of-type{margin-bottom:0}
+#v-elec .eav{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;background:linear-gradient(135deg,var(--heat),var(--ice))}
+#v-elec .egary .fbtn{margin-top:10px}
+@media (max-width:360px){#v-elec .row3{grid-template-columns:1fr 1fr}#v-elec .emotor{grid-template-columns:1fr 1fr}#v-elec .emotor .ev{grid-column:1/-1;text-align:left;padding-bottom:0}}
 /* ---- EPA 608 Prep (v1.91): gauges, question cards, exam grid, flashcards ---- */
 #v-epa .epa-top{min-height:0;margin-bottom:10px}
 #v-epa #epa-back{width:auto;padding:8px 14px;font-size:14px}
@@ -1055,8 +1092,8 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     <button type="button" class="ghost phlink" id="c-toph">Plot on P-h chart →</button>
   </div>
 
-  <div class="card" id="c-appbox">
-    <h2>Approach method</h2>
+  <details class="card" id="c-appbox">
+    <summary><div class="appsum"><h2>Approach method</h2><span class="note" id="r-appsum">Liquid line − outdoor air, no gauges</span></div></summary>
     <p class="note" style="margin-top:0">The liquid line temperature minus whatever the condenser is rejecting heat into. <b>Lennox</b> prints an approach target on the charging label, but the check works on any equipment — it just needs the right reference and a target, and the buttons below cover both. Its advantage: <b>temperatures only</b>, so the charge can be checked without hooking up gauges and losing refrigerant every visit.</p>
 
     <label>What you're standing in front of</label>
@@ -1124,7 +1161,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     <div class="formula" id="c-appformula">Approach = liquid line temp − outdoor air temp</div>
     <p class="note" id="c-appref">Take the outdoor air in the shade at the coil inlet, not downwind of the fan. Approach rises as the charge falls, so a high reading is usually low charge — but a dirty condenser coil, a slow fan or recirculating hot air raise it too, which is what the condenser split is there to tell you apart.</p>
     <p class="note">Charge by weight on a new install, a line-set change or after a recovery — on every brand. Approach is for checking and trimming an existing charge, and it wants a system that has run 15 minutes on high stage with a clean filter and a clean condenser.</p>
-  </div>
+  </details>
 
   <div class="card" id="c-curvebox">
     <h2>Charging curve</h2>
@@ -1256,6 +1293,117 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     </div>
     <div id="a-es-parts"></div>
     <p class="note">Most residential blowers are rated for 0.5 in. w.c. total external static; some high-static ECM equipment is rated 0.8–1.0. The rating and the matching blower table are in the installation manual — once TESP is known, that table gives the actual CFM the blower is moving.</p>
+  </div>
+</section>
+
+<!-- ================= ELECTRICAL CHECKS ================= -->
+<section class="view" id="v-elec">
+  <div class="verdict warn esafety"><b data-t="safetyLead">Live equipment.</b><span data-t="safety"></span></div>
+
+  <div class="card">
+    <h2 data-t="plate">Nameplate</h2>
+    <p class="note" style="margin-top:0" data-t="plateHow"></p>
+    <div class="row">
+      <div class="field"><label for="e-v" data-t="ratedVolts"></label><input id="e-v" placeholder="e.g. 208/230"></div>
+      <div class="field"><label for="e-ph" data-t="phase"></label><select id="e-ph"><option value="1" data-t="phase1"></option><option value="3" data-t="phase3"></option></select></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="e-mca">MCA <span class="unit">A</span></label><input id="e-mca" inputmode="decimal" placeholder="e.g. 27.6"></div>
+      <div class="field"><label for="e-mocp">MOCP <span class="unit">A</span></label><input id="e-mocp" inputmode="decimal" placeholder="e.g. 45"></div>
+    </div>
+    <div class="row3">
+      <div class="field"><label for="e-rla" data-t="rla"></label><input id="e-rla" inputmode="decimal" placeholder="A"></div>
+      <div class="field"><label for="e-lra" data-t="lra"></label><input id="e-lra" inputmode="decimal" placeholder="A"></div>
+      <div class="field"><label for="e-fla" data-t="fla"></label><input id="e-fla" inputmode="decimal" placeholder="A"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="e-vmin" data-t="vmin"></label><input id="e-vmin" inputmode="decimal" placeholder="V, optional"></div>
+      <div class="field"><label for="e-vmax" data-t="vmax"></label><input id="e-vmax" inputmode="decimal" placeholder="V, optional"></div>
+    </div>
+  </div>
+
+  <div class="esummary" id="e-sum"></div>
+
+  <div class="card echeck" id="e-c-cap">
+    <div class="ehead"><h2 data-t="caps"></h2><span class="epill none" id="e-p-cap">—</span></div>
+    <p class="note" style="margin-top:0" data-t="capsHow"></p>
+    <h3 class="esub" data-t="capHerm"></h3>
+    <div class="row3">
+      <div class="field"><label for="e-ch-r" data-t="rated"></label><input id="e-ch-r" inputmode="decimal" placeholder="µF"></div>
+      <div class="field"><label for="e-ch-a" data-t="amps"></label><input id="e-ch-a" inputmode="decimal" placeholder="A"></div>
+      <div class="field"><label for="e-ch-v" data-t="volts"></label><input id="e-ch-v" inputmode="decimal" placeholder="V"></div>
+    </div>
+    <div class="ereadout" id="e-r-ch"></div>
+    <h3 class="esub" data-t="capFan"></h3>
+    <div class="row3">
+      <div class="field"><label for="e-cf-r" data-t="rated"></label><input id="e-cf-r" inputmode="decimal" placeholder="µF"></div>
+      <div class="field"><label for="e-cf-a" data-t="amps"></label><input id="e-cf-a" inputmode="decimal" placeholder="A"></div>
+      <div class="field"><label for="e-cf-v" data-t="volts"></label><input id="e-cf-v" inputmode="decimal" placeholder="V"></div>
+    </div>
+    <div class="ereadout" id="e-r-cf"></div>
+    <div class="field" style="max-width:60%"><label for="e-tol" data-t="tolerance"></label><input id="e-tol" inputmode="decimal" value="6"></div>
+    <h3 class="esub" data-t="capStart"></h3>
+    <p class="note" style="margin-top:0" data-t="capStartHow"></p>
+    <div class="row3">
+      <div class="field"><label for="e-cs-lo" data-t="rangeLow"></label><input id="e-cs-lo" inputmode="decimal" placeholder="µF"></div>
+      <div class="field"><label for="e-cs-hi" data-t="rangeHigh"></label><input id="e-cs-hi" inputmode="decimal" placeholder="µF"></div>
+      <div class="field"><label for="e-cs-m" data-t="meterReads"></label><input id="e-cs-m" inputmode="decimal" placeholder="µF"></div>
+    </div>
+    <div class="ereadout" id="e-r-cs"></div>
+    <div id="e-g-cap"></div>
+  </div>
+
+  <div class="card echeck" id="e-c-amps">
+    <div class="ehead"><h2 data-t="motorAmps"></h2><span class="epill none" id="e-p-amps">—</span></div>
+    <p class="note" style="margin-top:0" data-t="motorHow"></p>
+    <div class="emotor">
+      <div class="field"><label data-t="compressor"></label><input id="e-mc-rate" readonly tabindex="-1"></div>
+      <div class="field"><label for="e-mc" data-t="measured"></label><input id="e-mc" inputmode="decimal" placeholder="A"></div>
+      <span class="ev none" id="e-v-mc">—</span>
+    </div>
+    <div class="emotor">
+      <div class="field"><label data-t="condFan"></label><input id="e-mf-rate" readonly tabindex="-1"></div>
+      <div class="field"><label for="e-mf" data-t="measured"></label><input id="e-mf" inputmode="decimal" placeholder="A"></div>
+      <span class="ev none" id="e-v-mf">—</span>
+    </div>
+    <p class="note" id="e-lra-note"></p>
+    <div id="e-g-amps"></div>
+  </div>
+
+  <div class="card echeck" id="e-c-volt">
+    <div class="ehead"><h2 data-t="supplyVolts"></h2><span class="epill none" id="e-p-volt">—</span></div>
+    <p class="note" style="margin-top:0" data-t="voltsHow"></p>
+    <div id="e-volt1" class="field" style="max-width:60%"><label for="e-v1" data-t="legL1L2"></label><input id="e-v1" inputmode="decimal" placeholder="V"></div>
+    <div id="e-volt3" class="row3 hide">
+      <div class="field"><label for="e-vab" data-t="legAB"></label><input id="e-vab" inputmode="decimal" placeholder="V"></div>
+      <div class="field"><label for="e-vbc" data-t="legBC"></label><input id="e-vbc" inputmode="decimal" placeholder="V"></div>
+      <div class="field"><label for="e-vca" data-t="legCA"></label><input id="e-vca" inputmode="decimal" placeholder="V"></div>
+    </div>
+    <div class="ereadout" id="e-r-volt"></div>
+    <div class="ereadout hide" id="e-r-imb"></div>
+    <div id="e-g-volt"></div>
+  </div>
+
+  <div class="card echeck" id="e-c-wire">
+    <div class="ehead"><h2 data-t="wire"></h2><span class="epill none" id="e-p-wire">—</span></div>
+    <p class="note" style="margin-top:0" data-t="wireHow"></p>
+    <div class="row">
+      <div class="field"><label for="e-brk" data-t="breaker"></label><input id="e-brk" inputmode="decimal" placeholder="A"></div>
+      <div class="field"><label for="e-gauge" data-t="wireSize"></label><select id="e-gauge"></select></div>
+    </div>
+    <label data-t="conductor"></label>
+    <div class="seg" id="e-mat"><button data-v="cu" class="on" data-t="copper"></button><button data-v="al" data-t="aluminum"></button></div>
+    <div class="field" style="max-width:60%"><label for="e-len" data-t="runLength"></label><input id="e-len" inputmode="decimal" placeholder="ft"></div>
+    <div class="ereadout" id="e-r-brk"></div>
+    <div class="ereadout" id="e-r-amp"></div>
+    <div class="ereadout" id="e-r-vd"></div>
+    <p class="note" id="e-nec"></p>
+    <div id="e-g-wire"></div>
+  </div>
+
+  <div class="btnrow">
+    <button type="button" class="ghost" id="e-clear" data-t="clear"></button>
+    <button type="button" class="primary" id="e-save" data-t="saveNote"></button>
   </div>
 </section>
 
@@ -1542,6 +1690,11 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     <p class="note">The 🎤 button uses your phone's speech recognition and may need a signal. If it doesn't work, tap the microphone on your keyboard instead.</p>
   </div>
   <div class="card">
+    <h2>Your name</h2>
+    <div class="field"><label for="s-tech">Signs electrical checks and anything else saved to a note <span class="unit">optional</span></label><input id="s-tech" placeholder="e.g. J. Novak"></div>
+  </div>
+
+  <div class="card">
     <h2>Student Mode</h2>
     <div class="switch-row">
       <div><div class="lbl">Student Mode</div><p class="note" style="margin:2px 0 0">Adds <b>HVAC Basics</b>, <b>608 Prep</b>, <b>Faults</b> and <b>How To</b> to the Menu: 31 beginner lessons with diagrams and quizzes, 40 practice troubleshooting faults in 4 tiers (Beginner to Expert Technician), and step-by-step guides for the basic skills every tech needs.</p></div>
@@ -1554,7 +1707,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
   <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.92 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v1.94 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
 </section>
 
@@ -1957,6 +2110,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   <button data-v="faults"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg>Faults</button>
   <button data-v="howto"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5"/><path d="M9 7h7M9 11h5"/></svg>How To</button>
   <button data-v="gas"><svg viewBox="0 0 24 24"><path d="M12 22c3.3 0 6-2.5 6-5.8 0-4.3-4-6.2-6-14.2-2 8-6 9.9-6 14.2C6 19.5 8.7 22 12 22z"/><path d="M12 22c1.6 0 3-1.3 3-3 0-2.2-1.9-3.1-3-6.6-1.1 3.5-3 4.4-3 6.6 0 1.7 1.4 3 3 3z"/></svg>Gas Heat</button>
+  <button data-v="elec"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12z"/></svg>Electrical</button>
   <button data-v="epa"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9.5 13.5l2 2 3.5-4"/></svg>608 Prep</button>
   <button data-v="basics"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>HVAC Basics</button>
   </div>
@@ -2020,12 +2174,12 @@ const store = {
   get(){ try { return JSON.parse(localStorage.getItem("hvac") || "{}"); } catch(e){ return {}; } },
   set(o){ try { localStorage.setItem("hvac", JSON.stringify(o)); } catch(e){} }
 };
-let S = Object.assign({tab:"charge", meter:"txv", ref:"r410a", ptref:"r410a", amode:"ton", solve:"cfm", shape:"rect", gmode:"clock", gdial:"2", appsrc:"label", appmode:"cool", ctoa:"20", step:"5"}, store.get());
-const INPUTS = ["ph-sp","ph-dp","ph-sh","ph-sc","ph-dlt","rf-csp","rf-cet","rf-cct","rf-chp","rf-clt","rf-camb","rf-ccs","rf-chlo","rf-chhi","c-sp","c-st","c-lp","c-lt","c-tsc","c-tol1","c-wb","c-odb","c-tol2","c-oat","c-tapp","c-tol3","c-benchname","a-tons","a-btu0","a-cptv","a-btu","a-cfm","a-t1","a-t2","a-alt","a-furn","a-afue","a-w","a-h","a-d","a-fpm","a-edb","a-ewb","a-ldb","a-rs","a-ss","a-rated","a-fd","a-cd","gh-sec","gh-rev","gh-hv","gh-alt","gh-np","gh-ret","gh-sup","gh-rlo","gh-rhi","gh-eff","rf-box","rf-sat","y-idb","y-irh","y-odb","y-orh","y-alt"];
+let S = Object.assign({tab:"charge", meter:"txv", ref:"r410a", ptref:"r410a", amode:"ton", solve:"cfm", shape:"rect", gmode:"clock", gdial:"2", appsrc:"label", appmode:"cool", ctoa:"20", ephase:"1", emat:"cu", step:"5"}, store.get());
+const INPUTS = ["ph-sp","ph-dp","ph-sh","ph-sc","ph-dlt","rf-csp","rf-cet","rf-cct","rf-chp","rf-clt","rf-camb","rf-ccs","rf-chlo","rf-chhi","c-sp","c-st","c-lp","c-lt","c-tsc","c-tol1","c-wb","c-odb","c-tol2","c-oat","c-tapp","c-tol3","c-benchname","e-v","e-mca","e-mocp","e-rla","e-lra","e-fla","e-vmin","e-vmax","e-ch-r","e-ch-a","e-ch-v","e-cf-r","e-cf-a","e-cf-v","e-tol","e-cs-lo","e-cs-hi","e-cs-m","e-mc","e-mf","e-v1","e-vab","e-vbc","e-vca","e-brk","e-len","a-tons","a-btu0","a-cptv","a-btu","a-cfm","a-t1","a-t2","a-alt","a-furn","a-afue","a-w","a-h","a-d","a-fpm","a-edb","a-ewb","a-ldb","a-rs","a-ss","a-rated","a-fd","a-cd","gh-sec","gh-rev","gh-hv","gh-alt","gh-np","gh-ret","gh-sup","gh-rlo","gh-rhi","gh-eff","rf-box","rf-sat","y-idb","y-irh","y-odb","y-orh","y-alt"];
 function save(){ const v = {}; INPUTS.forEach(id => v[id] = $(id).value); S.vals = v; store.set(S); }
 /* Fresh start every time the app is opened: calculator inputs & choices go back to defaults.
    (Settings, notes, photos/videos and unsaved note drafts are kept.) */
-Object.assign(S, {meter:"txv", amode:"ton", solve:"cfm", shape:"rect", gmode:"clock", gdial:"2", appsrc:"label", appmode:"cool", ctoa:"20", appInv:false, appRecv:false, lmode:"quick", lclimate:"mixed", lins:"avg", lsun:"avg", lstories:"1", rfmeter:"txv", rfrecv:"yes", rfcond:"air", rfglass:"na", rfpat:"na"});
+Object.assign(S, {meter:"txv", amode:"ton", solve:"cfm", shape:"rect", gmode:"clock", gdial:"2", appsrc:"label", appmode:"cool", ctoa:"20", appInv:false, appRecv:false, ephase:"1", emat:"cu", egauge:"", lmode:"quick", lclimate:"mixed", lins:"avg", lsun:"avg", lstories:"1", rfmeter:"txv", rfrecv:"yes", rfcond:"air", rfglass:"na", rfpat:"na"});
 S.refOv = {};                                   // screen-only refrigerants are per visit; the job's refrigerant stays
 delete S.vals;
 
@@ -10663,6 +10817,10 @@ applyTheme();
 TITLES.settings = "Settings";
 $("gear").addEventListener("click", () => { closeMenu(); showTab(S.tab === "settings" ? (S.prevTab || "charge") : "settings"); save(); window.scrollTo(0, 0); });
 
+/* ---------- the tech's name: signs anything saved to a note ---------- */
+$("s-tech").value = S.tech || "";
+$("s-tech").addEventListener("input", () => { S.tech = $("s-tech").value; save(); });
+
 /* ---------- units ---------- */
 const ABS_T = ["c-st","c-lt","c-wb","c-odb","c-oat","a-t1","a-t2","a-edb","a-ewb","a-ldb","gh-ret","gh-sup","rf-box","rf-sat","rf-cet","rf-cct","rf-clt","rf-camb","p-temp","y-idb","y-odb","d-tos","d-tis","d-tow","d-tiw","ph-dlt"], DIF_T = ["c-tsc","c-tol1","c-tol2","c-tapp","c-tol3","gh-rlo","gh-rhi","ph-sh","ph-sc"];
 const PH = {"c-st":["e.g. ",50], "c-lt":["e.g. ",100], "c-wb":["return air, e.g. ",63], "c-odb":["condenser inlet, e.g. ",85], "c-oat":["condenser inlet, e.g. ",95], "a-t1":["e.g. ",70], "a-t2":["e.g. ",125], "a-edb":["return air, e.g. ",76], "a-ewb":["return air, e.g. ",63], "a-ldb":["supply air, e.g. ",57], "gh-ret":["e.g. ",70], "gh-sup":["e.g. ",125], "rf-box":["e.g. ",0], "rf-cet":["e.g. ",-4], "rf-cct":["e.g. ",20], "rf-clt":["e.g. ",95], "rf-camb":["e.g. ",85], "y-idb":["return air, e.g. ",75], "y-odb":["condenser inlet, e.g. ",95]};
@@ -10731,19 +10889,19 @@ $("s-vtest").addEventListener("click", () => { if (typeof speakText === "functio
    compressor speed, so it only means something in the maker's fixed-speed test mode) and systems
    with a liquid receiver (surplus liquid sits in the receiver instead of the condenser). */
 const APP_MODES = {
-  cool: {ref: "Outdoor air temp", short: "outdoor air", ph: "condenser inlet, e.g. ", phv: 95, splitk: "Condenser split", split: [15, 25],
+  cool: {ref: "Outdoor air temp", short: "outdoor air", sum: "Liquid line − outdoor air", ph: "condenser inlet, e.g. ", phv: 95, splitk: "Condenser split", split: [15, 25],
     formula: "Approach = liquid line temp − outdoor air temp",
     note: "Air-cooled condenser in cooling: AC, or a heat pump running in cool. The reference is the air going into the outdoor coil.",
     refnote: "Take the outdoor air in the shade at the coil inlet, not downwind of the fan. Approach rises as the charge falls, so a high reading is usually low charge — but a dirty condenser coil, a slow fan or recirculating hot air raise it too, which is what the condenser split is there to tell you apart.",
     rule: [10, 5], rulenote: "No label and no subcool spec: most air-cooled systems land between {LO} and {HI} approach at design conditions. It's the weakest of the four targets — use it to spot a system that's badly off, not to trim a charge.",
     minref: 65, minmsg: "Below {MIN} the indoor load is too light for the reading to mean anything — Lennox says results at low temperature are not reliable and to weigh the charge in instead."},
-  heat: {ref: "Indoor return air temp", short: "return air", ph: "return air, e.g. ", phv: 70, splitk: "Indoor coil split", split: [30, 40],
+  heat: {ref: "Indoor return air temp", short: "return air", sum: "Indoor liquid line − return air", ph: "return air, e.g. ", phv: 70, splitk: "Indoor coil split", split: [30, 40],
     formula: "Approach = indoor liquid line temp − return air temp",
     note: "Heat pump in heating: the indoor coil is the condenser now, so the reference is the return air and the liquid line is the one leaving the indoor coil. Defrost the outdoor coil fully first, and work between about 15 °F and 65 °F outdoors.",
     refnote: "Measure the liquid line at the indoor unit and the return air before the coil. In heating the liquid line normally runs {LO}–{HI} above the return air, and the indoor coil condenses about 30–40 °F above indoor dry bulb. Nobody publishes heat-mode approach targets, so a benchmark taken in heating is worth far more than a rule of thumb.",
     rule: [9, 6], rulenote: "Rule of thumb for heating: the indoor liquid line runs about {LO} to {HI} warmer than the return air with the charge right and the outdoor coil clear.",
     minref: null},
-  water: {ref: "Entering water temp", short: "entering water", ph: "entering water, e.g. ", phv: 85, splitk: "Water split", split: [10, 20],
+  water: {ref: "Entering water temp", short: "entering water", sum: "Liquid line − entering water", ph: "entering water, e.g. ", phv: 85, splitk: "Water split", split: [10, 20],
     formula: "Approach = liquid line temp − entering water temp",
     note: "Water-cooled or geothermal: the condenser rejects into water, so the reference is the water entering the coax. Check flow first — condenser water normally rises about 10 °F through the unit; wrong flow moves approach as much as charge does.",
     refnote: "Measure the water entering the coax, not the loop header. A fouled or scaled coax, a weak pump or a plugged strainer all push approach up exactly like a low charge, so confirm the water temperature rise through the unit before touching the charge.",
@@ -10894,8 +11052,20 @@ function calcApproach(){
     else if (split < dIn(slo - 5) && isFinite(app)) v += verdict("warn", `${M.splitk} is low`, `${fD(split)} ${D} against a typical ${rng(slo, shi)}. Little heat being rejected: low load on the system, a weak compressor, or very low charge. Check the other side of the system and the compressor amps.`);
   }
   $("r-appv").innerHTML = v;
+
+  /* the closed card still says where the charge stands */
+  const sum = $("r-appsum");
+  if (!isFinite(app)) sum.textContent = `${M.sum} · no gauges needed`;
+  else {
+    const verd = !isFinite(tapp) ? "" : S.appRecv ? " · receiver — use the sight glass" :
+      Math.abs(app - tapp) <= tol + 1e-9 ? " · on target" : app > tapp ? " · undercharged" : " · overcharged";
+    sum.textContent = `${fD(app)} ${D}${verd}`;
+  }
+  sum.className = "note" + (isFinite(app) && isFinite(tapp) && !S.appRecv ? (Math.abs(app - tapp) <= tol + 1e-9 ? " sum-ok" : " sum-bad") : "");
 }
 ["c-oat","c-tapp","c-tol3"].forEach(id => $(id).addEventListener("input", () => { calcApproach(); save(); }));
+$("c-appbox").addEventListener("toggle", () => { S.appOpen = $("c-appbox").open; save(); });
+$("c-appbox").open = !!S.appOpen;
 paintAppMode();
 
 /* one line of plain text for a service note — empty when there's nothing to report */
@@ -14355,6 +14525,399 @@ seg("gh-dial", "gdial", () => calcGasClock());
 [["gh-askclock", "furnace overfired or underfired"], ["gh-askrise", "what should furnace temperature rise be"]].forEach(([id, q]) =>
   $(id).addEventListener("click", () => { showTab("gary"); save(); window.scrollTo(0, 0); if (typeof ask === "function") ask(q); }));
 calcGasClock();
+
+/* ================= ELECTRICAL CHECKS (v1.94) =================
+   Four checks against the unit's nameplate: capacitors, motor amps, supply voltage, wire and breaker.
+   Free and fully offline. The conductor tables live in nec_2026.json and are a draft until an
+   electrician confirms them; every string lives in electrical_ui.<lang>.json, so Spanish is one file.
+   ELEC is deliberately pure maths with no DOM in it — it ports to Swift as-is. */
+const NEC = {
+ "table": "NEC conductor data used by Thermal Gauge's Electrical Checks",
+ "edition": "2026",
+ "status": "UNVERIFIED DRAFT. Every number below must be confirmed against the published 2026 NEC by a licensed electrician before release. Local jurisdictions commonly enforce an older edition or amend it.",
+ "ampacity": {
+  "source": "Table 310.16, 75 °C column, not more than three current-carrying conductors in a raceway, ambient 30 °C",
+  "note": "Ampacity is the table value. Overcurrent protection for 14, 12 and 10 AWG is separately limited by 240.4(D) unless an exception such as 240.4(G)/440.22 for air-conditioning equipment applies, which is the case for the MCA/MOCP checks here.",
+  "cu": {"14": 20, "12": 25, "10": 35, "8": 50, "6": 65, "4": 85, "3": 100, "2": 115, "1": 130, "1/0": 150, "2/0": 175, "3/0": 200, "4/0": 230},
+  "al": {"12": 20, "10": 30, "8": 40, "6": 50, "4": 65, "3": 75, "2": 90, "1": 100, "1/0": 120, "2/0": 135, "3/0": 155, "4/0": 180}
+ },
+ "circularMils": {
+  "source": "Chapter 9, Table 8, bare conductor area",
+  "14": 4110, "12": 6530, "10": 10380, "8": 16510, "6": 26240, "4": 41740, "3": 52620,
+  "2": 66360, "1": 83690, "1/0": 105600, "2/0": 133100, "3/0": 167800, "4/0": 211600
+ },
+ "voltageDrop": {
+  "source": "K method, ohm-circular-mils per foot, uncoated conductors at 75 °C",
+  "note": "Voltage drop is not an NEC requirement; 210.19 and 215.2 recommend keeping branch-circuit drop to 3% and the total to 5%.",
+  "k": {"cu": 12.9, "al": 21.2},
+  "limitPct": 3
+ },
+ "imbalanceLimitPct": 2,
+ "defaultCapTolerancePct": 6,
+ "voltageWindowPct": 10
+}
+;
+const ELEC_UIS = {en: {
+ "lang": "en",
+ "note": "Every string the Electrical Checks screen shows. A Spanish build adds electrical_ui.es.json with the same keys.",
+ "title": "Electrical Checks",
+ "menu": "Electrical",
+ "safety": "These readings are taken with the power on. Wear rated PPE, use a meter rated for the circuit, and discharge capacitors before handling them. The app checks numbers; it doesn't replace an electrician's judgment, and local code can be stricter.",
+ "safetyLead": "Live equipment.",
+ "plate": "Nameplate",
+ "plateHow": "From the data plate on the unit. Everything else on this screen is checked against these numbers.",
+ "ratedVolts": "Rated volts",
+ "phase": "Phase",
+ "phase1": "1 phase",
+ "phase3": "3 phase",
+ "mca": "MCA",
+ "mocp": "MOCP",
+ "rla": "Comp RLA",
+ "lra": "Comp LRA",
+ "fla": "Fan FLA",
+ "vmin": "Min volts",
+ "vmax": "Max volts",
+ "optional": "optional",
+ "summary": "Results",
+ "noReadings": "No readings yet",
+ "allOk": "Everything checks out",
+ "someWarn": "Check the flagged items",
+ "someBad": "Problems found",
+ "pass": "Pass",
+ "check": "Check",
+ "fail": "Fail",
+ "dash": "—",
+ "enterReadings": "Enter readings",
+ "caps": "Capacitors",
+ "capsHow": "Run capacitor: with the unit running, clamp the lead between the capacitor and the motor's start winding and read volts across the capacitor. The app uses µF = 2652 × amps ÷ volts at 60 Hz.",
+ "capHerm": "Run capacitor · HERM",
+ "capFan": "Run capacitor · FAN",
+ "capStart": "Start capacitor",
+ "capStartHow": "A start capacitor is only in the circuit for a moment, so the amps method doesn't work on it. Discharge it, take it out of circuit, and read µF on the meter's capacitance setting.",
+ "rated": "Rated",
+ "amps": "Amps",
+ "volts": "Volts",
+ "tolerance": "Tolerance on the can",
+ "rangeLow": "Range low",
+ "rangeHigh": "Range high",
+ "meterReads": "Meter reads",
+ "capAllowed": "Allowed {lo}–{hi} µF",
+ "capPrinted": "Printed range {lo}–{hi} µF",
+ "motorAmps": "Motor amps",
+ "motorHow": "Running amps against the nameplate. RLA and FLA are ratings, not targets — a healthy motor usually runs under them, so only readings above the rating are flagged.",
+ "compressor": "Compressor",
+ "condFan": "Condenser fan",
+ "measured": "Measured",
+ "rating": "Rating",
+ "pctOk": "{p}% of rating",
+ "pctOver": "{p}% — over",
+ "lraRef": "LRA {n} A for reference on a hard-start call.",
+ "supplyVolts": "Supply voltage",
+ "voltsHow": "Read at the disconnect with the unit running.",
+ "legL1L2": "Volts L1–L2",
+ "legAB": "L1–L2",
+ "legBC": "L2–L3",
+ "legCA": "L1–L3",
+ "voltAllowed": "Allowed {lo}–{hi} V ({src})",
+ "srcMaker": "manufacturer's range",
+ "srcTenPct": "±10% of rating",
+ "imbalance": "% imbalance",
+ "imbVs": "Average {avg} V · keep under {lim}%",
+ "wire": "Wire and breaker",
+ "wireHow": "Sized against the nameplate: the breaker at or under MOCP, the conductors at or above MCA.",
+ "breaker": "Breaker or fuse",
+ "wireSize": "Wire size",
+ "pickSize": "Pick a size",
+ "conductor": "Conductor",
+ "copper": "Copper",
+ "aluminum": "Aluminum",
+ "runLength": "One-way run",
+ "breakerUnit": "A breaker",
+ "breakerVs": "MOCP {mocp} A max",
+ "breakerVsMca": "MOCP {mocp} A max · MCA {mca} A",
+ "ampUnit": "A ampacity",
+ "ampVs": "{g} AWG {mat} · needs ≥ MCA {mca} A",
+ "unlisted": "Not listed in the 75 °C column",
+ "dropUnit": "% drop",
+ "dropVs": "{v} V at MCA over {ft} ft · keep under {lim}%",
+ "necNote": "{ed} NEC ampacity, 75 °C column. Local code may differ, and these tables are a draft until an electrician confirms them.",
+ "garyName": "Gary",
+ "askGary": "Ask Gary about this →",
+ "gCapLow": "{side} side is weak. Replace the capacitor with the same µF and an equal or higher voltage rating. A weak capacitor makes the motor run hot and draw more amps, so recheck motor amps after.",
+ "gCapHigh": "{side} side reads high. That usually means the wrong capacitor is installed, or a reading error. Confirm the rating on the can and recheck volts and amps.",
+ "gCapStart": "Start capacitor is out of range. Replace it, and check the start relay or potential relay while you're there — a stuck relay is what kills most start capacitors.",
+ "gCompOver": "Compressor is over RLA. Common causes: low supply voltage, a weak run capacitor, high head pressure from a dirty condenser coil, an overcharge or air in the system, or a failing compressor.",
+ "gFanOver": "Condenser fan is over FLA. Check the fan capacitor, spin the blade by hand for tight bearings, and make sure it's the right blade set at the right height.",
+ "gVoltLow": "Voltage is low. Low voltage raises motor amps and heat. Check for loose or burnt connections at the disconnect and contactor, undersized wire, and whether the drop only shows up under load. If the supply itself is low, it's a utility problem.",
+ "gVoltHigh": "Voltage is high. Confirm the reading with the unit running. Sustained high voltage shortens motor and capacitor life — report it to the utility.",
+ "gImbalance": "Voltage imbalance is over {lim}%. Motors run hotter and draw more current. Check for a loose or corroded connection on one leg first; if the supply is unbalanced, report it to the utility.",
+ "gBreakerOver": "Breaker is larger than MOCP. It won't protect the unit. Replace it with one at or under {mocp} A, and use fuses or an HACR breaker if the nameplate calls for them.",
+ "gBreakerUnder": "Breaker is smaller than MCA. It may trip under normal load. Size it between the MCA and the MOCP.",
+ "gWireSmall": "Wire is too small for this unit. {g} AWG {mat} carries {a} A; the unit needs at least {mca} A. Upsize the conductors.",
+ "gWireUnlisted": "{g} AWG aluminum isn't in the table. Use 12 AWG aluminum or larger, or switch to copper.",
+ "gDrop": "Voltage drop is over {lim}%. On a run this long the next wire size up brings it down, and lower drop means lower motor amps.",
+ "saveNote": "Save these checks to a service note →",
+ "clear": "Clear readings",
+ "nothingToSave": "Enter some readings first",
+ "noteHeading": "Electrical checks — {date}",
+ "noteBy": " — {tech}",
+ "noteCapHerm": "HERM {uf} µF (rated {r} ±{tol}%) {verdict}",
+ "noteCapFan": "FAN {uf} µF (rated {r} ±{tol}%) {verdict}",
+ "noteCapStart": "Start cap {uf} µF (range {lo}–{hi}) {verdict}",
+ "noteComp": "Compressor {a} A / RLA {r} ({p}%) {verdict}",
+ "noteFan": "Fan {a} A / FLA {r} ({p}%) {verdict}",
+ "noteVolts": "Supply {v} V (allowed {lo}–{hi}, {src}) {verdict}",
+ "noteImb": "Imbalance {p}% (avg {avg} V) {verdict}",
+ "noteBreaker": "Breaker {a} A vs MOCP {mocp} A {verdict}",
+ "noteWire": "{g} AWG {mat} {a} A vs MCA {mca} A {verdict}",
+ "noteDrop": "Drop {p}% over {ft} ft {verdict}"
+}};
+const elecLang = () => ELEC_UIS[S.lang] ? S.lang : "en";
+function tE(k, v){
+  let s = ELEC_UIS[elecLang()][k]; if (s == null) return k;
+  if (v) Object.keys(v).forEach(a => s = s.split("{" + a + "}").join(v[a]));
+  return s;
+}
+TITLES.elec = tE("title");
+
+const ELEC = (() => {
+  const AMP = NEC.ampacity, CMIL = NEC.circularMils, K = NEC.voltageDrop.k;
+  const LIM_DROP = NEC.voltageDrop.limitPct, LIM_IMB = NEC.imbalanceLimitPct, VWIN = NEC.voltageWindowPct;
+  /* microfarads from the current the capacitor passes at line voltage, 60 Hz */
+  const uf = (amps, volts) => 2652 * amps / volts;
+  function runCap(rated, amps, volts, tolPct){
+    if (!(rated > 0 && amps > 0 && volts > 0 && tolPct >= 0)) return null;
+    const m = uf(amps, volts), lo = rated * (1 - tolPct / 100), hi = rated * (1 + tolPct / 100);
+    return {measured: m, lo, hi, status: m >= lo && m <= hi ? "ok" : "bad", low: m < lo};
+  }
+  function startCap(lo, hi, m){
+    if (!(lo > 0 && hi >= lo && m > 0)) return null;
+    return {measured: m, lo, hi, status: m >= lo && m <= hi ? "ok" : "bad", low: m < lo};
+  }
+  /* a rating is a ceiling, not a target: only readings above it are flagged */
+  function motor(rating, measured){
+    if (!(rating > 0 && measured > 0)) return null;
+    return {pct: measured / rating * 100, status: measured > rating ? "bad" : "ok"};
+  }
+  /* "208/230" or "460"; the maker's own min/max wins over the ±10% rule */
+  function voltRange(ratedText, vmin, vmax){
+    const nums = String(ratedText || "").split(/[^0-9.]+/).map(Number).filter(n => n > 0);
+    if (!nums.length) return null;
+    if (vmin > 0 && vmax > vmin) return {lo: vmin, hi: vmax, nominal: Math.max.apply(null, nums), maker: true};
+    return {lo: Math.min.apply(null, nums) * (1 - VWIN / 100), hi: Math.max.apply(null, nums) * (1 + VWIN / 100),
+            nominal: Math.max.apply(null, nums), maker: false};
+  }
+  function imbalance(a, b, c){
+    if (!(a > 0 && b > 0 && c > 0)) return null;
+    const avg = (a + b + c) / 3;
+    const dev = Math.max(Math.abs(a - avg), Math.abs(b - avg), Math.abs(c - avg));
+    const pct = dev / avg * 100;
+    return {avg, pct, status: pct > LIM_IMB ? "bad" : "ok", limit: LIM_IMB};
+  }
+  function breaker(size, mca, mocp){
+    if (!(size > 0 && mocp > 0)) return null;
+    if (size > mocp) return {status: "bad", why: "over"};
+    if (mca > 0 && size < mca) return {status: "warn", why: "under"};
+    return {status: "ok"};
+  }
+  function wire(mat, gauge, mca){
+    if (!gauge) return null;
+    const a = AMP[mat][gauge];
+    if (a == null) return {status: "bad", why: "unlisted"};
+    if (!(mca > 0)) return null;
+    return {ampacity: a, status: a >= mca ? "ok" : "bad"};
+  }
+  function vdrop(mat, gauge, amps, lengthFt, phase, volts){
+    const cm = CMIL[gauge];
+    if (!(cm && amps > 0 && lengthFt > 0 && volts > 0)) return null;
+    const mult = phase === 3 ? Math.sqrt(3) : 2;
+    const v = mult * K[mat] * amps * lengthFt / cm, pct = v / volts * 100;
+    return {v, pct, status: pct > LIM_DROP ? "warn" : "ok", limit: LIM_DROP};
+  }
+  return {AMP, CMIL, K, uf, runCap, startCap, motor, voltRange, imbalance, breaker, wire, vdrop};
+})();
+
+/* ---------- screen ---------- */
+const elW = {ok: "pass", warn: "check", bad: "fail", none: "dash"};
+const elWord = s => tE(elW[s] || "dash");
+const elNum = (v, d = 1) => isFinite(v) ? v.toFixed(d) : "–";
+const elGauges = Object.keys(NEC.circularMils);
+const elPhase = () => S.ephase === "3" ? 3 : 1;
+const elMat = () => S.emat === "al" ? "al" : "cu";
+const elMatName = () => tE(elMat() === "al" ? "aluminum" : "copper").toLowerCase();
+function elWorst(list){
+  const s = list.filter(x => x);
+  return !s.length ? "none" : s.indexOf("bad") >= 0 ? "bad" : s.indexOf("warn") >= 0 ? "warn" : "ok";
+}
+function elReadout(id, big, unit, vs, status, scale){
+  const el = $(id);
+  if (status === "none"){ el.innerHTML = `<span class="big">–</span><span class="ev none">${esc(tE("enterReadings"))}</span>`; return; }
+  let sc = "";
+  if (scale){
+    const span = (scale.hi - scale.lo) || 1;
+    const min = Math.min(scale.lo - span * 0.6, scale.val), max = Math.max(scale.hi + span * 0.6, scale.val);
+    const p = x => ((x - min) / (max - min) * 100).toFixed(1);
+    sc = `<div class="escale" aria-hidden="true"><span class="band" style="left:${p(scale.lo)}%;width:${(p(scale.hi) - p(scale.lo)).toFixed(1)}%"></span><span class="mark" style="left:${p(scale.val)}%"></span></div>`;
+  }
+  el.innerHTML = `<span class="big">${esc(String(big))}<small> ${esc(unit)}</small></span><span class="ev ${status}">${esc(elWord(status))}</span><span class="vs">${esc(vs)}</span>${sc}`;
+}
+function elCard(key, status){
+  $("e-c-" + key).className = "card echeck" + (status === "none" ? "" : " " + status);
+  const p = $("e-p-" + key); p.className = "epill " + status; p.textContent = elWord(status);
+}
+function elGary(id, lines, ask){
+  $(id).innerHTML = lines.length ? `<div class="egary"><span class="eav">G</span><div>${lines.map(l => `<p>${esc(l)}</p>`).join("")}
+    ${ask ? `<button type="button" class="ghost fbtn" data-eask="${esc(ask)}">${esc(tE("askGary"))}</button>` : ""}</div></div>` : "";
+}
+
+let elLast = {};                                           // the last results, for the note block
+function calcElec(){
+  const phase = elPhase(), mca = num("e-mca"), mocp = num("e-mocp"), mat = elMat(), gauge = S.egauge || "";
+  const R = {};
+
+  /* capacitors */
+  const tol = num("e-tol"), capG = [];
+  const ch = ELEC.runCap(num("e-ch-r"), num("e-ch-a"), num("e-ch-v"), tol);
+  const cf = ELEC.runCap(num("e-cf-r"), num("e-cf-a"), num("e-cf-v"), tol);
+  const cs = ELEC.startCap(num("e-cs-lo"), num("e-cs-hi"), num("e-cs-m"));
+  [["e-r-ch", ch, "HERM"], ["e-r-cf", cf, "FAN"]].forEach(a => {
+    const id = a[0], r = a[1], side = a[2];
+    if (!r) return elReadout(id, "", "", "", "none");
+    elReadout(id, elNum(r.measured), "µF", tE("capAllowed", {lo: elNum(r.lo, 2), hi: elNum(r.hi, 2)}), r.status, {lo: r.lo, hi: r.hi, val: r.measured});
+    if (r.status !== "ok") capG.push(tE(r.low ? "gCapLow" : "gCapHigh", {side}));
+  });
+  if (cs){
+    elReadout("e-r-cs", elNum(cs.measured, 0), "µF", tE("capPrinted", {lo: elNum(cs.lo, 0), hi: elNum(cs.hi, 0)}), cs.status, {lo: cs.lo, hi: cs.hi, val: cs.measured});
+    if (cs.status !== "ok") capG.push(tE("gCapStart"));
+  } else elReadout("e-r-cs", "", "", "", "none");
+  R.cap = elWorst([ch && ch.status, cf && cf.status, cs && cs.status]);
+  elGary("e-g-cap", capG, "Testing a run capacitor");
+
+  /* motor amps */
+  const rla = num("e-rla"), fla = num("e-fla"), lra = num("e-lra"), ampG = [];
+  $("e-mc-rate").value = isFinite(rla) ? "RLA " + rla : "RLA –";
+  $("e-mf-rate").value = isFinite(fla) ? "FLA " + fla : "FLA –";
+  $("e-lra-note").textContent = isFinite(lra) ? tE("lraRef", {n: lra}) : "";
+  const mc = ELEC.motor(rla, num("e-mc")), mf = ELEC.motor(fla, num("e-mf"));
+  [["e-v-mc", mc], ["e-v-mf", mf]].forEach(a => {
+    const el = $(a[0]), r = a[1];
+    if (!r){ el.className = "ev none"; el.textContent = tE("dash"); return; }
+    el.className = "ev " + r.status;
+    el.textContent = tE(r.status === "ok" ? "pctOk" : "pctOver", {p: elNum(r.pct, 0)});
+  });
+  if (mc && mc.status === "bad") ampG.push(tE("gCompOver"));
+  if (mf && mf.status === "bad") ampG.push(tE("gFanOver"));
+  R.amps = elWorst([mc && mc.status, mf && mf.status]);
+  elGary("e-g-amps", ampG, "Nameplate amps (RLA, LRA, FLA, MCA)");
+
+  /* supply voltage */
+  $("e-volt1").classList.toggle("hide", phase === 3);
+  $("e-volt3").classList.toggle("hide", phase !== 3);
+  $("e-r-imb").classList.toggle("hide", phase !== 3);
+  const range = ELEC.voltRange($("e-v").value, num("e-vmin"), num("e-vmax")), voltG = [];
+  const legs = phase === 3 ? [num("e-vab"), num("e-vbc"), num("e-vca")] : [num("e-v1")];
+  let vStatus = "none", imb = null;
+  if (range && legs.every(v => v > 0)){
+    const lowV = Math.min.apply(null, legs), highV = Math.max.apply(null, legs);
+    vStatus = lowV >= range.lo && highV <= range.hi ? "ok" : "bad";
+    elReadout("e-r-volt", phase === 3 ? `${elNum(lowV, 0)}–${elNum(highV, 0)}` : elNum(lowV, 0), "V",
+      tE("voltAllowed", {lo: elNum(range.lo, 0), hi: elNum(range.hi, 0), src: tE(range.maker ? "srcMaker" : "srcTenPct")}),
+      vStatus, {lo: range.lo, hi: range.hi, val: lowV < range.lo ? lowV : highV});
+    if (vStatus === "bad") voltG.push(tE(lowV < range.lo ? "gVoltLow" : "gVoltHigh"));
+  } else elReadout("e-r-volt", "", "", "", "none");
+  if (phase === 3){
+    imb = ELEC.imbalance(num("e-vab"), num("e-vbc"), num("e-vca"));
+    if (imb){
+      elReadout("e-r-imb", elNum(imb.pct, 2), tE("imbalance"), tE("imbVs", {avg: elNum(imb.avg, 1), lim: imb.limit}), imb.status, {lo: 0, hi: imb.limit, val: imb.pct});
+      if (imb.status !== "ok") voltG.push(tE("gImbalance", {lim: imb.limit}));
+    } else elReadout("e-r-imb", "", "", "", "none");
+  }
+  R.volt = elWorst([vStatus === "none" ? null : vStatus, imb && imb.status]);
+  elGary("e-g-volt", voltG, "Normal amp draw");
+
+  /* wire and breaker */
+  const brk = ELEC.breaker(num("e-brk"), mca, mocp), wr = ELEC.wire(mat, gauge, mca), wireG = [];
+  if (brk){
+    elReadout("e-r-brk", elNum(num("e-brk"), 0), tE("breakerUnit"),
+      mca > 0 ? tE("breakerVsMca", {mocp: elNum(mocp, 0), mca: elNum(mca, 1)}) : tE("breakerVs", {mocp: elNum(mocp, 0)}), brk.status);
+    if (brk.why === "over") wireG.push(tE("gBreakerOver", {mocp: elNum(mocp, 0)}));
+    if (brk.why === "under") wireG.push(tE("gBreakerUnder"));
+  } else elReadout("e-r-brk", "", "", "", "none");
+  if (wr){
+    if (wr.why === "unlisted"){
+      elReadout("e-r-amp", gauge + " AWG", elMatName(), tE("unlisted"), "bad");
+      wireG.push(tE("gWireUnlisted", {g: gauge}));
+    } else {
+      elReadout("e-r-amp", wr.ampacity, tE("ampUnit"), tE("ampVs", {g: gauge, mat: elMatName(), mca: elNum(mca, 1)}), wr.status);
+      if (wr.status !== "ok") wireG.push(tE("gWireSmall", {g: gauge, mat: elMatName(), a: wr.ampacity, mca: elNum(mca, 1)}));
+    }
+  } else elReadout("e-r-amp", "", "", "", "none");
+  const vd = ELEC.vdrop(mat, gauge, mca, num("e-len"), phase, range ? range.nominal : NaN);
+  if (vd){
+    elReadout("e-r-vd", elNum(vd.pct, 1), tE("dropUnit"), tE("dropVs", {v: elNum(vd.v, 1), ft: elNum(num("e-len"), 0), lim: vd.limit}), vd.status, {lo: 0, hi: vd.limit, val: vd.pct});
+    if (vd.status !== "ok") wireG.push(tE("gDrop", {lim: vd.limit}));
+  } else elReadout("e-r-vd", "", "", "", "none");
+  R.wire = elWorst([brk && brk.status, wr && wr.status, vd && vd.status]);
+  elGary("e-g-wire", wireG, "Wire & breaker sizing (condensers, air handlers)");
+
+  /* cards and the summary strip */
+  ["cap", "amps", "volt", "wire"].forEach(k => elCard(k, R[k]));
+  const overall = elWorst(["cap", "amps", "volt", "wire"].map(k => R[k] === "none" ? null : R[k]));
+  const NAMES = {cap: tE("caps"), amps: tE("motorAmps"), volt: tE("supplyVolts"), wire: tE("wire")};
+  $("e-sum").innerHTML = `<div class="eoverall"><b>${esc(tE(overall === "none" ? "noReadings" : overall === "ok" ? "allOk" : overall === "warn" ? "someWarn" : "someBad"))}</b>
+      <span class="epill ${overall}">${esc(elWord(overall))}</span></div>`
+    + ["cap", "amps", "volt", "wire"].map(k => `<button type="button" class="esum" data-ego="e-c-${k}"><b>${esc(NAMES[k])}</b><span class="epill ${R[k]}">${esc(elWord(R[k]))}</span></button>`).join("");
+  elLast = {R, overall, ch, cf, cs, mc, mf, rla, fla, range, legs, vStatus, imb, brk, wr, vd, phase, mat, gauge, mca, mocp, tol};
+}
+
+/* ---------- the block that goes in the unit's note ---------- */
+function elecLine(){
+  const L = elLast, out = [];
+  if (!L.R) return "";
+  const V = s => elWord(s).toLowerCase();
+  if (L.ch) out.push(tE("noteCapHerm", {uf: elNum(L.ch.measured), r: num("e-ch-r"), tol: L.tol, verdict: V(L.ch.status)}));
+  if (L.cf) out.push(tE("noteCapFan", {uf: elNum(L.cf.measured), r: num("e-cf-r"), tol: L.tol, verdict: V(L.cf.status)}));
+  if (L.cs) out.push(tE("noteCapStart", {uf: elNum(L.cs.measured, 0), lo: elNum(L.cs.lo, 0), hi: elNum(L.cs.hi, 0), verdict: V(L.cs.status)}));
+  if (L.mc) out.push(tE("noteComp", {a: num("e-mc"), r: L.rla, p: elNum(L.mc.pct, 0), verdict: V(L.mc.status)}));
+  if (L.mf) out.push(tE("noteFan", {a: num("e-mf"), r: L.fla, p: elNum(L.mf.pct, 0), verdict: V(L.mf.status)}));
+  if (L.range && L.legs.every(v => v > 0))
+    out.push(tE("noteVolts", {v: L.legs.map(v => elNum(v, 0)).join("/"), lo: elNum(L.range.lo, 0), hi: elNum(L.range.hi, 0),
+      src: tE(L.range.maker ? "srcMaker" : "srcTenPct"), verdict: V(L.vStatus)}));
+  if (L.imb) out.push(tE("noteImb", {p: elNum(L.imb.pct, 2), avg: elNum(L.imb.avg, 1), verdict: V(L.imb.status)}));
+  if (L.brk) out.push(tE("noteBreaker", {a: elNum(num("e-brk"), 0), mocp: elNum(L.mocp, 0), verdict: V(L.brk.status)}));
+  if (L.wr && L.wr.ampacity) out.push(tE("noteWire", {g: L.gauge, mat: elMatName(), a: L.wr.ampacity, mca: elNum(L.mca, 1), verdict: V(L.wr.status)}));
+  if (L.vd) out.push(tE("noteDrop", {p: elNum(L.vd.pct, 1), ft: elNum(num("e-len"), 0), verdict: V(L.vd.status)}));
+  if (!out.length) return "";
+  const tech = (S.tech || "").trim();
+  return tE("noteHeading", {date: niceDate(today())}) + (tech ? tE("noteBy", {tech}) : "") + "\n" + out.join("\n");
+}
+
+/* ---------- wiring ---------- */
+const EL_INPUTS = ["e-v","e-mca","e-mocp","e-rla","e-lra","e-fla","e-vmin","e-vmax","e-ch-r","e-ch-a","e-ch-v",
+  "e-cf-r","e-cf-a","e-cf-v","e-tol","e-cs-lo","e-cs-hi","e-cs-m","e-mc","e-mf","e-v1","e-vab","e-vbc","e-vca","e-brk","e-len"];
+$("e-gauge").innerHTML = `<option value="">${esc(tE("pickSize"))}</option>`
+  + elGauges.map(g => `<option value="${g}">${g} AWG</option>`).join("");
+$("e-gauge").value = S.egauge || "";
+$("e-ph").value = S.ephase || "1";
+EL_INPUTS.forEach(id => $(id).addEventListener("input", () => { calcElec(); save(); }));
+$("e-ph").addEventListener("change", () => { S.ephase = $("e-ph").value; save(); calcElec(); });
+$("e-gauge").addEventListener("change", () => { S.egauge = $("e-gauge").value; save(); calcElec(); });
+seg("e-mat", "emat", () => calcElec());
+$("v-elec").addEventListener("click", e => {
+  const go = e.target.closest("[data-ego]");
+  if (go){ $(go.dataset.ego).scrollIntoView({block: "start", behavior: S.reduceMotion ? "auto" : "smooth"}); return; }
+  const a = e.target.closest("[data-eask]");
+  if (a){ const q = a.dataset.eask; showTab("gary"); save(); window.scrollTo(0, 0); if (typeof ask === "function") ask(q); return; }
+});
+$("e-save").addEventListener("click", () => openNoteSheet(elecLine(), tE("nothingToSave")));
+$("e-clear").addEventListener("click", () => {
+  ["e-ch-a","e-ch-v","e-cf-a","e-cf-v","e-cs-m","e-mc","e-mf","e-v1","e-vab","e-vbc","e-vca","e-brk","e-len"].forEach(id => $(id).value = "");
+  S.egauge = ""; $("e-gauge").value = ""; save(); calcElec(); toast(tE("clear"));
+});
+/* every label, heading and hint on the screen comes from the strings file */
+document.querySelectorAll("#v-elec [data-t]").forEach(el => el.textContent = tE(el.dataset.t));
+$("e-nec").textContent = tE("necNote", {ed: NEC.edition});
+calcElec();
 
 /* ================= EPA 608 PREP (v1.91): Student Mode =================
    Free and fully offline: practice, topic drills, weak spots, flashcards and a timed exam simulation
