@@ -129,6 +129,18 @@
 :root[data-theme="coastal"] body{background-color:#f3faf9;background-image:radial-gradient(50% 40% at 92% 0%,rgba(224,168,62,.10),transparent 60%);background-attachment:fixed}
 :root[data-theme="coastal"] .card,:root[data-theme="coastal"] details.issue{border:1.5px dashed var(--accent);box-shadow:none}
 :root[data-theme="coastal"] h2,:root[data-theme="coastal"] h3{background:linear-gradient(90deg,var(--title-a),var(--title-b));-webkit-background-clip:text;background-clip:text;color:transparent}
+:root[data-theme="forest"]{
+  /* Forest: night woods — deep evergreen with bark amber */
+  --navy:#08140e; --heat:#e08a2b; --flame:#f4b350; --ice:#6ed08f; --cool:#2f8f5b;
+  --bg:#06120d; --card:#0e1f16; --ink:#eef6ef; --muted:#9db5a6; --line:#1e3a2a;
+  --brand:#08140e; --brand-ink:#ffffff; --accent:#2e9960; --on-accent:#ffffff;
+  --ok:#4ec07a; --ok-bg:#0d2a1b; --warn:#e0a02c; --warn-bg:#2d2309; --bad:#e2574a; --bad-bg:#351618;
+  --field:#0a1a12; --chip:#163325;
+  --title-a:#6ed08f; --title-b:#e08a2b; --sub:#9db5a6;
+  --stripe:linear-gradient(90deg,#2f8f5b 0%,#6ed08f 45%,#e08a2b 100%);
+  --grad:linear-gradient(90deg,#2f8f5b,#6ed08f);
+}
+:root[data-theme="forest"] body{background-color:#06120d;background-image:radial-gradient(70% 45% at 50% 0%,rgba(110,208,143,.10),transparent 65%);background-attachment:fixed}
 :root[data-theme="blueprint"]{
   /* Developer theme: Blueprint */
   --navy:#082c66; --heat:#ffffff; --flame:#9cc7ff; --ice:#ffffff; --cool:#9cc7ff;
@@ -414,29 +426,11 @@ table.phpts td{padding:5px 3px;border-bottom:1px solid var(--line);font-variant-
 .note{font-size:13px;color:var(--muted);margin:8px 0 0}
 .formula{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:var(--field);border:1px dashed var(--line);border-radius:8px;padding:8px;color:var(--muted);margin-top:8px}
 nav.tabs{position:fixed;inset:0;background:var(--bg);z-index:26;display:flex;flex-direction:column}
-.menu-list{flex:1;overflow-y:auto;padding:6px 0 calc(8px + env(safe-area-inset-bottom))}
-.menu-list button{width:100%;border:0;background:none;color:var(--ink);padding:13px 20px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:14px;text-align:left}
+.menu-list{flex:1;overflow-y:auto;padding:8px 0 calc(8px + env(safe-area-inset-bottom))}
+.menu-list button{width:100%;border:0;background:none;color:var(--ink);padding:14px 20px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:14px;text-align:left;border-bottom:1px solid var(--line)}
 .menu-list button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;color:var(--muted)}
 .menu-list button.on{color:var(--accent)}
 .menu-list button.on svg{color:var(--accent)}
-/* grouped menu (v1.98): a heading per group, tap to open or close */
-.mgrp{border-bottom:1px solid var(--line)}
-.mgrp:last-child{border-bottom:0}
-.mhead{display:flex;align-items:center;gap:10px;width:100%;padding:14px 18px 14px 20px;background:none;border:0;color:var(--muted);
-  font-size:12.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;text-align:left}
-.mhead .mttl{flex:none}
-.mhead .msub{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;
-  font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);opacity:.75}
-.mhead .mchev{width:18px;height:18px;flex:none;padding:0;background:none;border-radius:0;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s ease}
-.mgrp.open .mhead{color:var(--ink)}
-.mgrp.open .mhead .mchev{transform:rotate(180deg)}
-.mgrp.open .mhead .msub{opacity:0}
-.mgrp.has-on .mhead .mttl{color:var(--accent)}
-.mitems{display:none;padding-bottom:6px}
-.mgrp.open .mitems{display:block}
-.menu-list .mitems button{padding-left:22px;border-radius:0}
-.menu-list .mitems button.on{background:color-mix(in srgb,var(--accent) 12%,transparent)}
-.menu-list .mitems button:active{background:var(--chip)}
 table.pt{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 table.pt th,table.pt td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);font-size:15px}
 table.pt th{position:sticky;top:0;background:var(--card);font-size:12px;color:var(--muted);text-transform:uppercase}
@@ -552,15 +546,15 @@ table.patt td:first-child,table.patt th:first-child{text-align:left;font-weight:
   transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s linear .3s,box-shadow .3s}
 #nav-menu.open{transform:none;visibility:visible;box-shadow:12px 0 40px rgba(0,0,0,.35);
   transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s,box-shadow .3s}
-#nav-menu .menu-list .mgrp{opacity:0;transform:translateX(-14px);transition:opacity .22s ease,transform .28s cubic-bezier(.2,.8,.2,1)}
-#nav-menu.open .menu-list .mgrp{opacity:1;transform:none}
-#nav-menu.open .menu-list .mgrp:nth-child(1){transition-delay:.05s}
-#nav-menu.open .menu-list .mgrp:nth-child(2){transition-delay:.09s}
-#nav-menu.open .menu-list .mgrp:nth-child(3){transition-delay:.13s}
-#nav-menu.open .menu-list .mgrp:nth-child(4){transition-delay:.17s}
-#nav-menu.open .menu-list .mgrp:nth-child(5){transition-delay:.21s}
-#nav-menu.open .menu-list .mgrp:nth-child(n+6){transition-delay:.25s}
-#nav-menu .menu-list button{transition:background-color .15s,color .15s}
+#nav-menu .menu-list button{opacity:0;transform:translateX(-14px);transition:opacity .22s ease,transform .28s cubic-bezier(.2,.8,.2,1),background-color .15s,color .15s}
+#nav-menu.open .menu-list button{opacity:1;transform:none}
+#nav-menu.open .menu-list button:nth-child(1){transition-delay:.05s,.05s,0s,0s}
+#nav-menu.open .menu-list button:nth-child(2){transition-delay:.08s,.08s,0s,0s}
+#nav-menu.open .menu-list button:nth-child(3){transition-delay:.11s,.11s,0s,0s}
+#nav-menu.open .menu-list button:nth-child(4){transition-delay:.14s,.14s,0s,0s}
+#nav-menu.open .menu-list button:nth-child(5){transition-delay:.17s,.17s,0s,0s}
+#nav-menu.open .menu-list button:nth-child(6){transition-delay:.2s,.2s,0s,0s}
+#nav-menu.open .menu-list button:nth-child(n+7){transition-delay:.23s,.23s,0s,0s}
 #nav-menu .menu-list button:active{background:var(--chip)}
 #menu-btn svg path{transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s;transform-origin:12px 12px}
 /* buttons: smooth colour changes + a gentle press */
@@ -684,9 +678,7 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 #nav-menu.editing .menu-list button{cursor:default}
 .mup,.mdn{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--chip);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:12px}
 .mup:active,.mdn:active{background:var(--accent);color:var(--on-accent)}
-#nav-menu.editing .mitems button:first-child .mup,#nav-menu.editing .mitems button:last-child .mdn{opacity:.3;pointer-events:none}
-#nav-menu.editing .mgrp .mitems{display:block}
-#nav-menu.editing .mhead .mchev,#nav-menu.editing .mhead .msub{display:none}
+#nav-menu.editing .menu-list button:first-child .mup,#nav-menu.editing .menu-list button:last-child .mdn{opacity:.3;pointer-events:none}
 .mgrip{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--muted);touch-action:none;cursor:grab}
 #nav-menu .menu-list button.dragging{background:var(--chip);box-shadow:0 8px 22px rgba(0,0,0,.35);position:relative;z-index:2}
 #nav-menu .menu-list button.moved{animation:menuMoved .35s ease}
@@ -838,6 +830,10 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
   --bt-a1:#1f9e93;--bt-a2:#7fc9bc;--bt-a3:#e0a83e;--bt-a4:#f0c777;--bt-h:linear-gradient(90deg,#1f9e93,#7fc9bc);--bt-c:linear-gradient(90deg,#e0a83e,#f0c777);
   --bt-glow:conic-gradient(from 200deg,rgba(31,158,147,.22),rgba(224,168,62,.22),rgba(127,201,188,.18),rgba(31,158,147,.22));
   --bt-track:rgba(18,54,50,.1);--bt-tick:rgba(18,54,50,.32);--bt-needle:#1f9e93;--bt-nglow:rgba(31,158,147,.45);--bt-arcglow:rgba(31,158,147,.35);--bt-barbg:rgba(18,54,50,.1);--bt-shadow:rgba(18,54,50,.2)}
+#boot[data-theme="forest"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#12301f 0%,#0a1a12 55%,#04100a 100%);--bt-ink:#eef6ef;--bt-sub:#9db5a6;
+  --bt-a1:#2f8f5b;--bt-a2:#6ed08f;--bt-a3:#e08a2b;--bt-a4:#f4b350;--bt-h:linear-gradient(90deg,#2f8f5b,#6ed08f);--bt-c:linear-gradient(90deg,#e08a2b,#f4b350);
+  --bt-glow:conic-gradient(from 200deg,rgba(110,208,143,.26),rgba(224,138,43,.22),rgba(47,143,91,.16),rgba(110,208,143,.26));
+  --bt-track:rgba(238,246,239,.08);--bt-tick:rgba(238,246,239,.3);--bt-needle:#6ed08f;--bt-nglow:rgba(110,208,143,.6);--bt-arcglow:rgba(47,143,91,.5);--bt-barbg:rgba(238,246,239,.08);--bt-shadow:rgba(0,0,0,.6)}
 #boot[data-theme="blueprint"]{--bt-bg:radial-gradient(120% 80% at 50% 38%,#1b56b3 0%,#0d3b85 50%,#072a63 100%);--bt-ink:#ffffff;--bt-sub:#c3dcff;
   --bt-a1:#ffffff;--bt-a2:#c3dcff;--bt-a3:#9cc7ff;--bt-a4:#ffffff;--bt-h:linear-gradient(90deg,#ffffff,#e3efff);--bt-c:linear-gradient(90deg,#9cc7ff,#ffffff);
   --bt-glow:conic-gradient(from 200deg,rgba(255,255,255,.18),rgba(156,199,255,.22),rgba(255,255,255,.18));--bt-arcglow:rgba(255,255,255,.5)}
@@ -887,7 +883,7 @@ table.lbt tr.tot td{font-weight:800;border-top:2px solid var(--line)}
 .sfi{margin-right:8px}
 #v-safety .field{margin-top:14px}
 /* Student Mode: Faults */
-body:not(.student) #nav-menu .mgrp[data-g="learn"]{display:none}
+body:not(.student) #nav-menu .menu-list [data-v="faults"],body:not(.student) #nav-menu .menu-list [data-v="howto"],body:not(.student) #nav-menu .menu-list [data-v="basics"],body:not(.student) #nav-menu .menu-list [data-v="epa"]{display:none}
 .fprog{display:flex;align-items:center;gap:12px;margin-bottom:10px}.fprog b{white-space:nowrap;font-size:14px}
 .fbarw{flex:1;height:8px;border-radius:6px;background:var(--chip);overflow:hidden}#f-bar{height:100%;width:0;background:var(--accent);transition:width .3s ease}
 details.frules summary{padding:4px 0}details.frules ol{margin:8px 0 0;padding-left:20px;font-size:13.5px;line-height:1.45}details.frules li{margin:4px 0}
@@ -1001,13 +997,6 @@ button.ghost{border:1px solid color-mix(in srgb,var(--accent) 55%,transparent)}
 .menu-list button svg{width:20px;height:20px;padding:7px;box-sizing:content-box;border-radius:11px;background:var(--chip)}
 .menu-list button.on{background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .menu-list button.on svg{background:color-mix(in srgb,var(--accent) 22%,transparent)}
-/* grouped menu: headings sit flush, only the screen icons get tiles */
-.menu-list .mgrp{border-bottom:0}
-.menu-list .mgrp + .mgrp{border-top:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
-.menu-list .mhead{padding:13px 12px;border-radius:14px;font-size:12px}
-.menu-list .mhead .mchev{width:18px;height:18px;padding:0;background:none;border-radius:0;color:var(--muted)}
-.menu-list .mitems{padding-bottom:4px}
-.menu-list .mitems button{padding-left:10px}
 
 /* lists of cards (issues, how-to, flow) */
 details.issue{border:0;border-radius:16px;box-shadow:0 0 0 1px color-mix(in srgb,var(--line) 55%,transparent)}
@@ -1066,7 +1055,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
     var logErr = function(m, src){ try { var a = JSON.parse(localStorage.getItem("tg_errlog") || "[]"); a.push({t: Date.now(), m: String(m).slice(0, 300), s: src ? String(src).slice(0, 160) : ""}); localStorage.setItem("tg_errlog", JSON.stringify(a.slice(-50))); } catch(e){} };
     window.addEventListener("error", function(e){ logErr(e.message || "error", (e.filename ? e.filename.split("/").pop() : "") + (e.lineno ? ":" + e.lineno + ":" + e.colno : "")); });
     window.addEventListener("unhandledrejection", function(e){ logErr("Unhandled: " + (e.reason && e.reason.message || e.reason), ""); });
-    try { var s = JSON.parse(localStorage.getItem("hvac") || "{}"), t = s.devTheme ? s.devTheme : (s.aurora || s.theme === "aurora") ? "aurora" : (s.theme === "light" || s.theme === "dark" || s.theme === "livewire" || s.theme === "fireice" || s.theme === "coastal") ? s.theme : "default";
+    try { var s = JSON.parse(localStorage.getItem("hvac") || "{}"), t = s.devTheme ? s.devTheme : (s.aurora || s.theme === "aurora") ? "aurora" : (s.theme === "light" || s.theme === "dark" || s.theme === "livewire" || s.theme === "fireice" || s.theme === "coastal" || s.theme === "forest") ? s.theme : "default";
       if (s.flags && s.flags.no_boot) b.classList.add("skip");
       b.dataset.theme = t; if (t === "aurora") document.getElementById("boot-logo").src = window.TG_LOGO_AURORA; if (t === "panhandle") document.getElementById("boot-logo").src = window.TG_LOGO_PANHANDLE; if (s.reduceMotion) b.classList.add("calm"); } catch(e){}
     if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) b.classList.add("calm"); })();</script>
@@ -1710,6 +1699,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
       <button data-v="default"><span class="sw" style="background:#0a1a3f"><i style="background:#000a28;border-bottom:3px solid #ff2a14"></i><b style="background:#ff2a14"></b><u style="background:#34b9fc"></u></span>Default</button>
       <button data-v="light"><span class="sw" style="background:#f3f6fa"><i style="background:#1565c0"></i><b style="background:#1976d2"></b><u style="background:#bbdefb"></u></span>Light Mode</button>
       <button data-v="coastal"><span class="sw" style="background:#f3faf9"><i style="background:#ffffff;border-bottom:3px solid #1f9e93"></i><b style="background:#1f9e93"></b><u style="background:#e0a83e"></u></span>Coastal</button>
+      <button data-v="forest"><span class="sw" style="background:#06120d"><i style="background:#08140e;border-bottom:3px solid #6ed08f"></i><b style="background:#2e9960"></b><u style="background:#e08a2b"></u></span>Forest</button>
       <button data-v="dark"><span class="sw" style="background:#121214"><i style="background:#000;border-bottom:3px solid #ff3b30"></i><b style="background:#e53935"></b><u style="background:#f4f4f5"></u></span>Dark Mode</button>
       <button data-v="livewire"><span class="sw" style="background:#050608"><i style="background:#000;border-bottom:3px solid #ffd400"></i><b style="background:#ffd400"></b><u style="background:#1e8bff"></u></span>Live Wire</button>
       <button data-v="fireice"><span class="sw" style="background:#0a0607"><i style="background:#0d0705;border-bottom:3px solid #6fe3ff"></i><b style="background:#ff5a1f"></b><u style="background:#6fe3ff"></u></span>Fire and Ice</button>
@@ -1782,7 +1772,7 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   </div>
     <div class="card">
     <h2>About</h2>
-    <p class="note" style="margin:0">Thermal Gauge v1.98 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
+    <p class="note" style="margin:0">Thermal Gauge v2.04 (web) · Field reference only. Always follow the equipment manufacturer's instructions.<br>Gary's photo reading uses Tesseract OCR (Apache-2.0) and runs entirely on this phone — photos never leave it.</p>
   </div>
     </div>
   </details>
@@ -2105,6 +2095,14 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
       <h2>Backup</h2>
       <p class="note" style="margin-top:0">Notes are saved on this phone only. Removing Thermal Gauge from your Home Screen or clearing website data deletes them. Copy them out now and then to keep a backup.</p>
       <button class="ghost" id="n-copyall" style="margin-top:8px">Copy all notes as text</button>
+      <details class="sect" id="n-imp" style="margin-top:12px">
+        <summary><span>Paste notes back in</span></summary>
+        <div class="sect-b">
+          <p class="note" style="margin-top:0">Moving to a new phone or a new install? Copy the notes out of the old app, paste the whole lot here and they come back as service notes. Photos stay on the old phone.</p>
+          <textarea id="n-impbox" rows="5" placeholder="Paste the copied notes here"></textarea>
+          <button class="ghost" id="n-impgo" type="button" style="margin-top:8px">Add these notes</button>
+        </div>
+      </details>
     </div>
   </div>
 
@@ -2171,55 +2169,25 @@ header{padding-top:max(10px, env(safe-area-inset-top))}
   <div class="gary-head"><button id="nav-close">‹ Back</button><h2>Menu</h2><button id="nav-edit" aria-pressed="false">Edit</button></div>
   <div class="menu-hint">Drag <b>≡</b> or use the arrows to change the order. Tap <b>Done</b> when finished.</div>
   <div class="menu-list">
-  <section class="mgrp" data-g="calc">
-    <button type="button" class="mhead" aria-expanded="false"><span class="mttl">Charging &amp; refrigerant</span><span class="msub"></span><svg class="mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-    <div class="mitems">
-      <button data-v="charge" class="on"><svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/><path d="M11.5 17.5v-6"/></svg>SH / SC</button>
-      <button data-v="pt"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-4"/><path d="M12 2v3"/></svg>P-T Chart</button>
-      <button data-v="ph"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M6.5 18C7.5 10 9.7 6 12.5 6s5 4 6 12"/></svg>Pressure Enthalpy Chart</button>
-      <button data-v="refrig"><svg viewBox="0 0 24 24"><path d="M12 22L12 2M9.88 3.68L12 5.8L14.12 3.68M20.66 17L3.34 7M3.73 9.68L6.63 8.9L5.85 6M20.66 7L3.34 17M5.85 18L6.63 15.1L3.73 14.32M14.12 20.32L12 18.2L9.88 20.32M20.27 14.32L17.37 15.1L18.15 18M18.15 6L17.37 8.9L20.27 9.68"/></svg>Refrigeration</button>
-    </div>
-  </section>
-  <section class="mgrp" data-g="air">
-    <button type="button" class="mhead" aria-expanded="false"><span class="mttl">Airflow &amp; air</span><span class="msub"></span><svg class="mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-    <div class="mitems">
-      <button data-v="air"><svg viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg>Airflow</button>
-      <button data-v="psych"><svg viewBox="0 0 24 24"><path d="M12 3c-3.2 4-6 7.7-6 11a6 6 0 0 0 12 0c0-3.3-2.8-7-6-11z"/></svg>Psych</button>
-      <button data-v="load"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v5M10 15.5h4"/></svg>Load Calc</button>
-    </div>
-  </section>
-  <section class="mgrp" data-g="heat">
-    <button type="button" class="mhead" aria-expanded="false"><span class="mttl">Heat &amp; electrical</span><span class="msub"></span><svg class="mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-    <div class="mitems">
-      <button data-v="gas"><svg viewBox="0 0 24 24"><path d="M12 22c3.3 0 6-2.5 6-5.8 0-4.3-4-6.2-6-14.2-2 8-6 9.9-6 14.2C6 19.5 8.7 22 12 22z"/><path d="M12 22c1.6 0 3-1.3 3-3 0-2.2-1.9-3.1-3-6.6-1.1 3.5-3 4.4-3 6.6 0 1.7 1.4 3 3 3z"/></svg>Gas Heat</button>
-      <button data-v="elec"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12z"/></svg>Electrical</button>
-    </div>
-  </section>
-  <section class="mgrp" data-g="diag">
-    <button type="button" class="mhead" aria-expanded="false"><span class="mttl">Diagnose</span><span class="msub"></span><svg class="mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-    <div class="mitems">
-      <button data-v="gary"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>Ask Gary</button>
-      <button data-v="issues"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Issues</button>
-      <button data-v="flow"><svg viewBox="0 0 24 24"><rect x="8.5" y="2" width="7" height="4.5" rx="1"/><path d="M12 6.5v2M12 8.5l3.5 3.5-3.5 3.5-3.5-3.5z"/><path d="M8.5 12H5v5.5M15.5 12H19v5.5"/><rect x="2" y="17.5" width="6" height="4.5" rx="1"/><rect x="16" y="17.5" width="6" height="4.5" rx="1"/></svg>Flow Charts</button>
-    </div>
-  </section>
-  <section class="mgrp" data-g="job">
-    <button type="button" class="mhead" aria-expanded="false"><span class="mttl">On the job</span><span class="msub"></span><svg class="mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-    <div class="mitems">
-      <button data-v="check"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 12.5l2 2 4-4.5"/><path d="M9 18h6"/></svg>Checklist</button>
-      <button data-v="notes"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>Notes</button>
-      <button data-v="safety"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 8.2-8 9-4.6-.8-8-4.4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Safety</button>
-    </div>
-  </section>
-  <section class="mgrp" data-g="learn">
-    <button type="button" class="mhead" aria-expanded="false"><span class="mttl">Learn</span><span class="msub"></span><svg class="mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-    <div class="mitems">
-      <button data-v="basics"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>HVAC Basics</button>
-      <button data-v="howto"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5"/><path d="M9 7h7M9 11h5"/></svg>How To</button>
-      <button data-v="faults"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg>Faults</button>
-      <button data-v="epa"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9.5 13.5l2 2 3.5-4"/></svg>608 Prep</button>
-    </div>
-  </section>
+  <button data-v="charge" class="on"><svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/><path d="M11.5 17.5v-6"/></svg>SH / SC</button>
+  <button data-v="air"><svg viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg>Airflow</button>
+  <button data-v="psych"><svg viewBox="0 0 24 24"><path d="M12 3c-3.2 4-6 7.7-6 11a6 6 0 0 0 12 0c0-3.3-2.8-7-6-11z"/></svg>Psych</button>
+  <button data-v="pt"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-4"/><path d="M12 2v3"/></svg>P-T Chart</button>
+  <button data-v="ph"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M6.5 18C7.5 10 9.7 6 12.5 6s5 4 6 12"/></svg>Pressure Enthalpy Chart</button>
+  <button data-v="issues"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Issues</button>
+  <button data-v="check"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 12.5l2 2 4-4.5"/><path d="M9 18h6"/></svg>Checklist</button>
+  <button data-v="load"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v5M10 15.5h4"/></svg>Load Calc</button>
+  <button data-v="gary"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>Ask Gary</button>
+  <button data-v="safety"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 8.2-8 9-4.6-.8-8-4.4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Safety</button>
+  <button data-v="notes"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>Notes</button>
+  <button data-v="flow"><svg viewBox="0 0 24 24"><rect x="8.5" y="2" width="7" height="4.5" rx="1"/><path d="M12 6.5v2M12 8.5l3.5 3.5-3.5 3.5-3.5-3.5z"/><path d="M8.5 12H5v5.5M15.5 12H19v5.5"/><rect x="2" y="17.5" width="6" height="4.5" rx="1"/><rect x="16" y="17.5" width="6" height="4.5" rx="1"/></svg>Flow Charts</button>
+  <button data-v="refrig"><svg viewBox="0 0 24 24"><path d="M12 22L12 2M9.88 3.68L12 5.8L14.12 3.68M20.66 17L3.34 7M3.73 9.68L6.63 8.9L5.85 6M20.66 7L3.34 17M5.85 18L6.63 15.1L3.73 14.32M14.12 20.32L12 18.2L9.88 20.32M20.27 14.32L17.37 15.1L18.15 18M18.15 6L17.37 8.9L20.27 9.68"/></svg>Refrigeration</button>
+  <button data-v="faults"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg>Faults</button>
+  <button data-v="howto"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5"/><path d="M9 7h7M9 11h5"/></svg>How To</button>
+  <button data-v="gas"><svg viewBox="0 0 24 24"><path d="M12 22c3.3 0 6-2.5 6-5.8 0-4.3-4-6.2-6-14.2-2 8-6 9.9-6 14.2C6 19.5 8.7 22 12 22z"/><path d="M12 22c1.6 0 3-1.3 3-3 0-2.2-1.9-3.1-3-6.6-1.1 3.5-3 4.4-3 6.6 0 1.7 1.4 3 3 3z"/></svg>Gas Heat</button>
+  <button data-v="elec"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12z"/></svg>Electrical</button>
+  <button data-v="epa"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9.5 13.5l2 2 3.5-4"/></svg>608 Prep</button>
+  <button data-v="basics"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>HVAC Basics</button>
   </div>
   <div class="menu-foot"><button class="ghost" id="nav-reset" type="button">Reset to default order</button></div>
 </nav>
@@ -2313,7 +2281,6 @@ const menuOpen = () => $("nav-menu").classList.contains("open");
 function openMenu(){
   if (menuOpen()) return;
   $("nav-menu").classList.add("open"); $("nav-menu").setAttribute("aria-hidden", "false"); $("menu-btn").classList.add("on");
-  if (typeof openMenuGroupFor === "function") openMenuGroupFor(S.tab);     // the group you're in opens itself
   try { history.pushState(Object.assign({}, history.state, {menu: 1}), ""); } catch(e){}
 }
 function closeMenu(fromPop){
@@ -2333,51 +2300,15 @@ document.querySelector("nav.tabs").addEventListener("click", e => {
 
 /* ---------- rearrange the menu ---------- */
 const MENU_LIST = document.querySelector("#nav-menu .menu-list");
-const MENU_DEFAULT = [...MENU_LIST.querySelectorAll(".mitems > button[data-v]")].map(b => b.dataset.v);
-const menuItems = () => [...MENU_LIST.querySelectorAll(".mitems > button[data-v]")];
-const menuGroups = () => [...MENU_LIST.querySelectorAll(".mgrp")];
+const MENU_DEFAULT = [...MENU_LIST.querySelectorAll(":scope > button[data-v]")].map(b => b.dataset.v);
+const menuItems = () => [...MENU_LIST.querySelectorAll(":scope > button[data-v]")];
 const menuEditing = () => $("nav-menu").classList.contains("editing");
 menuItems().forEach(b => b.insertAdjacentHTML("beforeend",
   `<span class="medit" aria-hidden="true"><span class="mup" role="button" aria-label="Move up">▲</span><span class="mdn" role="button" aria-label="Move down">▼</span><span class="mgrip" aria-label="Drag to reorder">≡</span></span>`));
 function applyMenuOrder(){
-  const order = Array.isArray(S.menuOrder) ? S.menuOrder : MENU_DEFAULT;
-  const rank = v => { const i = order.indexOf(v); return i < 0 ? MENU_DEFAULT.indexOf(v) + 1000 : i; };   // a new screen keeps its default spot
-  menuGroups().forEach(g => {
-    const box = g.querySelector(".mitems");
-    [...box.querySelectorAll(":scope > button[data-v]")].sort((a, b) => rank(a.dataset.v) - rank(b.dataset.v)).forEach(b => box.appendChild(b));
-  });
-  paintMenuGroups();
-}
-/* each closed heading lists what's inside it, so nothing is hidden from someone looking for it */
-const MENU_SHORT = {charge: "SH/SC", pt: "P-T", ph: "P-h", refrig: "Refrigeration", air: "Airflow", psych: "Psych", load: "Load calc",
-  gas: "Gas heat", elec: "Electrical", gary: "Ask Gary", issues: "Issues", flow: "Flow charts", check: "Checklist", notes: "Notes",
-  safety: "Safety", basics: "Basics", howto: "How to", faults: "Faults", epa: "608 Prep"};
-function paintMenuGroups(){
-  menuGroups().forEach(g => {
-    const items = [...g.querySelectorAll(".mitems > button[data-v]")];
-    const sub = g.querySelector(".msub");
-    if (sub) sub.textContent = items.map(b => MENU_SHORT[b.dataset.v] || b.dataset.v).join(" · ");
-    g.classList.toggle("has-on", items.some(b => b.classList.contains("on")));
-  });
-}
-/* open and close a group; which ones are open is remembered */
-function setMenuGroup(g, on){
-  g.classList.toggle("open", on);
-  g.querySelector(".mhead").setAttribute("aria-expanded", on ? "true" : "false");
-  const open = menuGroups().filter(x => x.classList.contains("open")).map(x => x.dataset.g);
-  S.menuGroups = open; save();
-}
-function openMenuGroupFor(v){
-  const b = menuItems().find(x => x.dataset.v === v);
-  if (b){ const g = b.closest(".mgrp"); if (g && !g.classList.contains("open")) setMenuGroup(g, true); }
-}
-function restoreMenuGroups(){
-  const saved = Array.isArray(S.menuGroups) ? S.menuGroups : null;
-  menuGroups().forEach(g => {
-    const on = saved ? saved.includes(g.dataset.g) : g.dataset.g === "calc";
-    g.classList.toggle("open", on);
-    g.querySelector(".mhead").setAttribute("aria-expanded", on ? "true" : "false");
-  });
+  const order = Array.isArray(S.menuOrder) ? S.menuOrder : MENU_DEFAULT, byV = {};
+  menuItems().forEach(b => byV[b.dataset.v] = b);
+  [...order.filter(v => byV[v]), ...MENU_DEFAULT.filter(v => !order.includes(v))].forEach(v => MENU_LIST.appendChild(byV[v]));  // new screens keep their default spot at the end
 }
 function saveMenuOrder(){
   const cur = menuItems().map(b => b.dataset.v);
@@ -2385,17 +2316,14 @@ function saveMenuOrder(){
   save();
 }
 function moveMenuItem(b, dir){
-  const box = b.parentElement, sib = dir < 0 ? b.previousElementSibling : b.nextElementSibling;
+  const sib = dir < 0 ? b.previousElementSibling : b.nextElementSibling;
   if (!sib || !sib.dataset.v) return;
-  if (dir < 0) box.insertBefore(b, sib); else box.insertBefore(sib, b);
+  if (dir < 0) MENU_LIST.insertBefore(b, sib); else MENU_LIST.insertBefore(sib, b);
   b.classList.remove("moved"); void b.offsetWidth; b.classList.add("moved");
-  saveMenuOrder(); paintMenuGroups();
+  saveMenuOrder();
 }
 function setMenuEditing(on){
   $("nav-menu").classList.toggle("editing", on);
-  /* while rearranging, every group is open so an item can be moved anywhere in its group */
-  if (on) menuGroups().forEach(g => { g.classList.add("open"); g.querySelector(".mhead").setAttribute("aria-expanded", "true"); });
-  else restoreMenuGroups();
   $("nav-edit").textContent = on ? "Done" : "Edit"; $("nav-edit").setAttribute("aria-pressed", on ? "true" : "false");
 }
 $("nav-edit").addEventListener("click", () => setMenuEditing(!menuEditing()));
@@ -2410,21 +2338,14 @@ MENU_LIST.addEventListener("pointerdown", e => {
 MENU_LIST.addEventListener("pointermove", e => {
   if (!dragItem) return;
   e.preventDefault();
-  const box = dragItem.parentElement, prev = dragItem.previousElementSibling, next = dragItem.nextElementSibling;
-  if (prev && prev.dataset.v){ const r = prev.getBoundingClientRect(); if (e.clientY < r.top + r.height / 2){ box.insertBefore(dragItem, prev); return; } }
-  if (next && next.dataset.v){ const r = next.getBoundingClientRect(); if (e.clientY > r.top + r.height / 2) box.insertBefore(next, dragItem); }
+  const prev = dragItem.previousElementSibling, next = dragItem.nextElementSibling;
+  if (prev && prev.dataset.v){ const r = prev.getBoundingClientRect(); if (e.clientY < r.top + r.height / 2){ MENU_LIST.insertBefore(dragItem, prev); return; } }
+  if (next && next.dataset.v){ const r = next.getBoundingClientRect(); if (e.clientY > r.top + r.height / 2) MENU_LIST.insertBefore(next, dragItem); }
 });
-const endDrag = () => { if (!dragItem) return; dragItem.classList.remove("dragging"); dragItem = null; saveMenuOrder(); paintMenuGroups(); };
+const endDrag = () => { if (!dragItem) return; dragItem.classList.remove("dragging"); dragItem = null; saveMenuOrder(); };
 MENU_LIST.addEventListener("pointerup", endDrag);
 MENU_LIST.addEventListener("pointercancel", endDrag);
 applyMenuOrder();
-restoreMenuGroups();
-/* a heading opens or closes its group (never in edit mode, where every group is shown open) */
-MENU_LIST.addEventListener("click", e => {
-  const h = e.target.closest(".mhead"); if (!h) return;
-  if (menuEditing()) return;
-  const g = h.closest(".mgrp"); setMenuGroup(g, !g.classList.contains("open"));
-});
 $("menu-btn").addEventListener("click", () => menuOpen() ? closeMenu() : openMenu());
 $("nav-close").addEventListener("click", () => closeMenu());
 function showTab(v){
@@ -2434,7 +2355,6 @@ function showTab(v){
   document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
   document.querySelectorAll("section.view").forEach(s => s.classList.toggle("active", s.id === "v-" + v));
   $("subtitle").textContent = TITLES[v];
-  if (typeof paintMenuGroups === "function") paintMenuGroups();
   /* a switcher that scrolls shows the mode you're on, and fades the edge it runs off */
   document.querySelectorAll("#v-" + v + " .seg").forEach(sg => {
     const on = sg.querySelector("button.on");
@@ -2549,7 +2469,7 @@ function calcCharge(){
   $("r-cst").innerHTML = withUnit(tOut(cst), D);
   $("r-sh").innerHTML  = withUnit(dOut(sh), D);
   $("r-sc").innerHTML  = withUnit(dOut(sc), D);
-  let v1 = "", v2 = "";
+  let v1 = "", v2 = "", wgCall = "", wgNote = "", wgState = "info";     // v2.02: the same call, for the widget
   if (!isNaN(sp) && isNaN(est)) v1 += verdict("warn", "Suction pressure out of range", `Outside the ${r.name} table (${rangeText()}).`);
   if (!isNaN(lp) && isNaN(cst)) v1 += verdict("warn", "Liquid pressure out of range", `Outside the ${r.name} table (${rangeText()}).`);
 
@@ -2557,10 +2477,14 @@ function calcCharge(){
     const tsc = dIn(num("c-tsc")), tol = isNaN(num("c-tol1")) ? 3 : dIn(num("c-tol1"));
     if (isFinite(sc) && isFinite(tsc)){
       const d = sc - tsc;
+      wgState = Math.abs(d) <= tol + 1e-9 ? "ok" : "bad";
+      wgCall = wgState === "ok" ? "Charge OK" : d < 0 ? "Undercharged" : "Overcharged";
+      wgNote = (wgState === "ok" ? "Subcool" : d < 0 ? "Add — subcool" : "Recover — subcool") + ` ${fD(sc)}${D} · target ${fR(tsc)}${D}`;
       if (Math.abs(d) <= tol + 1e-9) v1 += verdict("ok", "Charge OK", `Subcool ${fD(sc)} ${D} is within ±${fR(tol)} of the ${fR(tsc)} ${D} target.`);
       else if (d < 0) v1 += verdict("bad", "Undercharged — add refrigerant", `Subcool is ${fD(-d)} ${D} below target. Low subcool on a TXV system points to a low refrigerant charge. Add charge in small amounts and let the system stabilize 10–15 min between adjustments. Rule out restrictions and low load first.`);
       else v1 += verdict("bad", "Overcharged — recover refrigerant", `Subcool is ${fD(d)} ${D} above target. High subcool on a TXV system points to too much refrigerant. Verify condenser coil and fan are clean/working and there's no liquid-line restriction before recovering charge.`);
-    } else v1 += verdict("info", "Enter liquid pressure & line temp", "TXV systems are charged by subcooling.");
+    } else { wgCall = "Enter liquid pressure"; wgNote = "TXV systems are charged by subcooling"; }
+    if (!isFinite(sc) || !isFinite(dIn(num("c-tsc")))) v1 += verdict("info", "Enter liquid pressure & line temp", "TXV systems are charged by subcooling.");
     if (isFinite(sh)){
       if (sh < 2) v2 = verdict("bad", "Superheat very low", "Risk of liquid floodback. Check TXV bulb mounting/insulation, low indoor airflow, or overcharge.");
       else if (sh < 5) v2 = verdict("warn", "Superheat low", `Most TXVs hold ${rng(8, 12)}. Check TXV bulb and indoor airflow.`);
@@ -2576,14 +2500,85 @@ function calcCharge(){
     else if (tsh < 5) v1 += verdict("warn", `Target ${fD(tsh)} ${D} — below ${fR(5)} ${D}`, "Don't charge by superheat at these conditions. Do not add refrigerant; recheck when load is higher.");
     else if (isFinite(sh)){
       const d = sh - tsh;
+      wgState = Math.abs(d) <= tol + 1e-9 ? "ok" : "bad";
+      wgCall = wgState === "ok" ? "Charge OK" : d > 0 ? "Undercharged" : "Overcharged";
+      wgNote = (wgState === "ok" ? "Superheat" : d > 0 ? "Add — superheat" : "Recover — superheat") + ` ${fD(sh)}${D} · target ${fD(tsh)}${D}`;
       if (Math.abs(d) <= tol + 1e-9) v1 += verdict("ok", "Charge OK", `Superheat ${fD(sh)} ${D} is within ±${fR(tol)} of the ${fD(tsh)} ${D} target.`);
       else if (d > 0) v1 += verdict("bad", "Undercharged — add refrigerant", `Superheat is ${fD(d)} ${D} above target. High superheat on a piston system points to a low refrigerant charge. Confirm indoor airflow and a clean filter/coil first, then add charge slowly.`);
       else v1 += verdict("bad", "Overcharged — recover refrigerant", `Superheat is ${fD(-d)} ${D} below target. Low superheat on a piston system points to too much refrigerant. Rule out low indoor airflow (dirty filter/coil, slow blower) before recovering charge.`);
-    } else v1 += verdict("info", "Enter suction pressure & line temp", `Target superheat is ${fD(tsh)} ${D}.`);
+    } else { v1 += verdict("info", "Enter suction pressure & line temp", `Target superheat is ${fD(tsh)} ${D}.`);
+      wgCall = "Enter suction readings"; wgNote = `Target superheat ${fD(tsh)}${D}`; }
+    if (!isFinite(tsh)) { wgCall = "Enter wet bulb & outdoor"; wgNote = "Piston systems are charged by superheat"; }
   }
   $("r-verdict").innerHTML = v1; $("r-verdict2").innerHTML = v2;
   try { if (typeof calcApproach === "function") calcApproach(); } catch(e){}
   try { if (typeof calcCurve === "function") calcCurve(); } catch(e){}      // charging curve card (defined with Gary's charging sheets)
+  try { pushWidget({r, sp, est, sh, lp, cst, sc, call: wgCall, note: wgNote, state: wgState}); } catch(e){}   // v2.01: the home-screen widgets
+}
+
+/* ---------- v2.01 / v2.02: the Android home-screen widgets ----------
+   A widget runs in its own process and can't see the app's storage, so the app hands the shell
+   finished lines through the same prompt bridge the voice and icon use. First line names the tile,
+   the rest is what it shows: readings (6 lines), P-T table (6), charge verdict (6 + a colour). */
+const wgLast = {};
+let wgVals = {};                                                           // the last readings, so a theme change can repaint
+/* the Android shell (WebView on file:) and the iPhone shell both answer the prompt bridge */
+const wgInApp = () => (/\bwv\b/.test(navigator.userAgent) && location.protocol === "file:") || /\bThermalGaugeiOS\b/.test(navigator.userAgent);
+const WG_COLOUR = {ok: 0xFF4EC07A | 0, bad: 0xFFE2574A | 0, warn: 0xFFE0A02C | 0, info: 0xFF9FB3D6 | 0};
+/* the four colours a tile paints with, read straight off the theme in use */
+function wgTheme(){
+  const cs = getComputedStyle(document.documentElement);
+  const hex = n => {
+    const v = (cs.getPropertyValue(n) || "").trim();
+    const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(v);
+    if (!m) return null;
+    const h = m[1].length === 3 ? m[1].replace(/./g, c => c + c) : m[1];
+    return (0xFF000000 | parseInt(h, 16)) | 0;
+  };
+  const FALL = {"--card": 0xFF0A1A3F | 0, "--accent": 0xFF2A9DF4 | 0, "--ink": 0xFFF3F7FF | 0, "--muted": 0xFF9FB3D6 | 0};
+  return ["--card", "--accent", "--ink", "--muted"].map(n => String(hex(n) === null ? FALL[n] : hex(n)));
+}
+function wgSend(key, lines){
+  const blob = lines.concat(wgTheme()).map(t => String(t == null ? "" : t).replace(/\s*\n\s*/g, " ")).join("\n");
+  if (blob === wgLast[key]) return;
+  wgLast[key] = blob;
+  try { window.prompt("tg:widget", key + "\n" + blob); } catch(e){}
+}
+function pushWidget(x){
+  if (!wgInApp()) return;                                                  // only the Android app has the bridge
+  if (x && x.r) wgVals = x; else x = wgVals || {};                         // no readings handed in: repaint the last ones
+  const D = DEG(), U = "°" + D.replace("°", ""), r = x.r || refById(screenRef("charge"));
+  const T = v => isFinite(v) ? fRT(v) + U : "—";                  // a temperature held in °F
+  const P = v => isFinite(v) ? String(Math.round(v)) + " psig" : "—";      // gauge pressure never changes with the unit
+  const P1 = v => isFinite(v) ? fmt(v, 1) + " psig" : "—";        // the P-T table earns a decimal
+  const meter = S.meter === "piston" ? "piston" : "TXV";
+  const stamp = "Updated " + new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
+  const has = isFinite(x.sh) || isFinite(x.sc);
+
+  /* 1 — the readings tile */
+  if (has) wgSend("tgw", [`${r.name} · ${meter}`,
+    isFinite(x.est) ? `Suction ${P(x.sp)} → ${T(x.est)}` : "Suction —",
+    isFinite(x.sh) ? `Superheat ${fD(x.sh)}${U}` : "—",
+    isFinite(x.cst) ? `Liquid ${P(x.lp)} → ${T(x.cst)}` : "Liquid —",
+    isFinite(x.sc) ? `Subcool ${fD(x.sc)}${U}` : "—", stamp]);
+  else wgSend("tgw", [r.name, "No readings yet", "—", `P-T at ${T(40)}`, P1(pAt(r.d, 40)), "Tap to open"]);
+
+  /* 2 — the P-T table: low side off the dew curve, high side off the bubble curve */
+  const rows = [[40, "d"], [50, "d"], [100, "b"], [110, "b"]].map(([t, side]) => {
+    const p = pAt(side === "d" ? r.d : r.b, t);
+    return `${T(t)}   ${P1(p)}`;
+  });
+  wgSend("tgwpt", [`${r.name} · P-T`, ...rows,
+    isBlend(r) ? "low side dew · high side bubble" : "saturation · tap for the full chart"]);
+
+  /* 3 — the charge verdict */
+  const state = x.call ? (x.state || "info") : "info";
+  wgSend("tgwvd", [`${r.name} · ${meter}`,
+    x.call || "No readings yet",
+    x.note || "Enter them on the SH / SC screen",
+    `SH ${isFinite(x.sh) ? fD(x.sh) + U : "—"} · SC ${isFinite(x.sc) ? fD(x.sc) + U : "—"}`,
+    has ? `${P(x.sp)} → ${T(x.est)} · ${P(x.lp)} → ${T(x.cst)}` : "Suction and liquid, on the SH / SC screen",
+    has ? stamp : "Tap to open", String(WG_COLOUR[state] || WG_COLOUR.info)]);
 }
 ["c-sp","c-st","c-lp","c-lt","c-tsc","c-tol1","c-wb","c-odb","c-tol2"].forEach(id => $(id).addEventListener("input", () => { calcCharge(); save(); }));
 
@@ -3257,6 +3252,63 @@ function copyText(txt){
 $("n-copyall").addEventListener("click", () => {
   if (!notes.length){ toast("No notes to copy"); return; }
   copyText(notes.slice().sort((a, b) => (b.date || "").localeCompare(a.date || "")).map(noteText).join("\n\n----------\n\n"));
+});
+/* v1.98: read back what "Copy all notes as text" wrote, so notes survive a new install or a new phone */
+const IMP_MON = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+function impDate(t){
+  const m = /^([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+(\d{4})$/.exec(t.trim());
+  if (m){ const mo = IMP_MON.indexOf(m[1].toLowerCase()); if (mo >= 0) return `${m[3]}-${String(mo + 1).padStart(2, "0")}-${String(+m[2]).padStart(2, "0")}`; }
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(t.trim());
+  return iso ? t.trim() : "";
+}
+function parseNotes(txt){
+  const FIELD = [[/^Customer:\s*/, "cust"], [/^Refrigerant:\s*/, "ref"], [/^Service:\s*/, "types"], [/^Equipment:\s*/, "unit"],
+                 [/^Notes:\s*/, "body"], [/^Readings:\s*/, "read"]];
+  return txt.split(/\n\s*-{5,}\s*\n/).map(block => {
+    const lines = block.replace(/\r/g, "").split("\n");
+    while (lines.length && !lines[0].trim()) lines.shift();
+    if (!lines.length) return null;
+    const rec = {date: today(), addr: "", cust: "", ref: "", unit: "", body: "", read: "", types: [], photos: [], labels: {}};
+    let structured = false;
+    const head = /^(.*?)\s+—\s+(.*)$/.exec(lines[0]) || /^(.*?)\s+-\s+(.*)$/.exec(lines[0]);
+    let i = 0;
+    if (head && impDate(head[1])){ rec.date = impDate(head[1]); rec.addr = head[2] === "No address" ? "" : head[2].trim(); i = 1; structured = true; }
+    let key = null;
+    for (; i < lines.length; i++){
+      const line = lines[i];
+      if (/^Media:|^Labels:/.test(line)){ key = null; continue; }
+      const hit = FIELD.find(f => f[0].test(line));
+      if (hit){ key = hit[1]; structured = true; const v = line.replace(hit[0], "").trim();
+        if (key === "types") rec.types = v.split(",").map(x => x.trim()).filter(t => SERVICE_TYPES.includes(t));
+        else rec[key] = v;
+        continue; }
+      if (key && key !== "types") rec[key] += (rec[key] ? "\n" : "") + line;          // a wrapped field keeps its own lines
+      else if (!key && line.trim()) rec.body += (rec.body ? "\n" : "") + line;
+    }
+    if (rec.ref && !REFS.some(r => r.name.toUpperCase() === rec.ref.toUpperCase())) rec.ref = "";
+    ["cust", "addr", "unit", "body", "read"].forEach(k => rec[k] = (rec[k] || "").trim());
+    /* only text that came out of the app reads as a note — loose typing isn't imported */
+    return structured && (rec.addr || rec.body || rec.cust || rec.read || rec.unit) ? rec : null;
+  }).filter(Boolean);
+}
+$("n-impgo").addEventListener("click", () => {
+  const txt = $("n-impbox").value;
+  if (!txt.trim()){ toast("Paste the notes in first"); return; }
+  let got = [];
+  try { got = parseNotes(txt); } catch(e){ got = []; }
+  if (!got.length){ toast("Couldn't read any notes in that"); return; }
+  const seen = new Set(notes.map(n => [n.date, n.addr, n.body].join("|")));
+  let added = 0;
+  got.forEach(rec => {
+    if (seen.has([rec.date, rec.addr, rec.body].join("|"))) return;                   // pasting twice doesn't double them up
+    seen.add([rec.date, rec.addr, rec.body].join("|"));
+    notes.push(Object.assign({id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), created: Date.now()}, rec));
+    added++;
+  });
+  if (!saveNotes(notes)){ toast("Couldn't save — storage unavailable"); return; }
+  $("n-impbox").value = "";
+  renderNotes();
+  toast(added ? `${added} note${added > 1 ? "s" : ""} added` : "Those notes are already here");
 });
 /* ---------- editor photos ---------- */
 const ADD_TILE = `<button type="button" class="add" id="n-addph"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Add photo</button>`
@@ -11486,7 +11538,7 @@ function heardNote(fixes){
 const LOGOS = {base: $("logo").src, aurora: window.TG_LOGO_AURORA};           // aurora shield is defined up top (boot screen uses it too)
 if (S.theme === "aurora") S.aurora = true;                         // was picked from Settings in v1.7-1.8
 delete S.egg;                                                      // old hidden theme (removed in v1.9)
-if (!["default","light","dark","livewire","fireice","coastal"].includes(S.theme)) S.theme = "default";
+if (!["default","light","dark","livewire","fireice","coastal","forest"].includes(S.theme)) S.theme = "default";
 function applyTheme(){
   const t = S.aurora ? "aurora" : S.theme;
   if (t === "default") delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
@@ -11494,6 +11546,7 @@ function applyTheme(){
   document.querySelectorAll("#s-theme button").forEach(b => b.classList.toggle("on", !S.aurora && b.dataset.v === S.theme));
   appIcon(S.aurora ? "aurora" : "default");
   try { const hb = getComputedStyle(document.querySelector("header")).backgroundColor, m = document.querySelector('meta[name="theme-color"]'); if (m && hb) m.setAttribute("content", hb); } catch(e){}   // browser bar / iOS status bar follow the theme
+  try { if (typeof pushWidget === "function") pushWidget(); } catch(e){}   // v2.03: the home-screen tiles follow the theme too
 }
 /* Home-screen icon follows ONLY the Northern Lights theme (green & blue shield); every other theme keeps the normal shield.
    Android app: the native shell remembers the wanted icon and switches launcher entries when the app goes to the background
@@ -17883,6 +17936,7 @@ phLayers(); renderPH();
 showTab(S.tab);
 if (S.tab === "notes") restoreDraft(); else clearDraft();
 calcCharge(); calcTon(); calcSens(); calcDuct(); calcSplit(); calcStatic(); calcPsych(); buildTable();
+try { if (!wgLast.tgw) pushWidget({}); } catch(e){}      // v2.01: a fresh install still gets a P-T glance on the tile
 </script>
 <script>
 (function(){
